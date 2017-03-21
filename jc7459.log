@@ -1,0 +1,21 @@
+jc7459
+*   e7739a9 Merge remote-tracking branch 'origin/slave2'
+|\  
+| *   c8cb861 slave2 merge slave1
+| |\  
+| * | a3e74e2 2 slave2
+* | |   935992e Merge remote-tracking branch 'origin/slave1'
+|\ \ \  
+| | |/  
+| |/|   
+| * |   97ce569 slave1 merge master
+| |\ \  
+| | |/  
+| |/|   
+| * | 341a0e8 1 slave1
+* | | 4544505 6 master
+| |/  
+|/|   
+* | 96d8c2c 3 master
+|/  
+* 79830e6 0 master
