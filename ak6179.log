@@ -1,3 +1,25 @@
+act444
+*   cf45bb6 Merge branch 'master' into l1b
+|\  
+| *   1a28cb9 Merge branch 'u2'
+| |\  
+| | * cc13200 top
+* | |   176da24 Merge branch 'l2' into l1b
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 9c6b797 bottom
+* | |   9efef15 Merge branch 'l1'
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * aa5283b d1
+* | 9afce35 u1
+|/  
+* fb42cd5 1
+
 ak6179
 *   d14f7cd Merge branch_2 with branch_3
 |\  
@@ -17,3 +39,22 @@ ak6179
 * | 841d29d 2nd commit on Master
 |/  
 * 5d6b583 First commit
+
+ch1751
+*   c7e3e35 merge all
+|\  
+| *   5dc09bc merge down2
+| |\  
+| * | 657bf08 down2 F
+* | |   45a8844 merge to G
+|\ \ \  
+| | |/  
+| |/|   
+| * |   7432501 D
+| |\ \  
+| | |/  
+| | * 47c9a3c C
+* | | 02a1692 E
+|/ /  
+* | 0e4cef0 B
+|/  
