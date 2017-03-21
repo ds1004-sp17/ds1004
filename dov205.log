@@ -19,3 +19,24 @@ dov205
 * | f4ab05e up
 |/  
 * fc0ebd6 origin
+
+cdg356
+*   ff52a4b Merge branch 'b1'
+|\
+| *   30aa9ae merged b2>b1
+| |\
+| | * 441e26d b2 change 1
+* | |   af8c485 Merge branch 'b1'
+|\ \ \
+| |/ /
+| * |   c79ed54 merge m>b1
+| |\ \
+| | |/
+| |/|
+| * | 5bfa244 b1 change 1
+* | | 165894f change to create second master node
+| |/
+|/|
+* | 772b033 m change 1
+|/
+* 2f47de5 created README on m
