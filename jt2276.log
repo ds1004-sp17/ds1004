@@ -19,6 +19,27 @@ cdg356
 |/
 * 2f47de5 created README on m
 
+deh284
+*   5452010 Merge branch 'b1'
+|\
+| *   df6aad7 Merge branch 'master' into b1
+| |\
+| * | fda8212 t3 commit1
+* | |   298c008 Merge branch 'b2'
+|\ \ \
+| |_|/
+|/| |
+| * | 0eba3e0 t2 commit1
+* | |   562e59c Merge branch 'b1'
+|\ \ \
+| |/ /
+|/| /
+| |/
+| * 1975d68 f1 commit1
+* | 51917ac t1 commit1 t# Please enter the commit message for your changes. Lines starting
+|/
+* a8eab83 Master C1
+
 jt2276
 *   e7c8baf 9th commit (5th on master)
 |\  
