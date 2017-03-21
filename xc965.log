@@ -1,3 +1,21 @@
+lt1503
+*   8b3d55f Merge branch 'b1' into b2
+|\  
+| *   fd7d336 Merge branch 'master' into b1
+| |\  
+| | * ce1d853 c2
+* | |   27cc044 Merge branch 'b1' into b2
+|\ \ \  
+| |/ /  
+| * |   f26ce8c Merge branch 'master' into b1
+| |\ \  
+| | |/  
+| | * f32a663 c1
+* | | 81abc6c b2
+|/ /  
+* | e1ef8c0 b1
+|/  
+* 1904855 start
 xc965
 *   ff7f79e Merge branch 'a1' into a2
 |\  
@@ -16,3 +34,4 @@ xc965
 * | 9b1d8b8 a1
 |/  
 * 60065c4 init
+
