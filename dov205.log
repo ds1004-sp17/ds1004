@@ -1,24 +1,23 @@
-dov205
-*   338e741 merge down into master
-|\  
-| *   b5775cc merge mid into down
-| |\  
-| * | 46fd1c7 down
-* | |   f5ad75d merge mid into master
-|\ \ \  
-| | |/  
-| |/|   
-| * |   9c0bf56 merge master to mid
-| |\ \  
-| | |/  
-| |/|   
-| * | 571548f mid
-* | | d1fb10f up
-| |/  
-|/|   
-* | f4ab05e up
-|/  
-* fc0ebd6 origin
+cdg356
+*   ff52a4b Merge branch 'b1'
+|\
+| *   30aa9ae merged b2>b1
+| |\
+| | * 441e26d b2 change 1
+* | |   af8c485 Merge branch 'b1'
+|\ \ \
+| |/ /
+| * |   c79ed54 merge m>b1
+| |\ \
+| | |/
+| |/|
+| * | 5bfa244 b1 change 1
+* | | 165894f change to create second master node
+| |/
+|/|
+* | 772b033 m change 1
+|/
+* 2f47de5 created README on m
 
 deh284
 *   5452010 Merge branch 'b1'
@@ -41,26 +40,28 @@ deh284
 |/
 * a8eab83 Master C1
 
-cdg356
-*   ff52a4b Merge branch 'b1'
-|\
-| *   30aa9ae merged b2>b1
-| |\
-| | * 441e26d b2 change 1
-* | |   af8c485 Merge branch 'b1'
-|\ \ \
-| |/ /
-| * |   c79ed54 merge m>b1
-| |\ \
-| | |/
-| |/|
-| * | 5bfa244 b1 change 1
-* | | 165894f change to create second master node
-| |/
-|/|
-* | 772b033 m change 1
-|/
-* 2f47de5 created README on m
+dov205
+*   338e741 merge down into master
+|\  
+| *   b5775cc merge mid into down
+| |\  
+| * | 46fd1c7 down
+* | |   f5ad75d merge mid into master
+|\ \ \  
+| | |/  
+| |/|   
+| * |   9c0bf56 merge master to mid
+| |\ \  
+| | |/  
+| |/|   
+| * | 571548f mid
+* | | d1fb10f up
+| |/  
+|/|   
+* | f4ab05e up
+|/  
+* fc0ebd6 origin
+
 
 jt2276
 *   e7c8baf 9th commit (5th on master)
