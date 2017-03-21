@@ -1,75 +1,77 @@
 lt1503
 *   8b3d55f Merge branch 'b1' into b2
-|\  
+|\
 | *   fd7d336 Merge branch 'master' into b1
-| |\  
+| |\
 | | * ce1d853 c2
 * | |   27cc044 Merge branch 'b1' into b2
-|\ \ \  
-| |/ /  
+|\ \ \
+| |/ /
 | * |   f26ce8c Merge branch 'master' into b1
-| |\ \  
-| | |/  
+| |\ \
+| | |/
 | | * f32a663 c1
 * | | 81abc6c b2
-|/ /  
+|/ /
 * | e1ef8c0 b1
-|/  
+|/
 * 1904855 start
 qg323
 *   0429876 Merge branch 'level1' into level2
-|\  
+|\
 | *   22983b2 Merge branch 'master' into level1
-| |\  
+| |\
 | | * 69a9ec8 master mod2
 * | |   4cd064e Merge branch 'level1' into level2
-|\ \ \  
-| |/ /  
+|\ \ \
+| |/ /
 | * |   e5b8d4b Merge branch 'master' into level1
-| |\ \  
-| | |/  
+| |\ \
+| | |/
 | | * 2b30a2e master mod1
 * | | 8f01797 level2
-|/ /  
+|/ /
 * | 34971db level1
-|/  
+|/
 * 7414b24 Initial commit
+
 xc965
 *   ff7f79e Merge branch 'a1' into a2
-|\  
+|\
 | *   bb5209e Merge branch 'master' into a1
-| |\  
+| |\
 | | * 01f341d c2
 * | |   1f1f78f Merge branch 'a1' into a2
-|\ \ \  
-| |/ /  
+|\ \ \
+| |/ /
 | * |   d58d4f0 Merge branch 'master' into a1
-| |\ \  
-| | |/  
+| |\ \
+| | |/
 | | * c2a1b1f a1
 * | | fe2b808 a2
-|/ /  
+|/ /
 * | 9b1d8b8 a1
-|/  
+|/
 * 60065c4 init
+
 yf940
 *   b6b87ab Gomi 40
-|\  
+|\
 | *   2780fdf Gomi 31
-| |\  
+| |\
 | * | e418a9a Gomi 22
 * | |   9c51484 Gomi 30
-|\ \ \  
-| | |/  
-| |/|   
+|\ \ \
+| | |/
+| |/|
 | * |   919190f Gomi 21
-| |\ \  
-| | |/  
-| |/|   
+| |\ \
+| | |/
+| |/|
 | * | f7b4239 Gomi 11
 * | | 775d585 Gomi 20
-| |/  
-|/|   
+| |/
+|/|
 * | 5fb5dc8 10 commit
-|/  
+|/
 * 961f68d 1st commit
