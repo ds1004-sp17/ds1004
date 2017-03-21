@@ -1,0 +1,17 @@
+lt1503
+
+*   0282175 Merge branch 'b1' into b2
+|\  
+| *   6e93bf2 Merge branch 'master' into b1
+| |\  
+| | * d4dcadf c2
+* | |   2fd8a41 Merge branch 'b1' into b2
+|\ \ \  
+| |/ /  
+| * |   aafa809 Merge branch 'master' into b1
+| |\ \  
+|/ / /  
+| | _   
+| * a189864 c1
+|/  
+* 87dcb91 init
