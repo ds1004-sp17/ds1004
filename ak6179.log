@@ -1,0 +1,19 @@
+ak6179
+*   d14f7cd Merge branch_2 with branch_3
+|\  
+| *   14eea6c Merge branch_3 with master
+| |\  
+| * | bc25c6f Change from branch_3
+* | |   cc158c6 Merge branch_2 with master
+|\ \ \  
+| | |/  
+| |/|   
+| * |   f9d0eea Merge master with branch_1
+| |\ \  
+| | |/  
+| | * 3df2047 First commit on branch_1
+* | | 76dcb07 First commit on branch_2
+|/ /  
+* | 841d29d 2nd commit on Master
+|/  
+* 5d6b583 First commit
