@@ -1,0 +1,28 @@
+zd507
+*   f2606a3 merging last 2 branches 3a and 3b to creating end node
+|\  
+| | *   783df19 merging branch 2b with 2c to create 3b
+| | |\  
+| |/ /  
+|/| |   
+| | * abd1ab4 1st commit to branch 2c (4th commit total)
+| | | *   bc8624a merging branch 2a with 2b to meet at 3a
+| | | |\  
+| |_|/ /  
+|/| | /   
+| | |/    
+| |/|     
+| * | f1d39c2 1st commit on branch 3a (7th commit total)
+| * | 2715aa9 1st commit to branch 2a (5th commit total)
+| |/  
+| | *   82af1dc merging branch_1a with branch_1b to branch_2b
+| | |\  
+| |/ /  
+| | /   
+| |/    
+|/|     
+* | 76f4a2a 1st commit to branch_2b (6th commit total)
+* | b4bbf8f 1st commit to branch 1a (2nd commit total)
+| * 98d36c4 1st commit to branch 1b (3rd commit total)
+|/  
+* f88607f 1st commit to master
