@@ -1,0 +1,64 @@
+xz1757
+*   7f47e01 (HEAD -> t6) t6
+|\  
+| *   ca9465c (t5) t5
+| |\  
+| | * 6b6e7a4 (t2) t2 2
+* | |   6f7c914 (t4) t4
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 7c7b504 (t1) t1 2
+* | |   ebb52ab (t3) t3
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 49ed5c3 t2
+* | 5bdb6d6 t1
+|/  
+* 32f15d4 (master) m0
+
+ys1001
+*   668d85f (HEAD -> b6) Merge branch 'b4' into b6 b6 1
+|\  
+| *   d91836d (b4) Merge branch 'b3' into b4 b4 1
+| |\  
+| * | 0fce3ab (b1) b1 2
+* | |   4bdb407 (b5) Merge branch 'b2' into b5 b5 1
+|\ \ \  
+| |_|/  
+|/| |   
+| * | c06eef9 (b2) b2 2
+* | |   193890c (b3) merge b1 1 and b2 1 into b3 1
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * 91a1a31 b2 1
+* | 9ce0c9b b1 1
+|/  
+* 9bb460d (master) master commit 0
+
+zy937
+*   38c1d06 dest
+|\  
+| *   0672ae1 down2
+| |\  
+| * | 7f85ff7 down
+* | |   011fe86 up2
+|\ \ \  
+| | |/  
+| |/|   
+| * |   4b29b1d mid
+| |\ \  
+| | |/  
+| |/|   
+| * | a28ca77 down1
+* | | af15d38 up
+| |/  
+|/|   
+* | 786ba78 up1
+|/  
+* 5235948 origin
