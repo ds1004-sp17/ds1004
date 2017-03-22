@@ -1,3 +1,25 @@
+sj2384
+*   4f102b6 9th commit (4th on test1, 3rd on test2).
+|\  
+| *   d5be8a4 7th commit (2nd on test2, 4th on master).
+| |\  
+| * | a218668 6th commit (1st on test2).
+* | |   732965c 8th commit (3rd on test1, 5th on master).
+|\ \ \  
+| | |/  
+| |/|   
+| * |   ae4c678 4th commit (3rd on master).
+| |\ \  
+| | |/  
+| |/|   
+| * | fa75c8a 3rd commit (2nd on master).
+* | | 99a84fa 5th commit (2nd on test1).
+| |/  
+|/|   
+* | 4018a03 2nd commit (1st on testing).
+|/  
+* eb03e1b 1st commit (1st on master).
+
 wl1599
 *   d579b2d Merge branch 'branch1' into branch2
 |\  
