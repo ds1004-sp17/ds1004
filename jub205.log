@@ -1,3 +1,23 @@
+eff254
+*   5570153 (HEAD -> master) Master VS tree3
+|\  
+| *   bcaed8d (tree3) Tree3 VS tree1_2
+| |\  
+| | * b31c5ab (tree1_2) 4th comit (1st on tree1_2)
+* | |   e1f7fe6 Master VS tree2
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 57ebf30 (tree2) 5th comit (1st on tree2)
+* | |   802c08d Master VS Tree1
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 1974812 (tree1) 3rd comit (1st on tree1)
+* | f5d27e3 2nd comit (2nds on master)
+|/  
+* 6128ee7 1st comit (1st on master)
 jub205
 *   7084790 Final merge / Merge branches 'testing' and 'testing2'
 |\  
