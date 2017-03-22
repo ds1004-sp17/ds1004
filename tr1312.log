@@ -1,0 +1,20 @@
+*   d168c27 Merge branch 'A1-1' into A2-2
+|\  
+| *   4d45078 Merge branch 'A1' into A1-1
+| |\  
+| * | 40ca7f9 3rd commit, 1st on A1-1
+* | |   7be7fba erge branch 'A1' into A2-2
+|\ \ \  
+| | |/  
+| |/|   
+| * |   345eada Merge branch 'A2' into A1
+| |\ \  
+| | |/  
+| |/|   
+| * | 34dd7bb 2nd commit, 1st on A1
+* | | 9c41a82 5th commit, 1st on A2-2
+| |/  
+|/|   
+* | 4206918 4th commit, 1st on A2
+|/  
+* 2aecbb9 1st commit, 1st on master
