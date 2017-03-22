@@ -1,3 +1,25 @@
+ym1495
+*   30680e6 9th commit(5th on master)
+|\
+| *   9348433 7th commit(2nd on branch2)
+| |\
+| * | 1b01422 4th commit(1st on branch2)
+* | |   034adcc 8th commit(4th on master) merge branch3 to master
+|\ \ \
+| |_|/
+|/| |
+| * | 2a4547b 5th commit(1st on branch3)
+* | |   a306611 6th commit(3rd on master) merge branch1 to master
+|\ \ \
+| |/ /
+| | /
+| |/
+|/|
+| * 47d08e6 2nd commit(1st on branch1)
+* | d848e2b 3rd commit(2nd on master)
+|/
+* 63c27e7 1st commit(1st on master)
+
 yz3464
 *   a2e3a04 Merge branch 'a1' into a2
 |\  
@@ -16,3 +38,4 @@ yz3464
 * | f927102 a1
 |/  
 * a7e6fbf init
+
