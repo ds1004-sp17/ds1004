@@ -1,25 +1,3 @@
-nn1119
-*   49259bd 4th merge
-|\  
-| *   be7516e 3rd merge, master-mbranch
-| |\  
-| | * 8713012 4th commit, mbranch 1
-| * |   2496e6a 2nd merge, master-tbranch
-| |\ \  
-| | |/  
-| |/|   
-| | * a0f91e8 5th commit, tbranch 1
-* | |   8fb680e 1st merge, testing into master
-|\ \ \  
-| |/ /  
-| | /   
-| |/    
-|/|     
-| * b23a153 2nd commit, master2
-* | b1aeed9 3rd commit, testing 1
-|/  
-* b9dd806 1st commit, master 1
-
 dv697
 *   f77cae3 Final Merge
 |\  
@@ -42,6 +20,27 @@ dv697
 |/  
 * 735d10f 1st commit (1st one for master)
 
+nn1119
+*   49259bd 4th merge
+|\  
+| *   be7516e 3rd merge, master-mbranch
+| |\  
+| | * 8713012 4th commit, mbranch 1
+| * |   2496e6a 2nd merge, master-tbranch
+| |\ \  
+| | |/  
+| |/|   
+| | * a0f91e8 5th commit, tbranch 1
+* | |   8fb680e 1st merge, testing into master
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * b23a153 2nd commit, master2
+* | b1aeed9 3rd commit, testing 1
+|/  
+* b9dd806 1st commit, master 1
 
 ue225
 *   97988e2 final Merge branch 'eeac2' into b2
