@@ -1,3 +1,22 @@
+wl1599
+*   d579b2d Merge branch 'branch1' into branch2
+|\  
+| *   f8bce5d 3rd on branch1
+| |\  
+| | * d2711ef 3rd on master
+* | |   9b68c21 2nd on branch2
+|\ \ \  
+| |/ /  
+| * |   767cb4b 2nd on branch1
+| |\ \  
+| | |/  
+| | * b4f00ab 2nd on master
+* | | 7f6da57 1st on branch2
+|/ /  
+* | 612242b 1st on branch1
+|/  
+* 457084e 1st on master
+
 xy990
 *   54970e2 9th
 |\  
