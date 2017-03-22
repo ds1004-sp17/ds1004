@@ -1,0 +1,62 @@
+sj2384
+*   4f102b6 9th commit (4th on test1, 3rd on test2).
+|\  
+| *   d5be8a4 7th commit (2nd on test2, 4th on master).
+| |\  
+| * | a218668 6th commit (1st on test2).
+* | |   732965c 8th commit (3rd on test1, 5th on master).
+|\ \ \  
+| | |/  
+| |/|   
+| * |   ae4c678 4th commit (3rd on master).
+| |\ \  
+| | |/  
+| |/|   
+| * | fa75c8a 3rd commit (2nd on master).
+* | | 99a84fa 5th commit (2nd on test1).
+| |/  
+|/|   
+* | 4018a03 2nd commit (1st on testing).
+|/  
+* eb03e1b 1st commit (1st on master).
+
+wl1599
+*   d579b2d Merge branch 'branch1' into branch2
+|\  
+| *   f8bce5d 3rd on branch1
+| |\  
+| | * d2711ef 3rd on master
+* | |   9b68c21 2nd on branch2
+|\ \ \  
+| |/ /  
+| * |   767cb4b 2nd on branch1
+| |\ \  
+| | |/  
+| | * b4f00ab 2nd on master
+* | | 7f6da57 1st on branch2
+|/ /  
+* | 612242b 1st on branch1
+|/  
+* 457084e 1st on master
+
+xy990
+*   54970e2 9th
+|\  
+| *   7970cbc 7th
+| |\  
+| * | c2da9d0 4th
+* | |   f9df583 8th
+|\ \ \  
+| |_|/  
+|/| |   
+| * | 3f2a59d 5th
+* | |   ee5b154 6th
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * 12a3ee3 2nd
+* | c60f687 3rd
+|/  
+* 854db52 first
