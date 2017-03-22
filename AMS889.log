@@ -18,3 +18,24 @@ AMS889
 * | b4bf134 master commit 2
 |/  
 * 2c4aacd master commit
+jmw784
+*   bc0d946 End node layer 4 (merge)
+|\  
+| *   bcc59ee Bottom node layer 3 (merge)
+| |\  
+| | * b0fc145 Bottom layer 2
+* | |   00e56e7 Top node layer 3 (merge)
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 7e980e6 Top node layer 2
+* | |   161af53 Middle node layer 2 (merge)
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * a6fe266 Top node layer 1
+* | 19d246b Bottom node layer 1
+|/  
+* 9752434 1st commit (1st on master)
