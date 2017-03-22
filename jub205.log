@@ -1,3 +1,21 @@
+ce2086   
+*   614f913 9 /branch 9 - from 6,8
+|\  
+| *   a095078 8 /branch 8  - from 5,7
+| |\  
+| | * d881bfd 7 /branch 7  - from 4
+* | |   77dccf9 6 /branch 6  - from 3,5
+|\ \ \  
+| |/ /  
+| * |   c27bb12 5 /branch 5  - from 2,4
+| |\ \  
+| | |/  
+| | * 9c4849d 4 /branch 4  - from 1
+* | | bc5ee6c 3 /branch 3
+|/ /  
+* | 0038b6d 2 /branch 2
+|/  
+* 506ae94 1 /master 1
 eff254
 *   5570153 (HEAD -> master) Master VS tree3
 |\  
