@@ -1,3 +1,22 @@
+dx383
+*   b6146dd master  merge branch4 on layer5
+|\  
+| *   fe10136 branch4 merge branch3 on layer4
+| |\  
+| | * 4ace8f6 5th commit 1st on branch3
+* | |   c4a3bf1 master  merge branch2 on layer4
+|\ \ \  
+| |/ /  
+| * |   98b6bac branch2 merge branch1 on layer3
+| |\ \  
+| | |/  
+| | * 9623bbd 2th commit 1st on branch1
+* | | 2cc8263 4th commit 3rd on master
+|/ /  
+* | efc6476 3th commit 2nd on master
+|/  
+* 9bf94b5 1th commit 1st on master
+
 jc7459
 *   e7739a9 Merge remote-tracking branch 'origin/slave2'
 |\  
@@ -19,3 +38,22 @@ jc7459
 * | 96d8c2c 3 master
 |/  
 * 79830e6 0 master
+
+jh5442
+*   940edc2 Merge branch 'master' into branch2
+|\  
+| *   70a943f Merge branch 'branch1'
+| |\  
+| | * 5c32dab 5th commit (2nd on branch1).
+* | |   573e0d3 Merge branch 'master' into branch2
+|\ \ \  
+| |/ /  
+| * |   bd7e6f8 Merge branch 'branch1'
+| |\ \  
+| | |/  
+| | * f30fc4b 2nd commit (1st on Branch1).
+* | | 0b1192c 4th commit (1st on branch2).
+|/ /  
+* | 842c93f 3rd commit (2nd on master).
+|/  
+* e6b1bf5 1st commit (1st on master).
