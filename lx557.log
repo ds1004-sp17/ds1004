@@ -38,3 +38,25 @@ lx557
 * | 651c26d first update of master branch
 |/  
 * 7f6d7be This is the start point
+
+nw1045
+*   dba0c48 9th commit (5th on master).
+|\  
+| *   0d506be 6th commit (2th on testing2).
+| |\  
+| * | dc78104 4st commit(1st on testing2)
+* | |   1cee7ef 8th commit (4th on master).
+|\ \ \  
+| |_|/  
+|/| |   
+| * | 477ae73 7st commit(2st on testing1)
+* | |   d052d0a 5th commit (3th on master).
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * edf86a1 2st commit(1st on testing1)
+* | 974ab81 3st commit(2st on master)
+|/  
+* 4bf15e9 1st commit(1st on master)

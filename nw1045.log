@@ -18,6 +18,27 @@ jh3572
 |/  
 * 4534fec 1st commit (1st on master).
 
+lx557
+*   7b12cf1 final merge
+|\  
+| *   4d791bb second merge of master to branch1
+| |\  
+| * | 8e6f260 2nd update of branch 1
+* | |   bebd3b6 second merge of branch2 to master
+|\ \ \  
+| |_|/  
+|/| |   
+| * | a54a5fb first update of branch2
+* | |   5e449a3 first merge of master and branch1
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 10368c1 first update of branch1
+* | 651c26d first update of master branch
+|/  
+* 7f6d7be This is the start point
+
 nw1045
 *   dba0c48 9th commit (5th on master).
 |\  
