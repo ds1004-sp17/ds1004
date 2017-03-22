@@ -1,3 +1,21 @@
+ak6201
+*   5de0d8e Merge branch 'b5' into b6
+|\  
+| *   34635e7 Merge branch 'b2_1' into b5
+| |\  
+| | * 2c4a2ec file on fb2_1
+* | |   094579b Merge branch 'b1_2' into b4
+|\ \ \  
+| |/ /  
+| * |   d7a2afc Merge branch 'b2' into b1_2
+| |\ \  
+| | |/  
+| | * cb48982 file on b2
+* | | 7d70747 file on fb1_1
+|/ /  
+* | d604bd2 file on b1
+|/  
+* c38e6ac initial commit
 jub205
 *   7084790 Final merge / Merge branches 'testing' and 'testing2'
 |\  
