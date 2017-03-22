@@ -1,0 +1,21 @@
+qc510
+*   7bac215 Merge branch 'branch2' into branch1
+|\  
+| *   80dcdee merge node2 with node 8
+| |\  
+| * | 3849812 4th commit
+* | |   3796d13 Merge branch 'master' into branch1
+|\ \ \  
+| | |/  
+| |/|   
+| * |   7adce99 4th commit
+| |\ \  
+| | |/  
+| |/|   
+| * | 2ccfa51 3rd commit(the 2nd master)
+* | | 678ed96 branch1 commit
+| |/  
+|/|   
+* | 177acca 2nd commit
+|/  
+* ec6cd63 First commit
