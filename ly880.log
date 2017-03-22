@@ -1,0 +1,19 @@
+"ly880" 
+*   0b02310 merge w/ master to get last node
+|\  
+| *   f4c6585 merge master w/ center
+| |\  
+| * | b091223 push master one commit
+* | |   9342a24 take branch 1 to center node
+|\ \ \  
+| | |/  
+| |/|   
+| * |   02930fc now we merge to center node
+| |\ \  
+| | |/  
+| | * 54897b2 move down b
+* | | bdf66f3 p one by one commit
+|/ /  
+* | 0b411f2 branch a commit
+|/  
+* 71bf58f left node
