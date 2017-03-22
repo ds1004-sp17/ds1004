@@ -20,3 +20,24 @@ cer446
 * | fd7b740 3rd commit (2nd on master), added File2
 |/  
 * 7f737d0 1st commit on master
+
+sl4964
+*   26f9e20 node9 Merge branch 'branch1'
+|\  
+| *   f8e2b8a node8 Merge branch 'branch2' into branch1
+| |\  
+| | * 9043e84 node6
+* | |   1eacaa6 node7 Merge branch 'branch1'
+|\ \ \  
+| |/ /  
+| * |   ee919e2 node4 Merge branch 'master' into branch1
+| |\ \  
+| | |/  
+| |/|   
+| * | 5ba4ccf node3
+* | | 1f2e26d node5
+| |/  
+|/|   
+* | 63129cc node2
+|/  
+* c06dabd node1
