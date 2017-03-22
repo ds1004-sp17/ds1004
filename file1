@@ -1,4 +1,9 @@
 this is file1.
-this line is from manual resolution.
+change file 1 from master.
+change file 1 from branch1.
+change file 1 from branch 2.
+change file 1 from branch 3.
+this line is from manual resolution: master and branch1.
+this line is from manual resolution: master and branch3.
 
 
