@@ -1,3 +1,22 @@
+jub205
+*   7084790 Final merge / Merge branches 'testing' and 'testing2'
+|\
+| *   319e1f9 Merge branch 'master' into testing2
+| |\
+| * | dc95841 6th commit (2nd on branch testing2)
+* | |   8840022 Merge branch 'master' into testing
+|\ \ \
+| | |/
+| |/|
+| * |   066a9cd Merge branches 'testing' and 'testing2'
+| |\ \
+| | |/
+| | * d809e37 3rd commit (1st on branch testing1)
+* | | 059a1a6 5th commit (2nd on branch testing)
+|/ /
+* | c5e8057 2nd commit (1st on branch testing)
+|/
+* 8714629 1st commit (1st on master)
 rds491
 *   1d903ec Merge branch 'master2'
 |\  
