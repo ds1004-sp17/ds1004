@@ -1,3 +1,47 @@
+ds4487
+*   dc737e1 9th commit (3rd on testing2)
+|\
+| *   dd00281 7th commit (2nd on testing3)
+| |\
+| * | b491404 4th commit (1st on testing3)
+* | |   2400b1d 8th commit (2nd on testing2)
+|\ \ \
+| | |/
+| |/|
+| * |   acb9bc1 6th commit (3rd on master)
+| |\ \
+| | |/
+| |/|
+| * | b9eb622 3rd commit (2nd on master)
+* | | dfe03b4 5th commit (1st on testing2)
+| |/
+|/|
+* | 066cf07 2nd commit (1st on testing1)
+|/
+* 83a333e 1st commit (1st on master)
+
+kc3289
+*   ece7a54 9th commit (3nd on t2)
+|\  
+| *   d0d49ad 7th commit (2nd on t3)
+| |\  
+| * | 91d9df9 4th commit (1st on t3)
+* | |   d554484 8th commit (2nd on t2)
+|\ \ \  
+| | |/  
+| |/|   
+| * |   ad6f3a4 6th commit (3rd on master)
+| |\ \  
+| | |/  
+| |/|   
+| * | 3f14924 3rd commit (2nd on master)
+* | | 6564a22 5th commit (1st on t2)
+| |/  
+|/|   
+* | ddb6ea5 2st commit (1st on t1)
+|/  
+* 7fee039 1st commit (1st on master)
+
 ra1228
 *   2760385 Merge branch 'testing3'
 |\  
