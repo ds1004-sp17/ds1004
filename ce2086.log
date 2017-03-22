@@ -34,3 +34,23 @@ ce2086
 * | 0038b6d 2 /branch 2
 |/  
 * 506ae94 1 /master 1
+rds491
+*   1d903ec Merge branch 'master2'
+|\  
+| *   1290a0b Merge branch 'b1.2' into master2
+| |\  
+| | * 5ad40a5 file on branch 1.2
+* | |   33bdc56 Merge branch 'b2'
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 73a07ff file on b2
+* | |   9d07c40 git branch master2 git checkout master2 git merge b1.2 git checkout master git merge b2 git merge master2 git graphMerge branch 'b1'
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 7a8f5c4 file on b1
+* | d34281d second file on master
+|/  
+* f031194 initial commit
