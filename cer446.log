@@ -21,6 +21,7 @@ cer446
 |/  
 * 7f737d0 1st commit on master
 
+<<<<<<< HEAD
 sl4964
 *   26f9e20 node9 Merge branch 'branch1'
 |\  
@@ -41,3 +42,5 @@ sl4964
 * | 63129cc node2
 |/  
 * c06dabd node1
+=======
+>>>>>>> cf88badd7768d94764a2e1db5d1f10b3940848f4

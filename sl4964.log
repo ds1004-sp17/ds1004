@@ -1,3 +1,26 @@
+cer446
+
+*   65e8894 last merge
+|\  
+| *   52aeb5f merging center node with branch C
+| |\  
+| | * 675b5d8 added file 3 to branch C
+* | |   d3ea0dc 6th commit, merging B and master
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 3b34914 5th commit (1st on B)
+* | |   cba0d3b 4th commit (3rd on master), merging A
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * 521f6ab 2nd commit (1st on A)
+* | fd7b740 3rd commit (2nd on master), added File2
+|/  
+* 7f737d0 1st commit on master
+
 sl4964
 *   26f9e20 node9 Merge branch 'branch1'
 |\  
