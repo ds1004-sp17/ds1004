@@ -1,0 +1,18 @@
+jh5442
+*   940edc2 Merge branch 'master' into branch2
+|\  
+| *   70a943f Merge branch 'branch1'
+| |\  
+| | * 5c32dab 5th commit (2nd on branch1).
+* | |   573e0d3 Merge branch 'master' into branch2
+|\ \ \  
+| |/ /  
+| * |   bd7e6f8 Merge branch 'branch1'
+| |\ \  
+| | |/  
+| | * f30fc4b 2nd commit (1st on Branch1).
+* | | 0b1192c 4th commit (1st on branch2).
+|/ /  
+* | 842c93f 3rd commit (2nd on master).
+|/  
+* e6b1bf5 1st commit (1st on master).
