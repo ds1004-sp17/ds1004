@@ -1,0 +1,19 @@
+yx1350
+*   e2feab4 9th commit(5th on br1 master)merge br2 to master
+|\  
+| *   d4a325b 8th commit(3nd on br2) merge br2 and br4
+| |\  
+| * | 67c7f0f 6nd commit(2nd on br2).
+* | |   e3caa4d 7nd commit(4nd on master) merge br3 to master(br1)
+|\ \ \  
+| | |/  
+| |/|   
+| * |   76c04f9 5th commit
+| |\ \  
+| | |/  
+| | * 9970be5 3rd commit(1nd on br2).
+* | | 8ba9057 4nd commit(3rd on br1).
+|/ /  
+* | fd95a26 2nd commit(2nd on master br1).
+|/  
+* 1ed80ed 1nd commit(1nd on master br1).
