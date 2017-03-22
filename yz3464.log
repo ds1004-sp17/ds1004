@@ -43,19 +43,19 @@ ym1495
 * 63c27e7 1st commit(1st on master)
 
 yz3464
-*   a2e3a04 Merge branch 'a1' into a2
+*   a2e3a04 Merge branch 's1' into s2
 |\  
-| *   3210a15 Merge branch 'master' into a1
+| *   3210a15 Merge branch 'master' into s1
 | |\  
-| | * 1db5788 c2
-* | |   e08dbd6 Merge branch 'a1' into a2
+| | * 1db5788 add
+* | |   e08dbd6 Merge branch 's1' into s2
 |\ \ \  
 | |/ /  
-| * |   b4c74ba Merge branch 'master' into a1
+| * |   b4c74ba Merge branch 'master' into s1
 | |\ \  
 | | |/  
-| | * 20bdf65 a1
-* | | 408ebdd a2
+| | * 20bdf65 s1
+* | | 408ebdd s2
 |/ /  
 * | f927102 a1
 |/  
