@@ -1,20 +1,61 @@
 ws854
 *   c7b7c51 Merge R2 to the end nod
-|\  
+|\
 | *   86ea40f merge middle bottom nod to right bottom
-| |\  
+| |\
 | | * cdc217c Add a file to M3
 * | |   a368a49 merge middle top nod to right top
-|\ \ \  
-| |/ /  
-|/| |   
+|\ \ \
+| |/ /
+|/| |
 | * | fae5313 Add a file to M1
 * | |   7eefd4c Merge the middle nod with L2
-|\ \ \  
-| |/ /  
-|/| /   
-| |/    
+|\ \ \
+| |/ /
+|/| /
+| |/
 | * 0c2d61d Add file to Left 2 nod
 * | 74d6c6a Add file to Left 1 nod
-|/  
+|/
 * a78988f master nod
+
+xy975
+*   15e186d 9th commit.
+|\
+| *   f735be4 7th commit (2nd on testing1).
+| |\
+| * | 8069206 5th commit (1st on testing1).
+* | |   55a9a25 8th commit (4th on master).
+|\ \ \
+| |_|/
+|/| |
+| * | e30f0c1 6th commit (2nd on testing).
+* | |   13fd39a 4th commit (3rd on master).
+|\ \ \
+| |/ /
+| | /
+| |/
+|/|
+| * 21f68d1 2nd commit (1st on testing).
+* | cd6839e 3rd commit (2nd on master).
+|/
+* 2bc3169 1st commit (1st on master).
+
+yk1587
+*   f34b1b0 Merge branch 'task7' into task8
+|\  
+| *   0959daf Merge branch 'task5' into task7
+| |\  
+| | * 92e365e task5
+* | |   a761d6d Merge branch 'task4' into task6
+|\ \ \  
+| |/ /  
+| * |   cdf8736 Merge branch 'task2' into task4
+| |\ \  
+| | |/  
+| | * 5ffa719 task2
+* | | 7690f45 task3
+|/ /  
+* | 8bc83fb task1
+|/  
+* 1f3c29d init
