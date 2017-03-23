@@ -18,3 +18,26 @@ jch609
 * | aa1eba8 2nd commit, 2nd on master
 |/  
 * 7529e46 1st commit, 1st on master
+
+
+ls1908
+*   a09892f 9th commit (2nd on branch 4). commit is from merging.
+|\  
+| *   53edba6 7th commit (4th on master) commit is from merge.
+| |\  
+| | * 0d08133 5th commit (1st on branch3).
+* | |   d7f4932 8th commit (1st on branch 4). commit is from merge.
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 250e6b0 4th commit (1st on branch2).
+* | |   1559a71 6th commit (3rd on master) commit is from merge.
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * 6f58df4 3rd commit (1st on branch1).
+* | 4d5bdc7 2nd commit (2nd on master).
+|/  
+* d838d58 1st commit (1st on master).
