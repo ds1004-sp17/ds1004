@@ -1,0 +1,21 @@
+bz866
+*   d89e377 Merge branch 'branch2' into branch1
+|\  
+| *   c947eda Merge branch 'master' into branch2
+| |\  
+| * | 33372ad 4th commit (1st branch2)
+* | |   5490308 Merge branch 'master' into branch1
+|\ \ \  
+| | |/  
+| |/|   
+| * |   3919580 resolved conflit
+| |\ \  
+| | |/  
+| |/|   
+| * | c024560 3rd commit (2nd master)
+* | | 390cc16 5th commit(2nd branch1)
+| |/  
+|/|   
+* | 7b99418 2nd commit(1st branch1)
+|/  
+* c479223 1st commit
