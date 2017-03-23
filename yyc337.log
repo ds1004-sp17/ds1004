@@ -17,3 +17,24 @@ yyc337
 * | b8a41f9 3
 |/  
 * eb5265e 1
+ffh123
+*   373faba Merged branch down into up
+|\  
+| *   f96708f Merged branch merge-1 into down
+| |\  
+| * | 6b870e8 d2
+| | | *   947485b Merged up into merge-1
+| | | |\  
+| | |/ /  
+| |_| /   
+|/| |     
+* | | 8a65f19 u2
+| |/  
+|/|   
+* |   73b51e4 Merged branch down into up
+|\ \  
+| |/  
+| * 09d8c94 d1
+* | 09b2c2d u1
+|/  
+* e9e6d55 Initial commit
