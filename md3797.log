@@ -39,3 +39,23 @@ md3797
 * | 5613909 3rd commit (2nd on master)
 |/  
 * 677c063 1st commit (1st on master)
+
+ys2786
+*   3fc20c9 [branch1] 8th commit, merge [branch2]
+|\
+| *   06a633c Merge branch 'merge1' into branch2
+| |\
+| * | b8db948 [branch2] 4th commit
+* | |   f9edcf4 [branch1] 7th commit, merge with [merge1]
+|\ \ \
+| | |/
+| |/|
+| * |   bb5a52f [merge1] 5th commit
+| |\ \
+| | |/
+| | * 77878d8 [branch2] 3rd commit
+* | | 2391ccc [branch1] 6th commit
+|/ /
+* | 9a79bcb [branch1] 2nd commit
+|/
+* f828978 [master] 1st commit
