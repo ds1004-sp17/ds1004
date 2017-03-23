@@ -1,0 +1,64 @@
+AMS889
+*   e0c4fca Merge branch 'testing2' into testing4
+|\  
+| *   196945f Merge branch 'master' into testing2
+| |\  
+| * | 46d0212 testing2 commit
+* | |   dbc44fc Merge branch 'testing3' into HEAD
+|\ \ \  
+| |_|/  
+|/| |   
+| * | 0cd2b61 testing3 commit
+* | |   61e2fe3 Merge branch 'testing1'
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 19b1ac8 testing1 commit
+* | b4bf134 master commit 2
+|/  
+* 2c4aacd master commit
+
+fnd212
+*   66cc2c9 Merge branch 'b2'
+|\  
+| *   4773a19 Merge branch 'b4' into b2
+| |\  
+| * | be44fd4 22
+* | |   ceb1d3a Merge branch 'b3'
+|\ \ \  
+| |_|/  
+|/| |   
+| * | b4c2160 20
+* | |   1133635 Merge branch 'b1'
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * 47034c3 10
+* | 2323b59 11
+|/  
+* b42600c 00
+
+jmw784
+*   bc0d946 End node layer 4 (merge)
+|\  
+| *   bcc59ee Bottom node layer 3 (merge)
+| |\  
+| | * b0fc145 Bottom layer 2
+* | |   00e56e7 Top node layer 3 (merge)
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 7e980e6 Top node layer 2
+* | |   161af53 Middle node layer 2 (merge)
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * a6fe266 Top node layer 1
+* | 19d246b Bottom node layer 1
+|/  
+* 9752434 1st commit (1st on master)
