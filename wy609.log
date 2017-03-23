@@ -1,0 +1,21 @@
+wy609
+*   7c522e8 Merge branch 'test1'
+|\  
+| *   e3eb5ab Merge branch 'test2' into test1
+| |\  
+| | * fabf6d4 Test2 first commit.
+* | |   545e4cb Merge branch 'test1'
+|\ \ \  
+| |/ /  
+| * |   1f3523f Merge branch 'master' into test1
+| |\ \  
+| | |/  
+| |/|   
+| * | 14c8530 Test1 first commit.
+* | | 6fe8f7a Master third commit.
+| |/  
+|/|   
+* | 2afc864 Master second commit.
+|/  
+* 2329f5b Master first commit.
+* aee99e1 first commit
