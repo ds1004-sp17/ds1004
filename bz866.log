@@ -19,3 +19,24 @@ bz866
 * | 7b99418 2nd commit(1st branch1)
 |/  
 * c479223 1st commit
+
+zg475
+*   b6a66fb final merge
+|\  
+| *   944e2af 2rd merge master to b1
+| |\  
+| * | 9ebba6b 2rd change to branch1
+* | |   5e382fd 3rd merge b2 to master
+|\ \ \  
+| |_|/  
+|/| |   
+| * | e32c2ab 1st change on branch2
+* | |   108322a first merge b1 to master
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * bf01be0 1st change on branch1
+* | babf9f2 1st change on master
+|/  
+* 2d46c84 start point
