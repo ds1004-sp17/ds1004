@@ -1,0 +1,82 @@
+cl4076
+*   62eb7dc Merge branch 'test2'
+|\  
+| *   4d6ae14 Merge branch 'test1' into test2
+| |\  
+| * | 34e433f 4th commit(1st on test2)
+* | |   a361968 Merge branch 'test1'
+|\ \ \  
+| | |/  
+| |/|   
+| * |   0a27301 Merge branch 'master' into test1
+| |\ \  
+| | |/  
+| |/|   
+| * | 05e3c15 2nd commit(1st on test1)
+* | | 777bdfd 5th commit(3rd on master)
+| |/  
+|/|   
+* | f433da1 3rd commit(2nd on master)
+|/  
+* b2046b4 1st commit(1st on master)
+ly976
+*   569bf53 9th commit (5th on master).
+|\  
+| *   3549490 7th commit (3nd on testing1).
+| |\  
+| | * 200328d 4th commit (1st on testing2).
+* | |   2616686 8th commit (4th on master).
+|\ \ \  
+| |/ /  
+| * |   a093add 5th commit (2nd on testing1).
+| |\ \  
+| | |/  
+| |/|   
+| * | a43cdcc 2nd commit (1st on testing1).
+* | | e98ad0e 6th commit (3rd on master)
+| |/  
+|/|   
+* | ab444f5 3rd commit (2nd on master).
+|/  
+* 2799a33 1st commit (1st on master)
+xs741
+*   d2ff245 (HEAD -> master) Merge branch 'test1'
+|\  
+| *   e86625e (test1) Merge commit '30e7508' into test1
+| |\  
+| * | 3cb72c8 2nd commit | test1
+* | |   b88796f Merge branch 'test2'
+|\ \ \  
+| * | | 3583400 (test2) 1st commit | test2
+| | |/  
+| |/|   
+* | |   de9326c Merge branch 'test1'
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 2be6838 1st commit | test1
+* | 30e7508 2nd commit | master
+|/  
+* 2c1d861 1st commit | master
+zx586
+*   68ee886 v9: Merge branch 'test2' into master
+|\  
+| *   581ef45 v7: Merge branch 'test1' into test2
+| |\  
+| * | 0ac87cb v4 (test2)
+* | |   11d9224 v8: Merge branch 'test4' into master
+|\ \ \  
+| | |/  
+| |/|   
+| * |   7e98b00 v5: Merge branch 'test3' into test1
+| |\ \  
+| | |/  
+| |/|   
+| * | 539f1f6 v2 (test1)
+* | | 34c2345 v6 (master)
+| |/  
+|/|   
+* | 48a8c9b v3 (master)
+|/  
+* 556fbbc v1 (master)
