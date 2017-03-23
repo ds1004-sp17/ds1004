@@ -1,3 +1,44 @@
+aa5194
+*   d5ed015 9th commit (merge).
+|\
+| *   f0a8381 6th commit (merge master into branch2).
+| |\
+| * | 5f378be 4th commit (1st on branch2).
+* | |   8cfc4d9 8th commit (merge).
+|\ \ \
+| |_|/
+|/| |
+| * | 75a4e43 7th commit (2nd on branch1).
+* | |   ea620ee 5th commit (merge).
+|\ \ \
+| |/ /
+| | /
+| |/
+|/|
+| * 9d33142 2nd commit (1st on branch1).
+* | 2fe975e 3rd commit (2nd on master).
+|/
+* 55140b9 1st commit (1st on master)
+
+jw4468
+*   07994ba node8
+|\  
+| *   d87e707 node7
+| |\  
+| | * 105d63f node6
+* | |   7b5732f node5
+|\ \ \  
+| |/ /  
+| * |   fe4cb1b node3
+| |\ \  
+| | |/  
+| | * 3a49deb node2”
+* | | 38a7f78 node4
+|/ /  
+* | 023cc58 node1
+|/  
+* c2e59ff source
+
 tl2116
 *   5d7e736 9th commit Merge branch Testing2.
 |\  
