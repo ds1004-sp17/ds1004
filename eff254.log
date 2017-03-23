@@ -1,3 +1,21 @@
+ce2086   
+*   614f913 9 /branch 9 - from 6,8
+|\  
+| *   a095078 8 /branch 8  - from 5,7
+| |\  
+| | * d881bfd 7 /branch 7  - from 4
+* | |   77dccf9 6 /branch 6  - from 3,5
+|\ \ \  
+| |/ /  
+| * |   c27bb12 5 /branch 5  - from 2,4
+| |\ \  
+| | |/  
+| | * 9c4849d 4 /branch 4  - from 1
+* | | bc5ee6c 3 /branch 3
+|/ /  
+* | 0038b6d 2 /branch 2
+|/  
+* 506ae94 1 /master 1
 eff254
 *   5570153 (HEAD -> master) Master VS tree3
 |\  
@@ -37,3 +55,23 @@ jub205
 * | c5e8057 2nd commit (1st on branch testing)
 |/
 * 8714629 1st commit (1st on master)
+rds491
+*   1d903ec Merge branch 'master2'
+|\  
+| *   1290a0b Merge branch 'b1.2' into master2
+| |\  
+| | * 5ad40a5 file on branch 1.2
+* | |   33bdc56 Merge branch 'b2'
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 73a07ff file on b2
+* | |   9d07c40 git branch master2 git checkout master2 git merge b1.2 git checkout master git merge b2 git merge master2 git graphMerge branch 'b1'
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 7a8f5c4 file on b1
+* | d34281d second file on master
+|/  
+* f031194 initial commit
