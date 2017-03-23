@@ -19,3 +19,26 @@ aj1973
 * | 0424171 3rd commit (1st from branch2)
 |/  
 * 97d3cde 1st commit (1st in master)
+
+na1886
+*   191b6fb 9th commit (3rd from branch4)
+|\  
+| *   781b148 7th commit (2nd from branch3)
+| |\  
+| * | 3b21b4d 4th commit (1st from branch3)
+* | |   eb6fad0 8th commit (2nd from branch4)
+|\ \ \  
+| | |/  
+| |/|   
+| * |   c503c18 6th commit (2nd from branch1)
+| |\ \  
+| | |/  
+| |/|   
+| * | 142ac66 2nd commit (1st from branch1)
+* | | 549be5f 5th commit (1st from branch4)
+| |/  
+|/|   
+* | 4c882b3 3rd commit (1st from branch2)
+|/  
+* 228495a 1st commit (1st in master)
+
