@@ -1,0 +1,16 @@
+cl3869
+*   8baeea7 Merge branch 'branch2' merge branch2
+|\  
+| *   ba2f99e Merge branch 'branch1' into branch2 merge branch1 to branch2
+| |\  
+| * | db3c59f 4 commit, 1  b2
+* | |   765a6f9 Merge branch 'branch1' merge branch1
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 85f75f2 5 commit, 2 on b1
+| |/  
+| * 38ab0c6 2 commit, 1  b1
+* | e632077 3 commit, 2  master
+|/  
+* db9ebc8 1 commit, 1  master
