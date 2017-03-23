@@ -18,3 +18,23 @@ jl7722
 * | 6b2ecc6 3rd commit
 |/  
 * f6573ae 1st commit
+lj992
+*   470e737 final merge from first branch to master branch
+|\
+| *   e5ebce1 merged second branch to first branch
+| |\
+| * | f022827 second edit on first branch
+* | |   f7a603e merged second branch to master branch
+|\ \ \
+| | |/
+| |/|
+| * |   027d8de fixing merge conflicts
+| |\ \
+| | |/
+| | * fb84e63 first edit on first branch
+* | | c031a42 second edit on master branch
+|/ /
+* | 7f849ca second edit on master branch
+|/
+* c664dae initial commit
+ 
