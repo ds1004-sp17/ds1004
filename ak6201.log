@@ -16,6 +16,63 @@ ak6201
 * | d604bd2 file on b1
 |/  
 * c38e6ac initial commit
+ce2086   
+*   614f913 9 /branch 9 - from 6,8
+|\  
+| *   a095078 8 /branch 8  - from 5,7
+| |\  
+| | * d881bfd 7 /branch 7  - from 4
+* | |   77dccf9 6 /branch 6  - from 3,5
+|\ \ \  
+| |/ /  
+| * |   c27bb12 5 /branch 5  - from 2,4
+| |\ \  
+| | |/  
+| | * 9c4849d 4 /branch 4  - from 1
+* | | bc5ee6c 3 /branch 3
+|/ /  
+* | 0038b6d 2 /branch 2
+|/  
+* 506ae94 1 /master 1
+eff254
+*   5570153 (HEAD -> master) Master VS tree3
+|\  
+| *   bcaed8d (tree3) Tree3 VS tree1_2
+| |\  
+| | * b31c5ab (tree1_2) 4th comit (1st on tree1_2)
+* | |   e1f7fe6 Master VS tree2
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 57ebf30 (tree2) 5th comit (1st on tree2)
+* | |   802c08d Master VS Tree1
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 1974812 (tree1) 3rd comit (1st on tree1)
+* | f5d27e3 2nd comit (2nds on master)
+|/  
+* 6128ee7 1st comit (1st on master)
+jub205
+*   7084790 Final merge / Merge branches 'testing' and 'testing2'
+|\
+| *   319e1f9 Merge branch 'master' into testing2
+| |\
+| * | dc95841 6th commit (2nd on branch testing2)
+* | |   8840022 Merge branch 'master' into testing
+|\ \ \
+| | |/
+| |/|
+| * |   066a9cd Merge branches 'testing' and 'testing2'
+| |\ \
+| | |/
+| | * d809e37 3rd commit (1st on branch testing1)
+* | | 059a1a6 5th commit (2nd on branch testing)
+|/ /
+* | c5e8057 2nd commit (1st on branch testing)
+|/
+* 8714629 1st commit (1st on master)
 rds491
 *   1d903ec Merge branch 'master2'
 |\  
