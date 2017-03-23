@@ -1,3 +1,25 @@
+js5991
+*   c8590c5 Merge branch 'branch2' into branch1
+|\  
+| *   7bbedf6 Merge branch 'master' into branch2
+| |\  
+| * | c078da1 4th commit (1st branch2)
+* | |   1895191 Merge branch 'master' into branch1
+|\ \ \  
+| | |/  
+| |/|   
+| * |   bfc9e01 resolved conflict
+| |\ \  
+| | |/  
+| |/|   
+| * | 811947b 3rd commit (2nd master)
+* | | 8080920 5th commit(2nd branch1)
+| |/  
+|/|   
+* | bc74bf1 2nd commit (1st branch1)
+|/  
+* db96015 1st Commit
+
 zl1732
 *   fbf0e7c Merge commit 'dd67326'
 |\  
