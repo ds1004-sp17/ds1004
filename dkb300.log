@@ -1,0 +1,26 @@
+dkb300
+*   21accfb Final Changes before merging to master
+|\  
+| *   7cf8325 Commit before merging
+| |\  
+| * | 40aa2c6 6th commit. 1st on B6
+| * | 8529131 5th commit. 1st on B3
+* | |   5bb0ab2 Merged b5 and master
+|\ \ \  
+| | |/  
+| |/|   
+| * |   af485d2 4th Commit. Merging b1 and b2.
+| |\ \  
+| | |/  
+| |/|   
+| * | 0bddcbc 2 commit. 1st by b1
+* | | 413dabc 8th commit. 1st (Correct one) on b5
+| |/  
+|/|   
+| | * 0ec7aaa Commiting faulty change. 2nd commit on b2
+| | * 43a35db 7th commit. 1st on b5
+| |/  
+|/|   
+* | 7c1fd67 3rd commit. 1st by b2
+|/  
+* 68d30ff 1st Commit. 1st on master
