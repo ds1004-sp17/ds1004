@@ -19,3 +19,25 @@ ac5901
 * | b9de8f8 2nd commit (2nd on master)
 |/  
 * 9522336 1st commit (1st on master)
+
+ak5641
+*   f23f05d 9th Commit (5th commit on master)
+|\  
+| *   bdb09a0 6th Commit (2nd commit on b2)
+| |\  
+| * | 50d171c 5th Commit (1st commit on b2)
+* | |   0807864 8th Commit (4th commit on master)
+|\ \ \  
+| | |/  
+| |/|   
+| * |   793b8f9 4th Commit (2nd commit on b1)
+| |\ \  
+| | |/  
+| |/|   
+| * | 20d4947 3rd Commit (1st commit on b1)
+* | | a4b6fbe 7th Commit (3rd commit on master)
+| |/  
+|/|   
+* | 1a907c0 2nd Commit (2nd commit on master)
+|/  
+* acd28e1 1st Commit (1st on master)
