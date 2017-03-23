@@ -1,3 +1,24 @@
+ba1303
+*   5e2b7aa Merge b2 into b3
+|\  
+| *   3be225f Merge master into b2
+| |\  
+| * | e74e478 Commit file to b2
+* | |   2a3c162 Merge master into b3
+|\ \ \  
+| | |/  
+| |/|   
+| * |   b222ae8 Merge b1 into master
+| |\ \  
+| | |/  
+| |/|   
+| * | 852cdc9 2nd commit on master
+* | | 630d225 Commit file to b3
+| |/  
+|/|   
+* | c1e9150 Commit file to b1
+|/  
+* 248c9ed 1st commit on master
 da1933
 *   616d79b final merge
 |\  

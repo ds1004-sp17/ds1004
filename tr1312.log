@@ -1,3 +1,45 @@
+ba1303
+*   5e2b7aa Merge b2 into b3
+|\  
+| *   3be225f Merge master into b2
+| |\  
+| * | e74e478 Commit file to b2
+* | |   2a3c162 Merge master into b3
+|\ \ \  
+| | |/  
+| |/|   
+| * |   b222ae8 Merge b1 into master
+| |\ \  
+| | |/  
+| |/|   
+| * | 852cdc9 2nd commit on master
+* | | 630d225 Commit file to b3
+| |/  
+|/|   
+* | c1e9150 Commit file to b1
+|/  
+* 248c9ed 1st commit on master
+da1933
+*   616d79b final merge
+|\  
+| *   ab2bfe4 merge 02 with 11
+| |\  
+| * | 764da14 4th commit (1st on 02).
+* | |   951b8ff merge 20 with 11
+|\ \ \  
+| | |/  
+| |/|   
+| * |   85f3fd2 Merge branch '10' into 01
+| |\ \  
+| | |/  
+| |/|   
+| * | ee18057 2nd commit (1st on 01).
+* | | d2c6df5 5th commit (1st on 20).
+| |/  
+|/|   
+* | c146a7d 3rd commit (1st on 10).
+|/  
+* 77df653 1st commit (1st on master).
 tr1312
 *   d168c27 Merge branch 'A1-1' into A2-2
 |\  
