@@ -1,25 +1,3 @@
-wz1070
-*   7cba291 Merge branch 'branch2' into branch1
-|\  
-| *   ea5f475 Merge branch 'master' into branch2
-| |\  
-| * | 7dab766 4th commit (1st branch2)
-* | |   9bfe628 Merge branch 'master' into branch1
-|\ \ \  
-| | |/  
-| |/|   
-| * |   6632967 resolved conflict
-| |\ \  
-| | |/  
-| |/|   
-| * | d41b6c9 3rd commit (2nd master)
-* | | e4f8b60 5th commit (2nd branch1)
-| |/  
-|/|   
-* | d69b0c7 2nd commit (1st branch1)
-|/  
-* bf79154 1st Commit
-
 js5991
 *   c8590c5 Merge branch 'branch2' into branch1
 |\  
@@ -62,6 +40,28 @@ kw1946
 * | 1276755 3rd
 |/  
 * a15e20f 1st
+
+wz1070
+*   7cba291 Merge branch 'branch2' into branch1
+|\  
+| *   ea5f475 Merge branch 'master' into branch2
+| |\  
+| * | 7dab766 4th commit (1st branch2)
+* | |   9bfe628 Merge branch 'master' into branch1
+|\ \ \  
+| | |/  
+| |/|   
+| * |   6632967 resolved conflict
+| |\ \  
+| | |/  
+| |/|   
+| * | d41b6c9 3rd commit (2nd master)
+* | | e4f8b60 5th commit (2nd branch1)
+| |/  
+|/|   
+* | d69b0c7 2nd commit (1st branch1)
+|/  
+* bf79154 1st Commit
 
 zl1732
 *   fbf0e7c Merge commit 'dd67326'
