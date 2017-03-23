@@ -1,3 +1,24 @@
+jch609
+*   3ada967 9th commit, 5th on master, 4th merge
+|\  
+| *   77070fa 8th commit, 3rd on branch1, 3rd merge
+| |\  
+| | * 4eeec9d 6th commit, 1st on branch2
+* | |   103b4a1 7th commit, 4th on master, 2nd merge
+|\ \ \  
+| |/ /  
+| * |   e612397 4th commit, 2nd on branch1, 1st merge
+| |\ \  
+| | |/  
+| |/|   
+| * | a7820f2 3rd commit, 1st on branch1
+* | | 1518e5b 5th commit, 3rd on master
+| |/  
+|/|   
+* | aa1eba8 2nd commit, 2nd on master
+|/  
+* 7529e46 1st commit, 1st on master
+
 zd507
 *   f2606a3 merging last 2 branches 3a and 3b to creating end node
 |\  
