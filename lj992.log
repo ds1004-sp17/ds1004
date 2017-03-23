@@ -1,15 +1,18 @@
-lj992
-*   7c047fa 9th commit (4th on testing).
+*   470e737 final merge from first branch to master branch
 |\  
-| * c001892 7th commit (5th on master).
-| *   4a2b92e 6th commit (4th on master).
+| *   e5ebce1 merged second branch to first branch
 | |\  
-| * | 5ceeca6 5th commit (3rd on master).
-* | | 2b7fa4c 8th commit (3rd on testing).
-| |/  
-|/|   
-* | 4a42714 4th commit (2nd on testing).
+| * | f022827 second edit on first branch
+* | |   f7a603e merged second branch to master branch
+|\ \ \  
+| | |/  
+| |/|   
+| * |   027d8de fixing merge conflicts
+| |\ \  
+| | |/  
+| | * fb84e63 first edit on first branch
+* | | c031a42 second edit on master branch
+|/ /  
+* | 7f849ca second edit on master branch
 |/  
-* 4f886a5 3rd commit (1st on testing).
-* a38c5d7 2nd commit (2nd on master).
-* 6151fcc 1st commit (1st on master).
+* c664dae initial commit
