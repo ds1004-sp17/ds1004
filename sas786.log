@@ -1,3 +1,46 @@
+bd1308
+*   77879c3 9th commit (3rd from mb11, merging mb21).
+|\  
+| *   989769f Merge branch 'mb1' into mb21
+| |\  
+| * | 0485a9d 5th commit (1st from mb21).
+* | |   a559b62 7th commit (2nd from mb11, merging w m1).
+|\ \ \  
+| | |/  
+| |/|   
+| * |   89ad6b1 6th commit (2nd from m1, merging).
+| |\ \  
+| | |/  
+| | * f7af55f 3rd commit (1st from mb2).
+* | | 819f8fb 4th commit (1st from mb11).
+|/ /  
+* | 36a4dda 2nd commit (1st from mb1).
+|/  
+* c5dca57 1st commit (from master).
+
+
+hps257
+*   a768d31 9th commit (3rd from branch4)
+|\  
+| *   d67bd22 7th commit (2nd from branch3)
+| |\  
+| * | 79498a6 4th commit (1st from branch3)
+* | |   7712dfc 8th commit (2nd from branch4)
+|\ \ \  
+| | |/  
+| |/|   
+| * |   3f45660 6th commit (2nd from branch1)
+| |\ \  
+| | |/  
+| |/|   
+| * | 170cc65 2nd commit (1st from branch1)
+* | | 9304740 5th commit (1st from branch4)
+| |/  
+|/|   
+* | 28326ca 3rd commit (1st from branch2)
+|/  
+* 5a2ee79 1st commit (1st in master)
+
 sas786
 * c7b8db3 10th commit (5th on testing).
 *   63a490e 9th commit(3rd from b4)
