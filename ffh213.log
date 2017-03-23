@@ -1,0 +1,39 @@
+*   373faba Merged branch down into up
+|\  
+| *   f96708f Merged branch merge-1 into down
+| |\  
+| * | 6b870e8 d2
+| | | *   947485b Merged up into merge-1
+| | | |\  
+| | |/ /  
+| |_| /   
+|/| |     
+* | | 8a65f19 u2
+| |/  
+|/|   
+* |   73b51e4 Merged branch down into up
+|\ \  
+| |/  
+| * 09d8c94 d1
+* | 09b2c2d u1
+|/  
+* e9e6d55 Initial commit
+yyc337
+*   7e23821 Merge branch '5' into 4
+|\  
+| *   19f8fe3 Merge branch '3' into 5
+| |\  
+| * | 56c74a1 5
+* | |   50471d5 Merge branch '3' into 4
+|\ \ \  
+| | |/  
+| |/|   
+| * |   97ee492 Merge branch '2' into 3
+| |\ \  
+| | |/  
+| | * c564282 2
+* | | 8b01da5 4
+|/ /  
+* | b8a41f9 3
+|/  
+* eb5265e 1
