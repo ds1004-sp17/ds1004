@@ -14,3 +14,25 @@ cl3869
 * | e632077 3 commit, 2  master
 |/  
 * db9ebc8 1 commit, 1  master
+
+yw2848
+*   bf008a1 Merge branch 'test2' master merge test2
+|\  
+| *   d428fe4 7th commit (2nd on test2).
+| |\  
+| * | c684deb 4th commit (1st on test2)
+* | |   ab31ab9 Merge branch 'test1' master merge test1
+|\ \ \  
+| |_|/  
+|/| |   
+| * | d8e6c3e 6th commit (2nd on test1).
+* | |   b24d8ae 5th commit (3rd on master).
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * fb2c239 2nd commit (1st on test1)
+* | e4b362e 3rd commit (2nd on master)
+|/  
+* 6771ad6 1st commit (1st on master)
