@@ -41,6 +41,27 @@ ls1908
 |/  
 * d838d58 1st commit (1st on master).
 
+mmd378
+*   ad59717 commit 9
+|\  
+| *   3a3244b commit 8
+| |\  
+| | * 03dd8ad commit 4
+* | |   1360273 commit 7
+|\ \ \  
+| |/ /  
+| * |   34bbd91 commit 5
+| |\ \  
+| | |/  
+| |/|   
+| * | 2de8c60 commit 2
+* | | 56b481f commit 6
+| |/  
+|/|   
+* | fe6d35a commit 3
+|/  
+* c9840d6 commit 1
+
 zd507
 *   f2606a3 merging last 2 branches 3a and 3b to creating end node
 |\  
