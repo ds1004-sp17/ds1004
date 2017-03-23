@@ -39,3 +39,23 @@ ly976
 * | ab444f5 3rd commit (2nd on master).
 |/  
 * 2799a33 1st commit (1st on master)
+xs741
+*   d2ff245 (HEAD -> master) Merge branch 'test1'
+|\  
+| *   e86625e (test1) Merge commit '30e7508' into test1
+| |\  
+| * | 3cb72c8 2nd commit | test1
+* | |   b88796f Merge branch 'test2'
+|\ \ \  
+| * | | 3583400 (test2) 1st commit | test2
+| | |/  
+| |/|   
+* | |   de9326c Merge branch 'test1'
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 2be6838 1st commit | test1
+* | 30e7508 2nd commit | master
+|/  
+* 2c1d861 1st commit | master
