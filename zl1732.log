@@ -63,3 +63,25 @@ zl1732
 * | 20fe613 u2
 |/  
 * 1bdb25a u1
+
+zl1755
+*   935d4d7 final merge
+|\  
+| *   e5f3e1e merge node 2 with node 8
+| |\  
+| * | 90e2b94 diverge to branch 2
+* | |   9dc25d4 merge with master move branch1 to node 7
+|\ \ \  
+| | |/  
+| |/|   
+| * |   60e6bf4 resolve conflicts
+| |\ \  
+| | |/  
+| |/|   
+| * | cd81438 1st div on master
+* | | 86de24f diverge branch1 to node 6
+| |/  
+|/|   
+* | 1f761cf 1st div on b1
+|/  
+* b07d320 initial commit master
