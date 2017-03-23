@@ -1,3 +1,23 @@
+jh5416
+*   4f1c254 Merge branch 'b1'
+|\  
+| *   106f80f Merge branch 'b2' into b1
+| |\  
+| * | b2eaa64 commit
+* | |   ac3cf5b Merge branch 'b2'
+|\ \ \  
+| | |/  
+| |/|   
+| * |   b73f27b Merge branch 'b1' into b2
+| |\ \  
+| | |/  
+| | * f3e555b commit
+* | | 619702d commit
+|/ /  
+* | a489908 commit
+|/  
+* d4df371 commit
+
 ln932
 *   ca51378 m4
 |\  
