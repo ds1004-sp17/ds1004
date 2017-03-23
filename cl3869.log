@@ -14,3 +14,25 @@ cl3869
 * | e632077 3 commit, 2  master
 |/  
 * db9ebc8 1 commit, 1  master
+
+md3797
+*   cc28782 9th commit (5th on master)
+|\  
+| *   d15dbce 7th commit (2nd on b2)
+| |\  
+| * | 45484d0 4th commit (1st on b2)
+* | |   1f08531 8th commit (4rd on master)
+|\ \ \  
+| |_|/  
+|/| |   
+| * | def57b0 6th commit (2nd on b1)
+* | |   d2f742e 5th commit (3rd on master)
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * d4a929a 2nd commit (1st on b1)
+* | 5613909 3rd commit (2nd on master)
+|/  
+* 677c063 1st commit (1st on master)
