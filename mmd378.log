@@ -61,3 +61,25 @@ mmd378
 * | fe6d35a commit 3
 |/  
 * c9840d6 commit 1
+ 
+sb3923
+*   b0f24bf 9th commit (last on master, merge-4).
+|\
+| *   daadd98 8th commit (3rd on branch1, merge-3).
+| |\
+| | * 1b28945 6th commit (1st on branch2).
+* | |   13a86d8 7th commit (4th on master, merge-2).
+|\ \ \
+| |/ /
+| * |   09dc735 4th commit (2nd on branch1, merge).
+| |\ \
+| | |/
+| |/|
+| * | d803100 3rd commit (1st on branch1).
+* | | 8683dfa 5th commit (3rd on master).
+| |/
+|/|
+* | 17c7c85 2nd commit (2nd on master).
+|/
+* a4630ac 1st commit (1st on master)
+
