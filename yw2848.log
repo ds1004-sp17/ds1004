@@ -1,3 +1,82 @@
+ch2905
+*   d181fd9 V8
+|\  
+| *   ba04a3d V5
+| |\  
+| * | 779c81d V2
+* | |   265aa8c V7
+|\ \ \  
+| | |/  
+| |/|   
+| * |   cd0fe5f V4
+| |\ \  
+| | |/  
+| | * 92ce70b V1
+* | | 291ac6c V6
+|/ /  
+* | 42758c2 V3
+|/  
+* 20c26ed V0
+
+cl3869
+*   8baeea7 Merge branch 'branch2' merge branch2
+|\  
+| *   ba2f99e Merge branch 'branch1' into branch2 merge branch1 to branch2
+| |\  
+| * | db3c59f 4 commit, 1  b2
+* | |   765a6f9 Merge branch 'branch1' merge branch1
+|\ \ \  
+| |/ /  
+|/| |   
+| * | 85f75f2 5 commit, 2 on b1
+| |/  
+| * 38ab0c6 2 commit, 1  b1
+* | e632077 3 commit, 2  master
+|/  
+* db9ebc8 1 commit, 1  master
+
+md3797
+*   cc28782 9th commit (5th on master)
+|\  
+| *   d15dbce 7th commit (2nd on b2)
+| |\  
+| * | 45484d0 4th commit (1st on b2)
+* | |   1f08531 8th commit (4rd on master)
+|\ \ \  
+| |_|/  
+|/| |   
+| * | def57b0 6th commit (2nd on b1)
+* | |   d2f742e 5th commit (3rd on master)
+|\ \ \  
+| |/ /  
+| | /   
+| |/    
+|/|     
+| * d4a929a 2nd commit (1st on b1)
+* | 5613909 3rd commit (2nd on master)
+|/  
+* 677c063 1st commit (1st on master)
+
+ys2786
+*   3fc20c9 [branch1] 8th commit, merge [branch2]
+|\
+| *   06a633c Merge branch 'merge1' into branch2
+| |\
+| * | b8db948 [branch2] 4th commit
+* | |   f9edcf4 [branch1] 7th commit, merge with [merge1]
+|\ \ \
+| | |/
+| |/|
+| * |   bb5a52f [merge1] 5th commit
+| |\ \
+| | |/
+| | * 77878d8 [branch2] 3rd commit
+* | | 2391ccc [branch1] 6th commit
+|/ /
+* | 9a79bcb [branch1] 2nd commit
+|/
+* f828978 [master] 1st commit
+
 yw2848
 *   bf008a1 Merge branch 'test2' master merge test2
 |\  
