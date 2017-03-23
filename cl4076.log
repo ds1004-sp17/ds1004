@@ -1,23 +1,24 @@
 cl4076
-*   a793f95 Merge branch 'feature_a_2' to master
+*   62eb7dc Merge branch 'test2'
 |\  
-| *   56f7258 Merge branch 'feature_b' into feature_a_2
+| *   4d6ae14 Merge branch 'test1' into test2
 | |\  
-| * | 9f7d28f 5th commit(1st on feature_a_2)
-* | |   f056b82 Merge branch 'feature_b' to master
+| * | 34e433f 4th commit(1st on test2)
+* | |   a361968 Merge branch 'test1'
 |\ \ \  
 | | |/  
 | |/|   
-| * |   5e6f552 Merge branch 'feature_a' into feature_b
+| * |   0a27301 Merge branch 'master' into test1
 | |\ \  
 | | |/  
-| | * 3d05250 2nd commit(1st on feature_a)
-| * | b8d6896 4th commit(1st on feature_b)
-* | | e0a18ab 6th commit(3rd on master)
-|/ /  
-* | ad4af88 3rd commit(2nd on master)
+| |/|   
+| * | 05e3c15 2nd commit(1st on test1)
+* | | 777bdfd 5th commit(3rd on master)
+| |/  
+|/|   
+* | f433da1 3rd commit(2nd on master)
 |/  
-* 458074e 1st commit(1st on master)
+* b2046b4 1st commit(1st on master)
 ly976
 *   569bf53 9th commit (5th on master).
 |\  
