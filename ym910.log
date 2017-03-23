@@ -1,0 +1,23 @@
+ym910
+*   1bbddc2 13th change to merge testing on master.
+|\  
+| *   e78db9f 12th change to merge master12 on testing.
+| |\  
+| | * 73e3e3c 10th commit (1st on master12).
+| * | de7443a 7th commit (2rd on testing).
+* | |   12070aa 11th commit to merge master1 on master.
+|\ \ \  
+| * | | 6f316d3 9th commit (2nd on master1).
+| | |/  
+| |/|   
+| * |   b8cf59e 8th commit to merge testing1 on master1.
+| |\ \  
+| | * | ec3c942 5th commit (1st on testing1).
+| | |/  
+| | * af56370 3rd commit (1st on testing).
+| * | 0ff1573 4th commit (1st on master1).
+* | | 060bf2a 6th commit (3rd on master).
+|/ /  
+* | 05e3330 2nd commit (2nd on master).
+|/  
+* cd7aa2b 1st commit (1st on master).
