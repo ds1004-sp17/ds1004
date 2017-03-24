@@ -1,0 +1,21 @@
+dsp372
+*   c86db5b Final merge
+|\  
+| *   a5a1ada Merging testingnode1 & testingnode3
+| |\  
+| | * db7cd4e text added to testingfile2 on testingnode3
+| * | c27a067 testingfile1 changed on testingnode1
+* | |   b5c03ad Merging M & testingnode2
+|\ \ \  
+| |_|/  
+|/| |   
+| * | 46b5df2 testingfile3 added on testingnode2
+* | |   be06788 Merging M & testingnode1
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * f456d9b 2nd(1st on testingnode1)
+* | 741c603 added testingfile2
+|/  
+* f6d93e6 testingfile1 added to M
