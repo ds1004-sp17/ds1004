@@ -1,0 +1,21 @@
+pa1230
+*   cc9bdff Final merge
+|\  
+| *   b81678a Merging t1 & t3
+| |\  
+| | * abc9b1e text added to f2 on t3
+| * | 85ff88d f1 changed on t1
+* | |   2e0b4c5 Merging M & t2
+|\ \ \  
+| |_|/  
+|/| |   
+| * | 4f1e2c1 f3 added on t2
+* | |   cd12907 Merging M & t1
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * ea7a0a9 Text 2 added to f1 on t1
+* | 8551071 added f2 on M
+|/  
+* b050095 f1 added to M
