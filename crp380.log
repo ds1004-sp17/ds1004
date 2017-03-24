@@ -1,52 +1,52 @@
 crp380
 *   fdbdd3b Merge branch 'b6' into b8
-|\  
+|\
 | *   cc2d24d Merge branch 'b3' into b6
-| |\  
+| |\
 | * | 8a926c0 branch b6
 | * | 27833cf branch b4
 * | | ac441a3 branch b8
 * | |   47b82ce Merge branch 'b3' into b7
-|\ \ \  
-| | |/  
-| |/|   
+|\ \ \
+| | |/
+| |/|
 | * |   22ed28d Merge branch 'b1' into b3
-| |\ \  
-| | |/  
+| |\ \
+| | |/
 | | * f138d52 branch b1
 | * | 8cded54 branch b3
 * | | d10719b branch b7
 * | | 42090b7  branch b5
-|/ /  
+|/ /
 * | b0394be branch b2
-|/  
+|/
 * 6267196 branch 1 commit
 * 47fe2b4 master commit
 
 haj263
 *   83905ed Merge branch 'b6' into b8 Merge branch b6 into b7
-|\  
+|\
 | *   c1a99fc Merge branch 'b3' into b6 Merge b6
-| |\  
+| |\
 | * | 7df984f b6 commit
 | * | a9c2232 b4 commit.
 * | | a7d77eb b8 commit
 * | |   173eb8c Merge branch 'b3' into b7 Merge b5 to b7
-|\ \ \  
-| | |/  
-| |/|   
+|\ \ \
+| | |/
+| |/|
 | * |   3286b2f Merge branch 'b2' into b3
-| |\ \  
+| |\ \
 | * | | 95e33ce b3 commit.
-| | |/  
-| |/|   
+| | |/
+| |/|
 | * | 4a72f1c b1 commit.
 * | | 1835fa6 b7 commit.
 * | | a1ce8a3 b5 commit.
-| |/  
-|/|   
+| |/
+|/|
 * | cbd0c85 b2 commit
-|/  
+|/
 * 5399368 Commited.
 
 msa530
@@ -74,7 +74,3 @@ msa530
 * | 7ce0e99 b1 commit
 |/
 * d6afeae master commit
-~                                                                                                                                                                                    
-~                                                                                                                                                                                    
-~                              
-
