@@ -2,13 +2,29 @@
 
 IN='extract_yellow_small.csv'
 PARTITION=5
+OUTS=(
+  "nondate"
+  "year"
+  "month"
+  "day"
+  "hour"
+  "minute"
+  "second"
+)
 
-hdfs dfs -rm -f "$IN.nondate.csv"
-hdfs dfs -rm -f "$IN.year.csv"
-hdfs dfs -rm -f "$IN.month.csv"
-hdfs dfs -rm -f "$IN.day.csv"
-hdfs dfs -rm -f "$IN.hour.csv"
-hdfs dfs -rm -f "$IN.minute.csv"
-hdfs dfs -rm -f "$IN.second.csv"
+for o in "${OUTS[@]}"; do
+  cmd="hdfs dfs -rm -r -f $IN.$o.csv"
+  echo $cmd
+  $cmd
+done
 
-spark-submit $IN $PARTITION
+spark-submit process_dates.py $IN $PARTITION
+
+OD="$IN.out"
+mkdir -p $OD
+
+for o in "${OUTS[@]}"; do
+  cmd="hdfs dfs -getmerge $IN.nondate.csv $OD/$IN.nondate.csv"
+  echo $cmd
+  $cmd
+done
