@@ -1,0 +1,98 @@
+paint/plaster	12
+curb condition	1
+new tree request	57
+dirty conditions	10
+food establishment	1
+derelict vehicle	2
+derelict bicycle	1
+complaint	2
+asbestos	2
+boilers	1
+dca literature request	3
+dof parking - request status	1
+illegal tree damage	3
+traffic	3
+special projects inspection team (spit)	4
+dof parking - request copy	3
+dof property - owner issue	5
+benefit card replacement	15
+animal abuse	5
+taxi compliment	6
+request for information	1
+dof literature request	37
+general construction/plumbing	10
+ferry inquiry	2
+scrie	15
+flooring/stairs	4
+non-emergency police matter	3
+derelict vehicles	13
+lead	3
+other enforcement	3
+missed collection (all materials)	7
+dof property - payment issue	9
+sanitation condition	10
+compliment	1
+building/use	14
+noise	25
+housing - low income senior	7
+dot literature request	4
+non-residential heat	5
+door/window	9
+noise - commercial	3
+traffic signal condition	10
+fire alarm - new system	1
+dpr internal	2
+taxi report	1
+indoor air quality	3
+special enforcement	6
+blocked driveway	38
+highway condition	3
+taxi complaint	1
+noise - residential	25
+maintenance or facility	9
+agency issues	7
+investigations and discipline (iad)	1
+water leak	2
+overgrown tree/branches	9
+street light condition	43
+street sign - dangling	1
+elevator	2
+dof property - request copy	9
+water system	20
+electronics waste	4
+opinion for the mayor	10
+noise - street/sidewalk	5
+smoking	5
+sidewalk condition	2
+school maintenance	1
+illegal parking	64
+unsanitary condition	7
+noise - vehicle	3
+dof parking - payment issue	9
+hpd literature request	4
+damaged tree	4
+dead/dying tree	2
+general	8
+heat/hot water	89
+cranes and derricks	1
+graffiti	101
+dca / doh new license application request	1
+litter basket / request	3
+dof parking - tax exemption	5
+air quality	4
+dep literature request	1
+dof property - reduction issue	24
+electrical	2
+homeless person assistance	20
+drug activity	1
+plant	1
+electric	8
+drie	2
+dof property - update account	11
+street sign - missing	3
+broken muni meter	4
+street condition	47
+sewer	8
+cable complaint	3
+plumbing	16
+for hire vehicle complaint	1

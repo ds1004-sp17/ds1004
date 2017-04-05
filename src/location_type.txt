@@ -1,0 +1,36 @@
+3+ family apartment building	2
+co-op unit	4
+park/playground	2
+address outside of nyc	2
+street/sidewalk	134
+street	102
+curb	1
+residential building	158
+street address	1
+residential	25
+store/commercial	4
+commercial building	1
+1-, 2- and 3- family home	17
+club/bar/restaurant	1
+recreation center	1
+bridge/underpass	1
+p.o. box	1
+highway	3
+comercial	15
+mixed use	44
+apartment building	1
+building (non-residential)	5
+park	10
+condo unit	2
+stairwell	1
+address	5
+senior address	22
+n/a	14
+nyc street address	12
+restaurant/bar/deli/bakery	1
+drie tenant's address	2
+property address	34
+ferry	2
+sidewalk	35
+other (explain below)	1
+residential building/house	29
