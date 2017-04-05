@@ -1,5 +1,3 @@
-unset PYTHONHASHSEED
-
 #./run.sh complaint_type
 #./run.sh location_type
 #./run.sh nums_in_month
