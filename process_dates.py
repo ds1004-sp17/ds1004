@@ -43,6 +43,14 @@ def matches_date(s):
     }
     return (date, count)
 
+def getprop(key):
+    def do_fn(tup):
+        o, count = tup
+        if isinstance(o, str):
+            return (None, count)
+        return (o[key], count)
+    return do_fn
+
 def to_csv(s):
     return '{},{}'.format(s[0], s[1])
 
@@ -57,11 +65,10 @@ def process(sc, strs):
 
     dates = counts.map(matches_date)
     invalids = dates.filter(lambda x: isinstance(x[0], str))
-    valids = dates.filter(lambda x: not isinstance(x[0], str))
 
     dims = ['year', 'month', 'day', 'hour', 'minute', 'second']
     for d in dims:
-        dimcount = valids.map(lambda (o, count): (o[d], count))
+        dimcount = dates.map(getprop(d))
         sums = dimcount.reduceByKey(add)
         sums.saveAsTextFile(raw + '.' + d + '.csv')
 
