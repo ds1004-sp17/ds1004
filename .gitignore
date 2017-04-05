@@ -42,3 +42,6 @@ lib/*
 *.pyc
 *.txt
 *.csv
+.*.crc
+.*.swp
+*/result/*
