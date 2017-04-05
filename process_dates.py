@@ -48,7 +48,10 @@ def getprop(key):
         o, count = tup
         if isinstance(o, str):
             return (None, count)
-        return (o[key], count)
+        try:
+            return (o[key], count)
+        except TypeError:
+            raise ValueError(str(tup))
     return do_fn
 
 def to_csv(s):
