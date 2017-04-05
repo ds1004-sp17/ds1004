@@ -31,7 +31,7 @@ def plot_nums_in_month_by_agency_year():
                 dic[agency] = NP.zeros((max_year-min_year+1, NMONTH))
             dic[agency][int(y)-min_year][int(m)-1] = float(avg)
 
-    print "data loaded."
+    print("data loaded.")
 
     for k, v in dic.items():
         agency = k.split(", ")[0]
@@ -59,7 +59,7 @@ def plot_nums_in_month_by_agency_year():
         PLT.savefig(result_dir + "/" + agency + ".png")
         PLT.close()
 
-        print agency, "exported."
+        print(agency + " exported.")
 
 
 if __name__ == "__main__":
