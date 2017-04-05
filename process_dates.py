@@ -39,15 +39,16 @@ def matches_date(s):
         'day': match.group(3),
         'hour': match.group(4),
         'minute': match.group(5),
-        'seconds': match.group(6)
+        'second': match.group(6)
     }
     return (date, count)
+
+def isstr(s):
+    return isinstance(s, str) or isinstance(s, unicode)
 
 def getprop(key):
     def do_fn(tup):
         o, count = tup
-        if isinstance(o, str):
-            return (None, count)
         try:
             return (o[key], count)
         except TypeError:
@@ -55,7 +56,7 @@ def getprop(key):
     return do_fn
 
 def to_csv(s):
-    return '{},{}'.format(s[0], s[1])
+    return '{0},{1}'.format(s[0], s[1])
 
 def process(sc, strs):
     """Input:
@@ -67,13 +68,14 @@ def process(sc, strs):
     counts = strs.reduceByKey(add)
 
     dates = counts.map(matches_date)
-    invalids = dates.filter(lambda x: isinstance(x[0], str))
+    invalids = dates.filter(lambda x: isstr(x[0]))
+    valids = dates.filter(lambda x: not isstr(x[0]))
 
     dims = ['year', 'month', 'day', 'hour', 'minute', 'second']
     for d in dims:
-        dimcount = dates.map(getprop(d))
+        dimcount = valids.map(getprop(d))
         sums = dimcount.reduceByKey(add)
-        sums.saveAsTextFile(raw + '.' + d + '.csv')
+        sums.map(to_csv).saveAsTextFile(raw + '.' + d + '.csv')
 
     invalids.map(to_csv).saveAsTextFile(raw + '.nondate.csv')
 
