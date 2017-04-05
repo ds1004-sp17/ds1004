@@ -24,7 +24,7 @@ OD="$IN.out"
 mkdir -p $OD
 
 for o in "${OUTS[@]}"; do
-  cmd="hdfs dfs -getmerge $IN.nondate.csv $OD/$IN.nondate.csv"
+  cmd="hdfs dfs -getmerge $IN.$o.csv $OD/$IN.$o.csv"
   echo $cmd
   $cmd
 done
