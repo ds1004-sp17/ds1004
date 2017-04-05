@@ -1,7 +1,7 @@
 #!/bin/bash
 
-IN='extract_yellow_small.csv'
-PARTITION=5
+IN=$1
+PARTITION=$2
 OUTS=(
   "nondate"
   "year"
