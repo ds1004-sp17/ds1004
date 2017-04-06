@@ -11,21 +11,27 @@ OUTS=(
   "minute"
   "second"
 )
+COLS=(
+  "tpep_pickup_datetime"
+  "tpep_dropoff_datetime"
+)
 
-for o in "${OUTS[@]}"; do
-  cmd="hdfs dfs -rm -r -f $IN.$o.csv"
-  echo $cmd
-  $cmd
-done
+for col in "${COLS[@]}"; do
+  for o in "${OUTS[@]}"; do
+    cmd="hdfs dfs -rm -r -f $IN.$col.$o.csv"
+    echo $cmd
+    $cmd
+  done
 
-spark-submit process_dates.py $IN $PARTITION
+  spark2-submit process_dates.py $IN $col
 
-OD="$IN.out"
-mkdir -p $OD
-rm $OD/*
+  OD="$IN.$col"
+  mkdir -p $OD
+  rm $OD/*
 
-for o in "${OUTS[@]}"; do
-  cmd="hdfs dfs -getmerge $IN.$o.csv $OD/$IN.$o.csv"
-  echo $cmd
-  $cmd
+  for o in "${OUTS[@]}"; do
+    cmd="hdfs dfs -getmerge $IN.$col.$o.csv $OD/$o.csv"
+    echo $cmd
+    $cmd
+  done
 done
