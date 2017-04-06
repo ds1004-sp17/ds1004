@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Example usage: process_dates.sh yellow_tripdata_2015-01_small.csv
+
 IN=$1
 PARTITION=$2
 OUTS=(
@@ -23,7 +25,7 @@ for col in "${COLS[@]}"; do
     $cmd
   done
 
-  spark2-submit process_dates.py $IN $col
+  spark-submit process_dates.py $IN 20 $col
 
   OD="$IN.$col"
   mkdir -p $OD
