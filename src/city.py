@@ -9,9 +9,9 @@ if __name__ == "__main__":
     data = sc.textFile(sys.argv[1], 1)
 
     data = data.mapPartitions(lambda x: reader(x))\
-            .map(lambda x: (x[16].upper().strip(), 1))\
+            .map(lambda x: (x[23].upper().strip(), 1))\
             .reduceByKey(add)\
-            .filter(lambda x: x[0] != "CITY")\
+            .filter(lambda x: x[0] != "BOROUGH")\
             .map(lambda x: x[0] + "\t" + str(x[1]))
 
     data.saveAsTextFile("city.out")
