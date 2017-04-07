@@ -15,4 +15,4 @@ export SPARK_YARN_USER_ENV=PYTHONHASHSEED=0
 ./run.sh nums_in_month_by_agency
 ./run.sh nums_in_hour_by_agency
 ./run.sh nums_in_month_by_agency_year
-#./run.sh check_zip
+./run.sh check_zip
