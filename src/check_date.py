@@ -6,6 +6,8 @@ import datetime
 def check_datetime(dt):
     try:
         d = datetime.datetime.strptime(dt, "%m/%d/%Y %I:%M:%S %p")
+        if d.year < 2009 or d.year > 2017:
+            return False
     except ValueError:
         return False
 
@@ -27,7 +29,7 @@ def datetime_checker():
     #
     # the whole data set is too large, incur OurOfMemeryError, 
     # and Spark SQL does not support *offset*.
-    batch_size = 5 * 10 ** 6
+    batch_size = 2 * 10 ** 5
     res = sqlContext.sql("select min(C0), max(C0) from nyc311 \
             where C0 <> 'Unique Key'").collect()
     index = int(res[0]._c0) - 1
