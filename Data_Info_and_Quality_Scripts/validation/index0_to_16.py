@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 
+import datetime
 import sys
 from operator import add
 from pyspark import SparkContext
@@ -27,151 +28,40 @@ if __name__ == "__main__":
 	unique_key = line.map(lambda x: (x[0].encode('utf-8')))\
 					.map(lambda x:verificate_unique_key(x))\
 					.map(lambda x: str(x[0])+", Plain Text, Unique identifier of a Service Request (SR) in the open data set, " + str(x[1]))\
-					.saveAsTextFile("01_uniquekey.out")
+					.saveAsTextFile("00_uniquekey.out")
 
 	# Index[1]
-	def verificate_created_date(created_date):
-		created_date.lower()
-		
-		try:
-			month = created_date[0:2]
-			date = int(created_date[3:5])
-			year = int(created_date[6:10])
-			hour = int(created_date[11:13])
-			minute = int(created_date[14:16])
-			sec = int(created_date[17:19])
-			time = created_date[20:22]
+	def verificate_date_related(date):
+		date = date.lower()
 
-			if (year != 2012 and year != 2016):
-				if (month == '01' or month == '03' or month == '05' or month == '07' or month == '08' or month == '10' or month == '12'):
-					if (date > 0 and date < 32) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-							and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-						created_date = created_date, "VALID"
-					else:
-						created_date = created_date, "INVALID"
+		if date == '' or date == 'n/a' or date == 'na' or date == 'unspecified':
+			date = date, "NULL"
+		else:
 
-				if (month == '04' or month == '06' or month == '09' or month == '11'):
-					if (date > 0 and date < 31) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-						and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-						created_date = created_date, "VALID"
-					else:
-						created_date = created_date, "INVALID"
+			try:
+				datetime.datetime.strptime(date, '%m/%d/%Y %I:%M:%S %p')
+				date = date, "VALID"
 
-				if (month == '02'):
-					if (date > 0 and date < 29) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-						and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-						created_date = created_date, "VALID"
-					else:
-						created_date = created_date, "INVALID"
+			except ValueError:
+				date = date, "INVALID"
 
-			else:
-				if (month == '01' or month == '03' or month == '05' or month == '07' or month == '08' or month == '10' or month == '12'):
-					if (date > 0 and date < 32) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-							and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-						created_date = created_date, "VALID"
-					else:
-						created_date = created_date, "INVALID"
-
-				if (month == '04' or month == '06' or month == '09' or month == '11'):
-					if (date > 0 and date < 31) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-						and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-						created_date = created_date, "VALID"
-					else:
-						created_date = created_date, "INVALID"
-
-				if (month == '02'):
-					if (date > 0 and date < 30) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-						and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-						created_date = created_date, "VALID"
-					else:
-						created_date = created_date, "INVALID"
-
-		except ValueError:
-			created_date = created_date, "INVALID"
-
-		return created_date	
+		return date	
 
 
 	created_date = line.map(lambda x: (x[1].encode('utf-8')))\
-					.map(lambda x: verificate_created_date(x))\
+					.map(lambda x: verificate_date_related(x))\
 					.map(lambda x: str(x[0])+", Date & Time, Date SR was created, " + str(x[1]))\
 					.saveAsTextFile("01_created_date.out")
 
 	# Index[2]
-	def verificate_close_date(close_date):
-		close_date.lower()
-
-		if close_date == '':
-			close_date = close_date, "NULL"
-		
-		else:
-			try:
-				month = close_date[0:2]
-				date = int(close_date[3:5])
-				year = int(close_date[6:10])
-				hour = int(close_date[11:13])
-				minute = int(close_date[14:16])
-				sec = int(close_date[17:19])
-				time = close_date[20:22]
-
-				if (year != 2012 and year != 2016):
-					if (month == '01' or month == '03' or month == '05' or month == '07' or month == '08' or month == '10' or month == '12'):
-						if (date > 0 and date < 32) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-								and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-							close_date = close_date, "VALID"
-						else:
-							close_date = close_date, "INVALID"
-
-					if (month == '04' or month == '06' or month == '09' or month == '11'):
-						if (date > 0 and date < 31) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-							and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-							close_date = close_date, "VALID"
-						else:
-							close_date = close_date, "INVALID"
-
-					if (month == '02'):
-						if (date > 0 and date < 29) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-							and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-							close_date = close_date, "VALID"
-						else:
-							close_date = close_date, "INVALID"
-
-				else:
-					if (month == '1' or month == '3' or month == '5' or month == '7' or month == '8' or month == '10' or month == '12'):
-						if (date > 0 and date < 32) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-								and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-							close_date = close_date, "VALID"
-						else:
-							close_date = close_date, "INVALID"
-
-					if (month == '4' or month == '6' or month == '9' or month == '11'):
-						if (date > 0 and date < 31) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-							and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-							close_date = close_date, "VALID"
-						else:
-							close_date = close_date, "INVALID"
-
-					if (month == '2'):
-						if (date > 0 and date < 30) and (hour >= 0 and hour <= 12) and (minute >= 0 and minute < 60)\
-							and (sec >= 0 and sec < 60) and (time == 'am' or time == 'pm') :
-							close_date = close_date, "VALID"
-						else:
-							close_date = close_date, "INVALID"
-
-			except ValueError:
-				close_date = close_date, "INVALID"
-
-		return close_date	
-
-
 	close_date = line.map(lambda x: (x[2].encode('utf-8')))\
-					.map(lambda x:verificate_close_date(x))\
+					.map(lambda x:verificate_date_related(x))\
 					.map(lambda x: str(x[0])+", Date & Time, Date SR was closed by responding agency, " + str(x[1]))\
 					.saveAsTextFile("02_close_date.out")
 
-
+	
 	def general_verificate(contents):
-		contents.lower()
+		contents = contents.lower()
 		
 		if contents == '' or contents == 'na' or contents == 'n/a' or contents == 'unspecified':
 			contents = contents, "NULL"
@@ -287,7 +177,7 @@ if __name__ == "__main__":
 				.map(lambda x:general_verificate(x))\
 				.map(lambda x: str(x[0])+", Plain Text, City of the incident location provided by geovalidation, " + str(x[1]))\
 				.saveAsTextFile("16_city.out")
-
+	
 	sc.stop()
 
 

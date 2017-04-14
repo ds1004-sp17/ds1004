@@ -43,12 +43,26 @@ if __name__ == "__main__":
 					.saveAsTextFile("19_status.out")
 
 	# Index[20]
-	"""
-	def verificate_due_date(due_date):
+	
+	def verificate_date_related(date):
+		date = date.lower()
+
+		if date == '' or date == 'n/a' or date == 'na' or date == 'unspecified':
+			date = date, "NULL"
+		else:
+
+			try:
+				datetime.datetime.strptime(date, '%m/%d/%Y %I:%M:%S %p')
+				date = date, "VALID"
+
+			except ValueError:
+				date = date, "INVALID"
+
+		return date	
 
 
 	due_date = line.map(lambda x: (x[20].encode('utf-8')))\
-					.map(lambda x:verificate_due_date(x))\
+					.map(lambda x: verificate_date_related(x))\
 					.map(lambda x: str(x[0])+", Plain Text, Date when responding agency is expected to update the SR. This is based on the Complaint Type and internal Service Level Agreements (SLAs), " + str(x[1]))\
 					.saveAsTextFile("20_due_date.out")
 	
@@ -58,7 +72,7 @@ if __name__ == "__main__":
 							.map(lambda x:general_verificate(x))\
 							.map(lambda x: str(x[0])+", Plain Text, Date when responding agency last updated the SR, " + str(x[1]))\
 							.saveAsTextFile("21_resolution_action.out")
-		"""
+	
 
 	# Index[22]
 	community_board = line.map(lambda x: (x[22].encode('utf-8')))\
@@ -68,11 +82,11 @@ if __name__ == "__main__":
 
 	# Index[23]
 	borough = line.map(lambda x: (x[23].encode('utf-8')))\
-					.map(lambda x:general_verificate(x))\
+					.map(lambda x: general_verificate(x))\
 					.map(lambda x: str(x[0])+", Plain Text, Provided by the submitter and confirmed by geovalidation, " + str(x[1]))\
 					.saveAsTextFile("23_borough.out")
 
-	"""
+	
 	# Index[24]
 	x_coordinate = line.map(lambda x: (x[24].encode('utf-8')))\
 					.map(lambda x:general_verificate(x))\
@@ -84,7 +98,7 @@ if __name__ == "__main__":
 					.map(lambda x:general_verificate(x))\
 					.map(lambda x: str(x[0])+", Plain Text, Geo validated: Y coordinate of the incident location., " + str(x[1]))\
 					.saveAsTextFile("25_y_coordinate.out")
-		"""
+	
 
 	# Index[26]
 	park_facility_name = line.map(lambda x: (x[26].encode('utf-8')))\
