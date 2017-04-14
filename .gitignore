@@ -20,6 +20,9 @@
 *.tar
 *.zip
 
+
+out
+
 # Logs and databases #
 ######################
 *.log
@@ -45,3 +48,5 @@ lib/*
 .*.crc
 .*.swp
 */result/*
+
+data
