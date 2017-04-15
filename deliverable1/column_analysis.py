@@ -151,24 +151,112 @@ def parse_9_payment_type(x):
 
 def parse_10_fare(x):
     key, occur_count = x
-    base_type, semantic_type, data_label = 'FLOAT', 'fare amount (Dollars)', 'VALID'
+    base_type, semantic_type, data_label = 'FLOAT', 'extra charge (dollars)', 'VALID'
     if key is None:
-        base_type = 'NULL'
-        semantic_type = 'missing value'
-        data_label = 'NULL'
+        base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
             float(key)
-            key = key // 10 * 10
-#***TO CHECK
             if (float(key) <= 0.0) or (float(key) >= 100.0):
-                semantic_type = 'INVALID|OUTLIER'
+                data_label = 'INVALID|OUTLIER'
         except:
-            base_type = 'STRING'
-            semantic_type = 'unknown value'
-            data_label = 'INVALID'
-    # return (key, base_type, semantic_type, data_label, occur_count)
-    return (key, occur_count)
+            base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
+
+def parse_11_extra(x):
+    key, occur_count = x
+    base_type, semantic_type, data_label = 'FLOAT', 'extra charge (dollars)', 'VALID'
+    if key is None:
+        base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
+    else:
+        try:
+            float(key)
+            if float(key) not in (0, 0.5, 1.0, 4.5):
+                data_label = 'INVALID|OUTLIER'
+        except:
+            base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
+
+def parse_12_tax(x):
+    key, occur_count = x
+    base_type, semantic_type, data_label = 'FLOAT', 'mta tax (dollars)', 'VALID'
+    if key is None:
+        base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
+    else:
+        try:
+            float(key)
+            if float(key) not in (0.0, 0.5):
+                data_label = 'INVALID|OUTLIER'
+        except:
+            base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
+
+def parse_15_improvement(x):
+    key, occur_count = x
+    base_type, semantic_type, data_label = 'FLOAT', 'improvement surcharge (dollars)', 'VALID'
+    if key is None:
+        base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
+    else:
+        try:
+            float(key)
+            if float(key) not in (0.0, 0.3):
+                data_label = 'INVALID|OUTLIER'
+        except:
+            base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
+
+def parse_13_tip(x):
+    key, occur_count = x
+    base_type, semantic_type, data_label = 'FLOAT', 'tip (dollars)', 'VALID'
+    if key is None:
+        base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
+    else:
+        try:
+            float(key)
+#*** TO CHECK
+            if (float(key) < 0.0) or (float(key) > 200.0):
+                data_label = 'INVALID|OUTLIER'
+        except:
+            base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
+
+def parse_14_tolls(x):
+    key, occur_count = x
+    base_type, semantic_type, data_label = 'FLOAT', 'tolls (dollars)', 'VALID'
+    if key is None:
+        base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
+    else:
+        try:
+            float(key)
+#*** TO CHECK
+            if (float(key) < 0.0) or (float(key) > 100.0):
+                data_label = 'INVALID|OUTLIER'
+        except:
+            base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
+
+def parse_16_total(x):
+    key, occur_count = x
+    base_type, semantic_type, data_label = 'FLOAT', 'total (dollars)', 'VALID'
+    if key is None:
+        base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
+    else:
+        try:
+            float(key)
+#*** TO CHECK
+            if (float(key) < 0.0) or (float(key) > 200.0):
+                data_label = 'INVALID|OUTLIER'
+        except:
+            base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
+
 
 ################################################################################
 
@@ -186,12 +274,12 @@ def main():
         #('tpep_dropoff_datetime', parse_2_dropoff_datetime),
         # 'passenger_count': parse_3_passenger_count,
         # 'trip_distance': parse_4_trip_distance,
-        # 'RatecodeID': parse_5,
-        # 'store_and_fwd_flag': parse_6,
+        # 'RatecodeID': parse_5_rate_code,
+        # 'store_and_fwd_flag': parse_6_store_and_fwd,
         # 'PULocationID': parse_7,
         # 'DOLocationID': parse_8,
-        # 'payment_type': parse_9,
-        # 'fare_amount': parse_10,
+        # 'payment_type': parse_9_payment_type,
+        # 'fare_amount': parse_10_fare,
         # 'extra': parse_11,
         # 'mta_tax': parse_12,
         # 'tip_amount': parse_13,
