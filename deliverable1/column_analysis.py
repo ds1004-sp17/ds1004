@@ -240,7 +240,7 @@ def main():
                     print(row)
             else:
                 values.saveAsTextFile(
-                        args.save_path + '{}.csv'.format(col))
+                        args.save_path + '/{}.csv'.format(col))
         
 
 if __name__ == '__main__':
