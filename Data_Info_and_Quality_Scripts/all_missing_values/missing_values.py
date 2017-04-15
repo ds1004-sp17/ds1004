@@ -13,7 +13,8 @@ if __name__ == "__main__":
 	data = sc.textFile(sys.argv[1], 1)
 	header = data.first() 
 	lines = data.filter(lambda row: row != header) 
-	line = lines.mapPartitions(lambda x: (reader(x, delimiter = ',', quotechar = '"')))
+	line = lines.map(lambda x:(x.encode('ascii','ignore')))\
+				.mapPartitions(lambda x: (reader(x, delimiter = ',', quotechar = '"')))
 
 	def check_missing_values(content):
 		try:
