@@ -1,12 +1,14 @@
 import csv
+import re
 import argparse
 import random
 from cStringIO import StringIO
 from operator import add
+import datetimes
 
 from pyspark import SparkContext
 
-parser = argparse.ArgumentParser(description='PyTorch Quora RNN/LSTM Language Model')
+parser = argparse.ArgumentParser(description='Big Data Taxi Parser')
 parser.add_argument('--file_path', type=str, default='yellow_tripdata_test.csv',
                     help='location of csv file in HDFS.')
 parser.add_argument('--min_partitions', type=int, default=5,
@@ -19,8 +21,18 @@ parser.add_argument('--keep_valid_rate', type=float, default=1.0,
                     help='how many valid values to keep (for debugging).')
 args = parser.parse_args()
 
-def combine_csv_files():
-    pass
+
+# Find out which year/month we're dealing with.
+file_month_re = re.compile('(\d\d\d\d)-(\d\d)')
+filename_match = file_month_re.search(args.file_path)
+expected_year = None
+expected_month = None
+if filename_match:
+    expected_year = int(filename_match.group(1))
+    expected_month = int(filename_match.group(2))
+    print('='*80 + '\n' + 'YEAR: {0}, MONTH: {1:02d}'.format(
+        expected_year, expected_month) + '\n' + '='*80)
+
 
 def to_csv(l):
     '''Turns a tuple into a CSV row.
@@ -62,7 +74,11 @@ def parse_0_vendor(x):
 
 
 def parse_1_pickup_datetime(x):
-    return (x, 'DATETIME', 'Pickup date/time in seconds', 'VALID')
+    return datetimes.process_pickup(x, expected_year, expected_month)
+
+
+def parse_2_dropoff_datetime(x):
+    return datetimes.process_dropoff(x, expected_year, expected_month)
 
 
 def parse_3_passenger_count(x):
@@ -271,7 +287,7 @@ def main():
     column_dict = [
         ('VendorID', parse_0_vendor),
         ('tpep_pickup_datetime', parse_1_pickup_datetime),
-        #('tpep_dropoff_datetime', parse_2_dropoff_datetime),
+        ('tpep_dropoff_datetime', parse_2_dropoff_datetime),
         # 'passenger_count': parse_3_passenger_count,
         # 'trip_distance': parse_4_trip_distance,
         # 'RatecodeID': parse_5_rate_code,
@@ -289,6 +305,10 @@ def main():
     ]
 
     sc = SparkContext()
+
+    # If your code calls out to other python files, add them here.
+    sc.addPyFile('datetimes.py')
+
     rdd = sc.textFile(args.file_path, minPartitions=args.min_partitions)
     header = rdd.first() #extract header
     rdd = rdd.filter(lambda row: row != header)
