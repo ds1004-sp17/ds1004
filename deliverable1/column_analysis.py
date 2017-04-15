@@ -1,5 +1,6 @@
 import csv
 import argparse
+import random
 from cStringIO import StringIO
 from operator import add
 
@@ -22,7 +23,22 @@ def combine_csv_files():
     pass
 
 def to_csv(l):
-    return ','.join(l)
+    '''Turns a tuple into a CSV row.
+    Args:
+        l: list/tuple to turn into a CSV
+    Returns:
+        (str) input encoded as CSV'''
+    f = StringIO()
+    writer = csv.writer(f)
+    writer.writerow(l)
+    return f.getvalue().strip()
+
+################################################################################
+# Column parser definitions.
+#
+# For each function, 'x' is a tuple (value, count).
+# The expected return is a tuple (value, base_type, semantic_type, validity)
+################################################################################
 
 def parse_0_vendor(x):
     key, occur_count = x
@@ -43,6 +59,10 @@ def parse_0_vendor(x):
             semantic_type = 'unknown value'
             data_label = 'INVALID'
     return (key, base_type, semantic_type, data_label, occur_count)
+
+
+def parse_1_pickup_datetime(x):
+    return (x, 'DATETIME', 'Pickup date/time in seconds', 'VALID')
 
 
 def parse_3_passenger_count(x):
@@ -150,14 +170,20 @@ def parse_10_fare(x):
     # return (key, base_type, semantic_type, data_label, occur_count)
     return (key, occur_count)
 
+################################################################################
 
+def keep_valid(row):
+    # Row: (value, base_type, semantic_type, valid_invalid)
+    if row[3] == 'VALID' and random.random() > args.keep_valid_rate:
+        return False
+    return True
 
 def main():
     # Keep as a list because dictionary iteration order is undefined.
     column_dict = [
         ('VendorID', parse_0_vendor),
         ('tpep_pickup_datetime', parse_1_pickup_datetime),
-        ('tpep_dropoff_datetime', parse_2_dropoff_datetime),
+        #('tpep_dropoff_datetime', parse_2_dropoff_datetime),
         # 'passenger_count': parse_3_passenger_count,
         # 'trip_distance': parse_4_trip_distance,
         # 'RatecodeID': parse_5,
@@ -189,6 +215,7 @@ def main():
         if values is not None:
             values = values.filter(keep_valid).map(to_csv)
             if args.dump:
+                print('Column: {0}'.format(col))
                 for row in values.collect():
                     print(row)
             else:
