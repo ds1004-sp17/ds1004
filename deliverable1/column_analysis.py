@@ -13,7 +13,7 @@ parser.add_argument('--save_path', type=str, default='./',
                     help='directory in HDFS to save files to.')
 parser.add_argument('--dump', action='store_true',
                     help='dump contents to terminal instead of saving')
-parser.add_argument('--keep_valid_rate', type=float, default=0.05,
+parser.add_argument('--keep_valid_rate', type=float, default=1e-5,
                     help='how many valid values to keep (for debugging).')
 args = parser.parse_args()
 
@@ -31,11 +31,18 @@ def to_csv(l):
     writer.writerow(l)
     return f.getvalue().strip()
 
+################################################################################
+# Column parser definitions.
+#
+# For each function, 'x' is a tuple (value, count).
+# The expected return is a tuple (value, base_type, semantic_type, validity)
+################################################################################
+
 def parse_0_vendor(x):
     pass
 
 def parse_1_pickup_datetime(x):
-    pass
+    return (x, 'DATETIME', 'Pickup date/time in seconds', 'VALID')
 
 def parse_2_dropoff_datetime(x):
     pass
@@ -45,6 +52,8 @@ def parse_3_passenger_count(x):
 
 def parse_4_trip_distance(x):
     pass
+
+################################################################################
 
 def keep_valid(row):
     # Row: (value, base_type, semantic_type, valid_invalid)
