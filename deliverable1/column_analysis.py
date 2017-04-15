@@ -175,7 +175,7 @@ def parse_10_fare(x):
     else:
         try:
             float(key)
-            if (float(key) <= 0.0) or (float(key) >= 100.0):
+            if (float(key) < 0.0) or (float(key) >= 100.0):
                 data_label = 'INVALID|OUTLIER'
         except:
             base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'

@@ -38,8 +38,6 @@ def main():
     parser = argparse.ArgumentParser(description='Parser for time-series of trips')
 
     parser.add_argument('--filepaths_file', type=str, required=True)
-    parser.add_argument('--list_files', type=list, required=True,
-                        help='list of filenames')
     parser.add_argument('--min_partitions', type=int, default=5,
                         help='minimum number of data partitions when loading')
     parser.add_argument('--output_path', type=str, required=True,
@@ -49,9 +47,9 @@ def main():
     sc = SparkContext()
     values_list = []
 
-    with open(parser.filepaths_file) as f:
+    with open(args.filepaths_file) as f:
         filepaths = f.readlines()
-        filepaths = [x.strip() for x in lines]
+        filepaths = [x.strip() for x in filepaths]
 
     for filename in filepaths:
         rdd = sc.textFile(filename, minPartitions=args.min_partitions)
