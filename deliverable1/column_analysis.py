@@ -201,6 +201,10 @@ def main():
     ]
 
     sc = SparkContext()
+
+    # If your code calls out to other python files, add them here.
+    sc.addPyFile('datetimes.py')
+
     rdd = sc.textFile(args.file_path, minPartitions=args.min_partitions)
     header = rdd.first() #extract header
     rdd = rdd.filter(lambda row: row != header)
