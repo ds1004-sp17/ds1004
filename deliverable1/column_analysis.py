@@ -3,6 +3,7 @@ import argparse
 import random
 from cStringIO import StringIO
 from operator import add
+import datetimes
 
 from pyspark import SparkContext
 
@@ -61,8 +62,7 @@ def parse_0_vendor(x):
     return (key, base_type, semantic_type, data_label, occur_count)
 
 
-def parse_1_pickup_datetime(x):
-    return (x, 'DATETIME', 'Pickup date/time in seconds', 'VALID')
+# Pickup datetime: datetimes.process_pickup
 
 
 def parse_3_passenger_count(x):
@@ -182,7 +182,7 @@ def main():
     # Keep as a list because dictionary iteration order is undefined.
     column_dict = [
         ('VendorID', parse_0_vendor),
-        ('tpep_pickup_datetime', parse_1_pickup_datetime),
+        ('tpep_pickup_datetime', datetimes.process_pickup),
         #('tpep_dropoff_datetime', parse_2_dropoff_datetime),
         # 'passenger_count': parse_3_passenger_count,
         # 'trip_distance': parse_4_trip_distance,
