@@ -20,10 +20,7 @@
 *.tar
 *.zip
 
-
-out
 Notes
-
 # Logs and databases #
 ######################
 *.log
@@ -50,4 +47,4 @@ lib/*
 .*.swp
 */result/*
 
-data
+
