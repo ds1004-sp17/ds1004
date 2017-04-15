@@ -1,7 +1,7 @@
 import csv
 import argparse
 import os
-from org.apache.hadoop.fs import FileSystem
+import re
 
 from pyspark import SparkContext
 
@@ -36,8 +36,8 @@ def matches_date(string):
 def main():
     parser = argparse.ArgumentParser(description='Parser for time-series of trips')
 
-    parser.add_argument('--folder_path', type=str, required=True,
-                        help='location of folder containing csv file in HDFS.')
+    parser.add_argument('--filenames', type=list, required=True,
+                        help='list of filenames')
     parser.add_argument('--min_partitions', type=int, default=5,
                         help='minimum number of data partitions when loading')
     parser.add_argument('--output_path', type=str, required=True,
@@ -47,14 +47,12 @@ def main():
     sc = SparkContext()
     values_list = []
 
-    for filename in FileSystem.get(sc.hadoopConfiguration()).listFiles(args.folder_path, true):
-        filename = os.path.join(args.folder_path, filename)
-        rdd = sc.textFile(filename, minPartitions=args.min_partitions)
-        header = rdd.first() #extract header
-        rdd = rdd.filter(lambda row: row != header)
-        pickup_datetime_ind = 1
-        values = rdd.map(lambda x: (matches_date(next(csv.reader([x]))[pickup_datetime_ind])['year_month'], 1)).reduceByKey(add)
-        values_list.append(values)
+    rdd = sc.textFile(args.filenames, minPartitions=args.min_partitions)
+    header = rdd.first() #extract header
+    rdd = rdd.filter(lambda row: row != header)
+    pickup_datetime_ind = 1
+    values = rdd.map(lambda x: (matches_date(next(csv.reader([x]))[pickup_datetime_ind])['year_month'], 1)).reduceByKey(add)
+    values_list.append(values)
 
     result = sc.union(values_list)
     result.saveAsTextFile(args.output_path)
