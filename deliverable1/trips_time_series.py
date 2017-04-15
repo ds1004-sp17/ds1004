@@ -34,6 +34,10 @@ def matches_date(string):
     return date
 
 
+def csv_row_read(x):
+    return next(csv.reader([x]))
+
+
 def main():
     parser = argparse.ArgumentParser(description='Parser for time-series of trips')
 
@@ -52,11 +56,17 @@ def main():
         filepaths = [x.strip() for x in filepaths]
 
     for filename in filepaths:
+        pickup_datetime_ind = 1
         rdd = sc.textFile(filename, minPartitions=args.min_partitions)
         header = rdd.first() #extract header
         rdd = rdd.filter(lambda row: row != header)
-        pickup_datetime_ind = 1
-        values = rdd.map(lambda x: (matches_date(next(csv.reader([x]))[pickup_datetime_ind])['year_month'], 1)).reduceByKey(add)
+
+        # Split into columns.
+        all_rows = rdd.map(lambda x: csv_row_read(x))
+        # Get rows that have the containing column.
+        rows = all_rows.filter(lambda col: len(col) > pickup_datetime_ind)
+
+        values = rows.map(lambda x: (matches_date(x[pickup_datetime_ind])['year_month'], 1)).reduceByKey(add)
         values_list.append(values)
 
     result = sc.union(values_list)
