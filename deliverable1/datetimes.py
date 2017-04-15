@@ -33,19 +33,17 @@ def matches_date(string):
         return None
 
     date = {
-        'year': match.group(1),
-        'month': match.group(2),
-        'day': match.group(3),
-        'hour': match.group(4),
-        'minute': match.group(5),
-        'second': match.group(6)
+        'year': int(match.group(1)),
+        'month': int(match.group(2)),
+        'day': int(match.group(3)),
+        'hour': int(match.group(4)),
+        'minute': int(match.group(5)),
+        'second': int(match.group(6))
     }
     return date
 
-
-def process_pickup(pair):
+def _process(pair):
     '''Processes a date string.
-
     Args:
         pair: (date_string, occurrence_count)
     Returns:
@@ -60,5 +58,29 @@ def process_pickup(pair):
     if not date:
         return (date_string, 'STRING', 'unknown value', 'INVALID')
 
-    return (date_string, 'STRING', 'date and time value', 'VALID')
+    return (date_string, 'STRING', 'date and time value', 'VALID'), \
+            occurrence_count, date
+
+def process_pickup(pair, expected_year, expected_month):
+    '''Process pickup dates.
+    Args:
+        pair: (date_string, occurrence_count)
+        expected_year: int, the year the date row is for
+        expected_month: int, the month the date row is for
+    Returns:
+        row: Tuple of values in the correct format.'''
+
+    row, occurrence, date = _process(pair)
+    if not date:
+        return row
+    (date_string, base_type, semantic_type, validity) = row
+    # Check if value is within desired date range.
+    # Pickup dates should be strictly inside the date range.
+    if expected_year is not None and expected_month is not None:
+        if date['year'] != expected_year or date['month'] != expected_month:
+            semantic_type = 'pickup date (out of range for file)'
+            validity = 'INVALID'
+    return (date_string, base_type, semantic_type, validity)
+
+#def process_dropoff(pair):
 

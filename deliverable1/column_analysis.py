@@ -1,4 +1,5 @@
 import csv
+import re
 import argparse
 import random
 from cStringIO import StringIO
@@ -20,8 +21,18 @@ parser.add_argument('--keep_valid_rate', type=float, default=1.0,
                     help='how many valid values to keep (for debugging).')
 args = parser.parse_args()
 
-def combine_csv_files():
-    pass
+
+# Find out which year/month we're dealing with.
+file_month_re = re.compile('(\d\d\d\d)-(\d\d)')
+filename_match = file_month_re.search(args.file_path)
+expected_year = None
+expected_month = None
+if filename_match:
+    expected_year = int(match.group(1))
+    expected_month = int(match.group(2))
+    print('='*80 + '\n' + 'YEAR: {0}, MONTH: {1:02d}'.format(
+        expected_year, expected_month) + '\n' + '='*80)
+
 
 def to_csv(l):
     '''Turns a tuple into a CSV row.
