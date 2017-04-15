@@ -14,18 +14,7 @@ import sys
 import re
 import csv
 import random
-import argparse
 from operator import add
-from pyspark import SparkContext
-
-
-parser = argparse.ArgumentParser(description='Process date time.')
-parser.add_argument('--path', help='what file in HDFS to load')
-parser.add_argument('--min_partitions', type=int, help='how many partitions.')
-parser.add_argument('--keep_prob', type=float, help='for valid values, only ' \
-    'keep this much. Invalid values are always printed..')
-
-args = parser.parse_args()
 
 date_str = re.compile('(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)')
 
@@ -53,18 +42,8 @@ def matches_date(string):
     }
     return date
 
-def to_csv(l):
-    return ','.join(l)
 
-def drop_rows(row):
-    # For analysis, so we don't print too much.
-    if rows[3] == 'VALID':
-        if random.random() < args.keep_prob:
-            return True
-        return False
-    return True
-
-def process(pair):
+def process_pickup(pair):
     '''Processes a date string.
 
     Args:
@@ -82,18 +61,4 @@ def process(pair):
         return (date_string, 'STRING', 'unknown value', 'INVALID')
 
     return (date_string, 'STRING', 'date and time value', 'VALID')
-
-if __name__ == '__main__':
-    icol = 1 # tpep_pickup_datetime
-    colname = 'tpep_pickup_datetime'
-
-    sc = SparkContext()
-    lines = sc.textFile(args.path, minPartitions=args.min_partitions)
-    print(lines.getNumPartitions())
-    lines = lines.map(lambda x: (next(csv.reader([x]))[icol], 1))
-    values = lines.reduceByKey(add)
-    values = values.map(process)
-
-    values = values.filter(drop_rows)
-    values.map(to_csv).saveAsTextFile(args.path + '_tpep_pickup_datetime.csv')
 
