@@ -4,6 +4,7 @@ import os
 import re
 
 from pyspark import SparkContext
+from operator import add
 
 
 def matches_date(string):
@@ -36,7 +37,8 @@ def matches_date(string):
 def main():
     parser = argparse.ArgumentParser(description='Parser for time-series of trips')
 
-    parser.add_argument('--filenames', type=list, required=True,
+    parser.add_argument('--filepaths_file', type=str, required=True)
+    parser.add_argument('--list_files', type=list, required=True,
                         help='list of filenames')
     parser.add_argument('--min_partitions', type=int, default=5,
                         help='minimum number of data partitions when loading')
@@ -47,12 +49,17 @@ def main():
     sc = SparkContext()
     values_list = []
 
-    rdd = sc.textFile(args.filenames, minPartitions=args.min_partitions)
-    header = rdd.first() #extract header
-    rdd = rdd.filter(lambda row: row != header)
-    pickup_datetime_ind = 1
-    values = rdd.map(lambda x: (matches_date(next(csv.reader([x]))[pickup_datetime_ind])['year_month'], 1)).reduceByKey(add)
-    values_list.append(values)
+    with open(parser.filepaths_file) as f:
+        filepaths = f.readlines()
+        filepaths = [x.strip() for x in lines]
+
+    for filename in filepaths:
+        rdd = sc.textFile(filename, minPartitions=args.min_partitions)
+        header = rdd.first() #extract header
+        rdd = rdd.filter(lambda row: row != header)
+        pickup_datetime_ind = 1
+        values = rdd.map(lambda x: (matches_date(next(csv.reader([x]))[pickup_datetime_ind])['year_month'], 1)).reduceByKey(add)
+        values_list.append(values)
 
     result = sc.union(values_list)
     result.saveAsTextFile(args.output_path)
