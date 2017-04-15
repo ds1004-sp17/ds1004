@@ -324,8 +324,9 @@ def main():
     sc.addPyFile('datetimes.py')
 
     rdd = sc.textFile(args.file_path, minPartitions=args.min_partitions)
-    header = csv_row_read(rdd.first()) #extract header
-    rdd = rdd.filter(lambda row: row != header)
+    header_line = rdd.first()
+    header = csv_row_read(header_line)
+    rdd = rdd.filter(lambda row: row != header_line)
     for i, col in enumerate(header):
         col = col.strip()
         parse_func = column_dict.get(col, None)
@@ -356,8 +357,7 @@ def main():
                         args.save_path + '/{}.csv'.format(col))
 
         # Dump some of the invalid rows.
-        rn = rows_non.filter(lambda r: random.random() < args.keep_invalid_rate)
-        for row in rn.collect():
+        for row in rows_non.collect():
             print(row)
         
 
