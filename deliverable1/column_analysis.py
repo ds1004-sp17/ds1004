@@ -7,7 +7,7 @@ import datetimes
 
 from pyspark import SparkContext
 
-parser = argparse.ArgumentParser(description='PyTorch Quora RNN/LSTM Language Model')
+parser = argparse.ArgumentParser(description='Big Data Taxi Parser')
 parser.add_argument('--file_path', type=str, default='yellow_tripdata_test.csv',
                     help='location of csv file in HDFS.')
 parser.add_argument('--min_partitions', type=int, default=5,
