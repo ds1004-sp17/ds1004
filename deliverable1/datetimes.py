@@ -52,11 +52,13 @@ def _process(pair):
 
     date_string, occurrence_count = pair
     if date_string is None:
-        return (None, 'NULL', 'missing value', 'INVALID')
+        return (None, 'NULL', 'missing value', 'INVALID'), \
+                occurrence_count, None
 
     date = matches_date(date_string)
     if not date:
-        return (date_string, 'STRING', 'unknown value', 'INVALID')
+        return (date_string, 'STRING', 'unknown value', 'INVALID'), \
+                occurrence_count, None
 
     return (date_string, 'STRING', 'date and time value', 'VALID'), \
             occurrence_count, date

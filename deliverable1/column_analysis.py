@@ -277,17 +277,27 @@ def parse_16_total(x):
 ################################################################################
 
 def keep_valid(row):
-    # Row: (value, base_type, semantic_type, valid_invalid)
-    if row[3] == 'VALID' and random.random() > args.keep_valid_rate:
-        return False
-    return True
+    try:
+        # Row: (value, base_type, semantic_type, valid_invalid)
+        if row[3] == 'VALID' and random.random() > args.keep_valid_rate:
+            return False
+        return True
+    except:
+        return True
+
+def csv_row_read(x):
+    return next(csv.reader([x]))
 
 def main():
     # Keep as a list because dictionary iteration order is undefined.
-    column_dict = [
-        ('VendorID', parse_0_vendor),
-        ('tpep_pickup_datetime', parse_1_pickup_datetime),
-        ('tpep_dropoff_datetime', parse_2_dropoff_datetime),
+    column_dict = {
+        'VendorID': parse_0_vendor,
+        # Date time column for 2014.
+        'pickup_datetime': parse_1_pickup_datetime,
+        'dropoff_datetime': parse_2_dropoff_datetime,
+        # Date time column for 2015.
+        'tpep_pickup_datetime': parse_1_pickup_datetime,
+        'tpep_dropoff_datetime': parse_2_dropoff_datetime,
         # 'passenger_count': parse_3_passenger_count,
         # 'trip_distance': parse_4_trip_distance,
         # 'RatecodeID': parse_5_rate_code,
@@ -302,7 +312,7 @@ def main():
         # 'tolls_amount': parse_14,
         # 'improvement_surcharge': parse_15,
         # 'total_amount': parse_16
-    ]
+    }
 
     sc = SparkContext()
 
@@ -310,11 +320,16 @@ def main():
     sc.addPyFile('datetimes.py')
 
     rdd = sc.textFile(args.file_path, minPartitions=args.min_partitions)
-    header = rdd.first() #extract header
+    header = csv_row_read(rdd.first()) #extract header
     rdd = rdd.filter(lambda row: row != header)
-    for i, (col, parse_func) in enumerate(column_dict):
+    for i, col in enumerate(header):
+        parse_func = column_dict.get(col, None)
+        if parse_func is None:
+            print('Don\'t know how to read column: {0}'.format(col))
+            continue
+
         # Get unique values and their counts.
-        values = rdd.map(lambda x: (next(csv.reader([x]))[i], 1)).\
+        values = rdd.map(lambda x: (csv_row_read(x)[i], 1)).\
                     reduceByKey(add)
         # Feed values RDD to a parser.
         values = values.map(parse_func)
@@ -328,7 +343,7 @@ def main():
                     print(row)
             else:
                 values.saveAsTextFile(
-                        args.save_path + '{}.csv'.format(col))
+                        args.save_path + '/{}.csv'.format(col))
         
 
 if __name__ == '__main__':
