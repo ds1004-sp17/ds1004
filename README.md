@@ -13,20 +13,27 @@ cd src
 There are a bunch of _.py_ files and several _.sh_ scripts. If you want to automatically run all the bash scripts, run the following command:
 
 ```bash
-./run_all.sh
+./run_all.sh [/hadoop/path/your/filename]
 ```
 
 If you want to only run specific MapReduce tasks, named _foo.py_, run the following command
 
 ```bash
-./run.sh foo # NOTE: discard the extension
+./run.sh foo [/hadoop/path/your/filename] # NOTE: discard the extension ".py"
+```
+
+Some tasks use SparkSQL, so run the following command
+
+```bash
+./run_sql.sh foo # without file extension ".py"
 ```
 
 After processing the data by _spark_, you can run the following command to plot the data:
 
 ```bash
-./run_fig
+./run_fig process_xxx.py
 ```
+
 # Update basic information, counting missing values and validation
 1. The PDFs will be used for the summury or report.
 2. The files in data_info folder: 
