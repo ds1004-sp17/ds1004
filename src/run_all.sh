@@ -19,10 +19,12 @@ filename="$1"
 ./run.sh nums_in_month_by_agency "$filename"
 ./run.sh nums_in_hour_by_agency "$filename"
 ./run.sh nums_in_month_by_agency_year "$filename"
-./run.sh check_zip "$filename"
+./run.sh check_zipcode "$filename"
+
 
 # The commands below run sparkSQL
 
+./run_sql.sh check_date "$filename"
 ./run_sql.sh street
 ./run_sql.sh type_broadway
 ./run_sql.sh type_broadway_noise
