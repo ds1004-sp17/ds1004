@@ -204,8 +204,10 @@ def main():
     # Keep as a list because dictionary iteration order is undefined.
     column_dict = {
         'VendorID': parse_0_vendor,
+        # Date time column for 2014.
         'pickup_datetime': parse_1_pickup_datetime,
         'dropoff_datetime': parse_2_dropoff_datetime,
+        # Date time column for 2015.
         'tpep_pickup_datetime': parse_1_pickup_datetime,
         'tpep_dropoff_datetime': parse_2_dropoff_datetime,
         # 'passenger_count': parse_3_passenger_count,
