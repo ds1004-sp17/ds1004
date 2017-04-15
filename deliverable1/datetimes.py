@@ -74,6 +74,7 @@ def process_pickup(pair, expected_year, expected_month):
     if not date:
         return row
     (date_string, base_type, semantic_type, validity) = row
+    semantic_type = 'valid pickup date'
     # Check if value is within desired date range.
     # Pickup dates should be strictly inside the date range.
     if expected_year is not None and expected_month is not None:
@@ -81,6 +82,42 @@ def process_pickup(pair, expected_year, expected_month):
             semantic_type = 'pickup date (out of range for file)'
             validity = 'INVALID'
     return (date_string, base_type, semantic_type, validity)
+
+
+def process_dropoff(pair, expected_year, expected_month):
+    '''Process dropoff dates. Dropoffs can go past the current month.
+    Args:
+        pair: (date_string, occurrence_count)
+        expected_year: int, the year the date row is for
+        expected_month: int, the month the date row is for
+    Returns:
+        row: Tuple of values in the correct format.'''
+
+    row, occurrence, date = _process(pair)
+    if not date:
+        return row
+    (date_string, base_type, semantic_type, validity) = row
+    # Check if value is within desired date range.
+    # Pickup dates should be strictly inside the date range.
+    semantic_type = 'valid dropoff date'
+    if expected_year is not None and expected_month is not None:
+        year, month = date['year'], date['month']
+        if year == expected_year + 1 and month == 1 and expected_month == 12:
+            # Taxi trips that cross midnight january 1st. Happy new year!
+            semantic_type = 'dropoff date (crosses year boundary)'
+            validity = 'OUTLIER'
+        elif year == expected_year and month == expected_month + 1:
+            # Taxi trips that cross months (March 31 -> April 1)
+            semantic_type = 'dropoff date (crosses month boundary)'
+            validity = 'OUTLIER'
+        elif date['year'] != expected_year or date['month'] != expected_month:
+            # Any other date, we deem it invalid.
+            semantic_type = 'dropoff date (out of range for file)'
+            validity = 'INVALID'
+    return (date_string, base_type, semantic_type, validity)
+
+#def process_dropoff(pair):
+
 
 #def process_dropoff(pair):
 

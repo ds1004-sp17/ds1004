@@ -77,6 +77,10 @@ def parse_1_pickup_datetime(x):
     return datetimes.process_pickup(x, expected_year, expected_month)
 
 
+def parse_2_dropoff_datetime(x):
+    return datetimes.process_dropoff(x, expected_year, expected_month)
+
+
 def parse_3_passenger_count(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'INT', 'passenger count', 'VALID'
@@ -195,7 +199,7 @@ def main():
     column_dict = [
         ('VendorID', parse_0_vendor),
         ('tpep_pickup_datetime', parse_1_pickup_datetime),
-        #('tpep_dropoff_datetime', parse_2_dropoff_datetime),
+        ('tpep_dropoff_datetime', parse_2_dropoff_datetime),
         # 'passenger_count': parse_3_passenger_count,
         # 'trip_distance': parse_4_trip_distance,
         # 'RatecodeID': parse_5,
