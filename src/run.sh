@@ -5,7 +5,8 @@ export PYTHONHASHSEED=0
 export SPARK_YARN_USER_ENV=PYTHONHASHSEED=0
 
 out="$1"
+filename="$2"
 rm "$out.txt"
-spark-submit "$out.py" /user/jc7459/311.csv
+spark-submit "$out.py" "$filename"
 hadoop fs -getmerge "$out.out" "$out.txt"
 hadoop fs -rm -r "$out.out"
