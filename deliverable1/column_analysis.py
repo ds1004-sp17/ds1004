@@ -219,7 +219,7 @@ def main():
                 for row in values.collect():
                     print(row)
             else:
-                values.map(to_csv).saveAsTextFile(
+                values.saveAsTextFile(
                         args.save_path + '_{}.csv'.format(col))
         
 
