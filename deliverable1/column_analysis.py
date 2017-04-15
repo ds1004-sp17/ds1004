@@ -19,6 +19,8 @@ parser.add_argument('--dump', action='store_true',
                     help='dump contents to terminal instead of saving')
 parser.add_argument('--keep_valid_rate', type=float, default=1.0,
                     help='how many valid values to keep (for debugging).')
+parser.add_argument('--keep_invalid_rate', type=float, default=1.0,
+                    help='how many invalid values to keep (for debugging).')
 args = parser.parse_args()
 
 
@@ -281,6 +283,8 @@ def keep_valid(row):
         # Row: (value, base_type, semantic_type, valid_invalid)
         if row[3] == 'VALID' and random.random() > args.keep_valid_rate:
             return False
+        if row[3] == 'INVALID' and random.random() > args.keep_invalid_rate:
+            return False
         return True
     except:
         return True
@@ -323,14 +327,20 @@ def main():
     header = csv_row_read(rdd.first()) #extract header
     rdd = rdd.filter(lambda row: row != header)
     for i, col in enumerate(header):
+        col = col.strip()
         parse_func = column_dict.get(col, None)
         if parse_func is None:
             print('Don\'t know how to read column: {0}'.format(col))
             continue
 
-        # Get unique values and their counts.
-        values = rdd.map(lambda x: (csv_row_read(x)[i], 1)).\
-                    reduceByKey(add)
+        # Split into columns.
+        all_rows = rdd.map(lambda x: csv_row_read(x))
+        # Get rows that have the containing column.
+        rows = columns.filter(lambda col: len(col) > i)
+        # What about rows that don't have enough columns.
+        rows_non = columns.filter(lambda col: len(col) <= i)
+
+        values = rows.map(lambda row: (row[i], 1)).reduceByKey(add)
         # Feed values RDD to a parser.
         values = values.map(parse_func)
         # For each tuple returned by the parse_func, dup it to a csv
@@ -344,6 +354,11 @@ def main():
             else:
                 values.saveAsTextFile(
                         args.save_path + '/{}.csv'.format(col))
+
+        # Dump some of the invalid rows.
+        rn = rows_non.filter(lambda r: random.random() < args.keep_invalid_rate)
+        for row in rn.collect():
+            print(row)
         
 
 if __name__ == '__main__':
