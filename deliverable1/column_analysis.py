@@ -1,4 +1,5 @@
 import csv
+import argparse
 from cStringIO import StringIO
 from operator import add
 
@@ -7,7 +8,7 @@ from pyspark import SparkContext
 parser = argparse.ArgumentParser(description='PyTorch Quora RNN/LSTM Language Model')
 parser.add_argument('--file_path', type=str, default='yellow_tripdata_test.csv',
                     help='location of csv file in HDFS.')
-parser.add_argument('--min_partitions', type=int, default=20,
+parser.add_argument('--min_partitions', type=int, default=5,
                     help='minimum number of data partitions when loading')
 parser.add_argument('--save_path', type=str, default='./',
                     help='directory in HDFS to save files to.')
@@ -56,6 +57,8 @@ def parse_4_trip_distance(x):
 ################################################################################
 
 def keep_valid(row):
+    if row == None:
+        return False
     # Row: (value, base_type, semantic_type, valid_invalid)
     if row[3] == 'VALID' and random.random() > args.keep_valid_rate:
         return False
@@ -86,7 +89,7 @@ def main():
 
     sc = SparkContext()
     rdd = sc.textFile(args.file_path, minPartitions=args.min_partitions)
-    for i, (col, parse_func) in enumerate(column_dict.iteritems()):
+    for i, (col, parse_func) in enumerate(column_dict):
         # Get unique values and their counts.
         values = rdd.map(lambda x: (next(csv.reader([x]))[i], 1)).\
                     reduceByKey(add)
@@ -96,7 +99,7 @@ def main():
         # defined per column.
         if values is not None:
             values = values.filter(keep_valid).map(to_csv)
-            if dump:
+            if args.dump:
                 for row in values.collect():
                     print(row)
             else:

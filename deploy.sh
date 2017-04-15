@@ -7,7 +7,7 @@ USERNAME='ch1751'
 HOST='dumbo'
 DESTDIR='bigdata_project/'
 
-cmd="scp -F $SSH_CONF *.py *.sh $USERNAME@$HOST:$DESTDIR"
+cmd="scp -F $SSH_CONF '*' $USERNAME@$HOST:$DESTDIR"
 
 echo $cmd
 $cmd
