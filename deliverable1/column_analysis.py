@@ -28,8 +28,8 @@ filename_match = file_month_re.search(args.file_path)
 expected_year = None
 expected_month = None
 if filename_match:
-    expected_year = int(match.group(1))
-    expected_month = int(match.group(2))
+    expected_year = int(filename_match.group(1))
+    expected_month = int(filename_match.group(2))
     print('='*80 + '\n' + 'YEAR: {0}, MONTH: {1:02d}'.format(
         expected_year, expected_month) + '\n' + '='*80)
 
@@ -73,7 +73,8 @@ def parse_0_vendor(x):
     return (key, base_type, semantic_type, data_label, occur_count)
 
 
-# Pickup datetime: datetimes.process_pickup
+def parse_1_pickup_datetime(x):
+    return datetimes.process_pickup(x, expected_year, expected_month)
 
 
 def parse_3_passenger_count(x):
@@ -193,7 +194,7 @@ def main():
     # Keep as a list because dictionary iteration order is undefined.
     column_dict = [
         ('VendorID', parse_0_vendor),
-        ('tpep_pickup_datetime', datetimes.process_pickup),
+        ('tpep_pickup_datetime', parse_1_pickup_datetime),
         #('tpep_dropoff_datetime', parse_2_dropoff_datetime),
         # 'passenger_count': parse_3_passenger_count,
         # 'trip_distance': parse_4_trip_distance,
