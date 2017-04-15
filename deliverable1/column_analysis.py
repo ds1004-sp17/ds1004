@@ -336,9 +336,9 @@ def main():
         # Split into columns.
         all_rows = rdd.map(lambda x: csv_row_read(x))
         # Get rows that have the containing column.
-        rows = columns.filter(lambda col: len(col) > i)
+        rows = all_rows.filter(lambda col: len(col) > i)
         # What about rows that don't have enough columns.
-        rows_non = columns.filter(lambda col: len(col) <= i)
+        rows_non = all_rows.filter(lambda col: len(col) <= i)
 
         values = rows.map(lambda row: (row[i], 1)).reduceByKey(add)
         # Feed values RDD to a parser.
