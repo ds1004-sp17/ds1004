@@ -15,7 +15,7 @@ parser.add_argument('--save_path', type=str, default='./',
                     help='directory in HDFS to save files to.')
 parser.add_argument('--dump', action='store_true',
                     help='dump contents to terminal instead of saving')
-parser.add_argument('--keep_valid_rate', type=float, default=1e-5,
+parser.add_argument('--keep_valid_rate', type=float, default=1.0,
                     help='how many valid values to keep (for debugging).')
 args = parser.parse_args()
 
@@ -220,7 +220,7 @@ def main():
                     print(row)
             else:
                 values.saveAsTextFile(
-                        args.save_path + '_{}.csv'.format(col))
+                        args.save_path + '{}.csv'.format(col))
         
 
 if __name__ == '__main__':
