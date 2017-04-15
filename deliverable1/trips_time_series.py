@@ -1,6 +1,7 @@
 import csv
 import argparse
 import os
+from org.apache.hadoop.fs import FileSystem
 
 from pyspark import SparkContext
 
@@ -26,8 +27,8 @@ def matches_date(string):
         'day': int(match.group(3)),
         'hour': int(match.group(4)),
         'minute': int(match.group(5)),
-        'second': int(match.group(6))
-        'year_month': str(match.group(1)) + "/" + str(match.group(2))2
+        'second': int(match.group(6)),
+        'year_month': str(match.group(1)) + "/" + str(match.group(2))
     }
     return date
 
@@ -39,18 +40,15 @@ def main():
                         help='location of folder containing csv file in HDFS.')
     parser.add_argument('--min_partitions', type=int, default=5,
                         help='minimum number of data partitions when loading')
-    parser.add_argument('--save_path', type=str, default='./',
-                        help='directory in HDFS to save files to.')
-    parser.add_argument('--keep_valid_rate', type=float, default=1.0,
-                        help='how many valid values to keep (for debugging).')
-    parser.add_argument('--output-path', type=str, required=True,
+    parser.add_argument('--output_path', type=str, required=True,
                         help='path for output file')
     args = parser.parse_args()
 
     sc = SparkContext()
     values_list = []
 
-    for filename in os.listdir(args.folder_path):
+    for filename in FileSystem.get(sc.hadoopConfiguration()).listFiles(args.folder_path, true):
+        filename = os.path.join(args.folder_path, filename)
         rdd = sc.textFile(filename, minPartitions=args.min_partitions)
         header = rdd.first() #extract header
         rdd = rdd.filter(lambda row: row != header)
