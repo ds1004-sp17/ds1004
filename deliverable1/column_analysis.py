@@ -8,10 +8,12 @@ import os
 import random
 from cStringIO import StringIO
 from operator import add
+from multiprocessing.pool import ThreadPool
+from time import sleep
 import datetimes
 import locations
 
-from pyspark import SparkContext
+from pyspark import SparkContext, SparkConf
 
 parser = argparse.ArgumentParser(description='Big Data Taxi Parser')
 parser.add_argument('--input_dir', type=str, default='public/taxis_test',
@@ -383,8 +385,8 @@ def process_one_file(sc, filepath, whitelist_columns=None):
         if whitelist_columns and col not in whitelist_columns:
             continue
 
-        values_filename = os.path.join(args.tempdir, str(uuid.uuid1()))
-        invalid_rows_filename = os.path.join(args.tempdir, str(uuid.uuid1()))
+        values_filename = os.path.join(args.tempdir, str(uuid.uuid4()))
+        invalid_rows_filename = os.path.join(args.tempdir, str(uuid.uuid4()))
 
         # Get rows that have the containing column.
         rows = all_rows.filter(filter_row_col_num(col_id))
@@ -410,6 +412,9 @@ def process_one_file(sc, filepath, whitelist_columns=None):
 ################################################################################
 
 def main():
+
+    conf = SparkConf().setAppName('taxi_columns')
+    conf.set("spark.scheduler.mode", "FAIR")
     sc = SparkContext()
     sc.setLogLevel(args.loglevel)
 
@@ -493,41 +498,58 @@ WARNING WARNING WARNING
         column_values[col] = []
         invalid_rows[col] = []
 
+    # A worker task to be fed through the pool.
+    def process_file(arg):
+        sleep(random.random() * 3.0)
+        year, month = arg
+        filename = filename_format.format(year, month)
+        filepath = os.path.join(args.input_dir, filename)
+        print('Getting:', filepath)
+
+        # Read columns from each file, then group columns together.
+        # Later, these columns are unioned and parsed together so their
+        # counts are merged.
+        try:
+            return process_one_file(sc, filepath, user_columns)
+        except Exception as e:
+            if 'Input path does not exist' in str(e):
+                print('-------- File {0} does not exist!! ---------'\
+                        .format(filepath))
+                return
+            else:
+                # Unknown exception.
+                raise
+
     # For each year and each month, read in columns.
     file_count = 0
+    inputs = []
     for year in range(args.min_year, args.max_year + 1):
         for month in range(1, 13):
-            filename = filename_format.format(year, month)
-            filepath = os.path.join(args.input_dir, filename)
-            print('Getting:', filepath)
+            inputs.append((year, month))
 
-            # Read columns from each file, then group columns together.
-            # Later, these columns are unioned and parsed together so their
-            # counts are merged.
-            try:
-                columns = process_one_file(sc, filepath, user_columns)
-            except Exception as e:
-                if 'Input path does not exist' in str(e):
-                    print('-------- File {0} does not exist!! ---------'\
-                            .format(filepath))
-                    continue
-                else:
-                    # Unknown exception.
-                    raise
-            for col, values_file, missing_rows_file in columns:
-                if col not in column_values:
-                    print('{0}: Unknown column: {1}'.format(filename, col))
-                    continue
-                column_values[col].append(values_file)
-                invalid_rows[col].append(missing_rows_file)
-            file_count += 1
+    # Read each file, split them into columns, and save to temporary files.
+    # This task is completely parallel so we can use thread pools.
+    pool = ThreadPool(processes=8)
+    process_results = pool.map(process_file, inputs)
+
+    # Gather and separate into columns.
+    for columns in process_results:
+        if columns is None:
+            continue
+        for col, values_file, missing_rows_file in columns:
+            if col not in column_values:
+                print('{0}: Unknown column: {1}'.format(filename, col))
+                continue
+            column_values[col].append(values_file)
+            invalid_rows[col].append(missing_rows_file)
+        file_count += 1
 
     # After collecting columns, parse them all.
     for col, value_paths in column_values.items():
         print('----- Analyzing Column: {0} [found in {1}/{2} files] -----'.\
-                format(col, len(values), file_count))
+                format(col, len(value_paths), file_count))
 
-        if col not in user_columns or len(values) == 0:
+        if col not in user_columns or len(value_paths) == 0:
             continue
         values = [sc.textFile(path) for path in value_paths]
         all_values = sc.union(values) # All values from all items.
