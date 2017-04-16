@@ -38,6 +38,15 @@ def csv_row_read(x):
     return next(csv.reader([x]))
 
 
+def filter_amount(x, ind, max_amount=200):
+    try:
+        val = float(x[ind])
+        if val > 0 and val < max_amount:
+            return True
+    except:
+        return False
+
+
 def main():
     parser = argparse.ArgumentParser(description='Parser for time-series of trips')
 
@@ -61,12 +70,18 @@ def main():
 
         rdd = sc.textFile(filename, minPartitions=args.min_partitions)
         header = rdd.first() #extract header
+        header_list = [x.lower().strip() for x in csv_row_read(header)]
         rdd = rdd.filter(lambda row: row != header)
+
+        total_amount_ind = header_list.index('total_amount')
 
         # Split into columns.
         all_rows = rdd.map(lambda x: csv_row_read(x))
         # Get rows that have the containing column.
-        rows = all_rows.filter(lambda col: len(col) > distance_ind)
+        rows = all_rows.filter(lambda col: len(col) > total_amount_ind)
+
+        # Filter out invalid currency amounts
+        rows = rows.filter(lambda x: filter_amount(x, total_amount_ind))
 
         values = rows.map(lambda x: (matches_date(x[pickup_datetime_ind])['year_month'], float(x[distance_ind]))).reduceByKey(add)
         values_list.append(values)
