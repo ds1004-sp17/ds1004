@@ -305,7 +305,7 @@ def parse_16_total(x):
 
 ################################################################################
 
-def keep_valid(row):
+def drop_values(row):
     '''For a given data row, choose whether to print out the data. Args:
         row: A tuple (value, base_type, semantic_type, label, count)'''
     try:
@@ -326,58 +326,18 @@ def csv_row_read(x):
 ################################################################################
 
 def process_one_file(filepath):
-    '''Breaks a file into columns and does value tagging on each column.
+    '''Breaks a file into columns.
 
     Args:
         filepath: string, where to get the file
     Returns:
-        a list of CSV line RDDs, one for each column. They can either be
-        dumped or saved to a file.
+        a list of CSV line RDDs, one for each column.
 
         Each column emits a tuple: (colname, RDD, invalid_rows) where the
         second value are rows that don't contain this column.
     '''
     # This helps date column validation.
     expected_year, expected_month = read_file_path(filepath)
-
-    # Common columns for all years.
-    column_dict = {
-        'VendorID': parse_0_vendor,
-        'passenger_count': parse_3_passenger_count,
-        'trip_distance': parse_4_trip_distance,
-        'RatecodeID': parse_5_rate_code,
-        'store_and_fwd_flag': parse_6_store_and_fwd,
-        'payment_type': parse_9_payment_type,
-        'fare_amount': parse_10_fare,
-        'extra': parse_11,
-        'mta_tax': parse_12,
-        'tip_amount': parse_13,
-        'tolls_amount': parse_14,
-        'improvement_surcharge': parse_15,
-        'total_amount': parse_16
-    }
-
-    # Date column changes from 2015.
-    if expected_year < 2015:
-        column_dict['pickup_datetime'] = \
-            pickup_datetime_parser(expected_year, expected_month)
-        column_dict['dropoff_datetime'] = \
-            pickup_datetime_parser(expected_year, expected_month)
-    else:
-        column_dict['tpep_pickup_datetime'] = \
-            pickup_datetime_parser(expected_year, expected_month)
-        column_dict['tpep_dropoff_datetime'] = \
-            pickup_datetime_parser(expected_year, expected_month)
-
-    # Locations are different before/after 2016.
-    if expected_year < 2016:
-        column_dict['pickup_longitude'] = locations.parse_longitude
-        column_dict['pickup_latitude'] = locations.parse_latitude
-        column_dict['dropoff_longitude'] = locations.parse_longitude
-        column_dict['dropoff_latitude'] = locations.parse_latitude
-    else:
-        column_dict['PULocationId'] = parse_pu_location_id
-        column_dict['DOLocationId'] = parse_do_location_id
 
     # Load the text file and split out the header.
     rdd = sc.textFile(file_path, minPartitions=args.min_partitions)
@@ -393,18 +353,17 @@ def process_one_file(filepath):
     column_results = []
     for i, col in enumerate(header):
         col = col.strip()
-        parse_func = column_dict.get(col, None)
-        if parse_func is None:
-            print('{0}: Don\'t know how to read column: {1}'.format(
-                filepath, col))
-            continue
 
         # Get rows that have the containing column.
         rows = all_rows.filter(lambda col: len(col) > i)
-        rows_missing_this_col = all_rows.filter(lambda col: len(col) <= i)
+        rows_missing_this_col = all_rows\
+                .filter(lambda col: len(col) <= i)\
+                .map(to_csv)\
+                # Tag the invalid row so we know which file it's from.
+                .map(lambda line: filepath + ':' + line)
+
         # Get all unique values and analyze.
-        values = rows.map(lambda row: (row[i], 1)).reduceByKey(add)
-        values = values.map(parse_func)
+        values = rows.map(lambda row: row[i])
 
         column_results.append((col, values, rows_missing_this_col))
     return column_results
@@ -415,9 +374,12 @@ def main():
     sc = SparkContext()
     sc.setLogLevel(args.loglevel)
 
+    print('='*80 + '\n' + 'BIG DATA TAXIS PARSER' + '\n' + '='*80)
+
     if args.dump and args.keep_valid_rate > 0.1:
-        print('Warning: --dump is set but keep_rate is {0}, which could dump\n'
-                'a lot of data into the terminal!'.format(args.keep_valid_rate))
+        print('\nWarning: --dump is set but keep_rate is {0}, which could \n'
+                'dump a lot of data into the terminal!'.format(
+                    args.keep_valid_rate))
         raw_input('Press Enter to continue, or Ctrl-C to quit')
 
     # If your code calls out to other python files, add them here.
@@ -425,29 +387,79 @@ def main():
     sc.addPyFile('locations.py')
     sc.addFile('taxi_zone_lookup.csv')
 
+    # All the possible columns. Some years may only have a subset of columns.
+    column_dict = {
+        'VendorID': parse_0_vendor,
+        # Date time column for 2014.
+        'pickup_datetime': parse_1_pickup_datetime,
+        'dropoff_datetime': parse_2_dropoff_datetime,
+        # Date time column for 2015-2016.
+        'tpep_pickup_datetime': parse_1_pickup_datetime,
+        'tpep_dropoff_datetime': parse_2_dropoff_datetime,
+        # Locations.
+        'PULocationID': parse_pu_location_id,
+        'DOLocationID': parse_do_location_id,
+        # Locations (pre-2016).
+        'pickup_longitude': locations.parse_longitude,
+        'pickup_latitude': locations.parse_latitude,
+        'dropoff_longitude': locations.parse_longitude,
+        'dropoff_latitude': locations.parse_latitude,
+        # More fields.
+        'passenger_count': parse_3_passenger_count,
+        'trip_distance': parse_4_trip_distance,
+        'RatecodeID': parse_5_rate_code,
+        'store_and_fwd_flag': parse_6_store_and_fwd,
+        'payment_type': parse_9_payment_type,
+        'fare_amount': parse_10_fare,
+        'extra': parse_11,
+        'mta_tax': parse_12,
+        'tip_amount': parse_13,
+        'tolls_amount': parse_14,
+        'improvement_surcharge': parse_15,
+        'total_amount': parse_16
+    }
+
     filename_format = 'yellow_tripdata_{0}-{1:02d}.csv'
+    column_values = {col_name: [] for col_name in column_dict.keys()}
+    invalid_rows = {col_name: [] for col_name in column_dict.keys()}
+
+    # For each year and each month, read in columns.
     for year in range(args.min_year, args.max_year + 1):
         for month in range(1, 13):
             filename = filename_format.format(year, month)
             filepath = os.path.join(args.input_dir, filename)
             print('Getting:', filepath)
 
-        # Feed values RDD to a parser.
+            columns = process_one_file(filepath)
+            for col, values, missing_rows in columns:
+                if col not in column_values:
+                    print('{0}: Unknown column: {1}'.format(filename, col))
+                    continue
+                column_values[col].append(values)
+                invalid_rows[col].append(missing_rows)
+
+    # After collecting columns, parse them all.
+    for col, values in column_values.items():
+        print('----- Analyzing Column: {0} -----'.format(col))
+
+        if len(values) == 0:
+            continue
+        all_values = sc.union(values) # All values from all items.
+        unique_values = all_values.map(lambda row: (row, 1)).reduceByKey(add)
+        parsed_values = unique_values.map(column_dict[col])
+
         # For each tuple returned by the parse_func, dup it to a csv
         # defined per column.
-        # if values is not None:
-        #     values = values.filter(keep_valid).map(to_csv)
-        #     if args.dump:
-        #         print('Column: {0}'.format(col))
-        #         for row in values.collect():
-        #             print(row)
-        #     else:
-        #         values.saveAsTextFile(
-        #                 args.save_path + '/{}.csv'.format(col))
-        #
-        # # Dump some of the invalid rows.
-        # for row in rows_non.collect():
-        #     print(row)
+        parsed_values = parsed_values.filter(drop_values).map(to_csv)
+        if args.dump:
+            for row in values.collect():
+                print(row)
+        else:
+            values.saveAsTextFile(args.save_path + '/{}.csv'.format(col))
+
+        # Dump some of the invalid rows.
+        for row in rows_non.take(100):
+            print(row)
         
 
 if __name__ == '__main__':
