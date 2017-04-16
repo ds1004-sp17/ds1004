@@ -18,7 +18,7 @@ time spark-submit column_analysis.py \
   --print_invalid_rows \
   --cache
 
-hdfs dfs -rm -r -f taxis_results/_tmp/
+#hdfs dfs -rm -r -f taxis_results/_tmp/
 
 echo 'Saved files available in:'
 hdfs -ls taxis_test_results/
