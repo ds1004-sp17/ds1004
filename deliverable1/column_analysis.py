@@ -374,6 +374,7 @@ def process_one_file(sc, filepath, whitelist_columns=None):
                 # Tag the invalid row so we know which file it's from.
 
         # Get all unique values and analyze.
+        col_id = i # Important to establish a closure.
         values = rows.map(lambda row: row[i])
 
         column_results.append((col, values, rows_missing_this_col))
