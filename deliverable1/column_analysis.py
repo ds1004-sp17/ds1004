@@ -419,7 +419,7 @@ WARNING WARNING WARNING
 
     # All the possible columns. Some years may only have a subset of columns.
     column_dict = {
-        'vendor_id': parse_0_vendor,
+        'vendor_id': parse_0_vendor, # 2013-2014 formatting.
         'VendorID': parse_0_vendor,
         # Date time column for 2014.
         'pickup_datetime': parse_1_pickup_datetime,
@@ -456,8 +456,11 @@ WARNING WARNING WARNING
         user_columns = set(args.columns.split(','))
 
     filename_format = 'yellow_tripdata_{0}-{1:02d}.csv'
-    column_values = {col_name: [] for col_name in column_dict.keys()}
-    invalid_rows = {col_name: [] for col_name in column_dict.keys()}
+    column_values = {}
+    invalid_rows = {}
+    for col in user_columns:
+        column_values[col] = []
+        invalid_rows[col] = []
 
     # For each year and each month, read in columns.
     for year in range(args.min_year, args.max_year + 1):
@@ -476,7 +479,8 @@ WARNING WARNING WARNING
 
     # After collecting columns, parse them all.
     for col, values in column_values.items():
-        print('----- Analyzing Column: {0} -----'.format(col))
+        print('----- Analyzing Column: {0} [{1}] -----'.format(
+            col, len(values)))
 
         if col not in user_columns or len(values) == 0:
             continue
