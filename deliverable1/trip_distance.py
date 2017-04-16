@@ -38,11 +38,24 @@ def csv_row_read(x):
     return next(csv.reader([x]))
 
 
-def filter_amount(x, ind, max_amount=200):
+def filter_amount(x, ind, max_amount=200.0):
     try:
         val = float(x[ind])
         if val > 0 and val < max_amount:
             return True
+        else:
+            return False
+    except:
+        return False
+
+
+def filter_distance(x, ind, max_distance=100.0):
+    try:
+        val = float(x[ind])
+        if val > 0 and val < max_distance:
+            return True
+        else:
+            return False
     except:
         return False
 
@@ -65,20 +78,23 @@ def main():
         filepaths = [x.strip() for x in filepaths]
 
     for filename in filepaths:
-        pickup_datetime_ind = 1
-        distance_ind = 4
 
         rdd = sc.textFile(filename, minPartitions=args.min_partitions)
         header = rdd.first() #extract header
         header_list = [x.lower().strip() for x in csv_row_read(header)]
         rdd = rdd.filter(lambda row: row != header)
 
+        pickup_datetime_ind = header_list.index('tpep_pickup_datetime')
+        distance_ind = header_list.index('trip_distance')
         total_amount_ind = header_list.index('total_amount')
 
         # Split into columns.
         all_rows = rdd.map(lambda x: csv_row_read(x))
         # Get rows that have the containing column.
         rows = all_rows.filter(lambda col: len(col) > total_amount_ind)
+
+        # Filter out outlier or invalid distance amounts
+        rows = rows.filter(lambda x: filter_distance(x, distance_ind))
 
         # Filter out invalid currency amounts
         rows = rows.filter(lambda x: filter_amount(x, total_amount_ind))
