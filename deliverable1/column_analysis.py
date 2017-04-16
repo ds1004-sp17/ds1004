@@ -22,7 +22,7 @@ parser.add_argument('--input_dir', type=str, default='public/taxis_test',
 parser.add_argument('--min_year', type=int, default=2013,
                     help='first year to begin parsing.')
 parser.add_argument('--max_year', type=int, default=2016,
-                    help='last year to begin parsing.')
+                    help='last year to begin parsing (inclusive).')
 parser.add_argument('--min_partitions', type=int, default=5,
                     help='minimum number of data partitions when loading')
 parser.add_argument('--tempfile_partitions', type=int, default=3,
