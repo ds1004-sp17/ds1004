@@ -67,7 +67,7 @@ def main():
         header = rdd.first() #extract header
         rdd = rdd.filter(lambda row: row != header)
 
-        header = [x.lower() for x in csv_row_read(header)]
+        header = [x.lower().strip() for x in csv_row_read(header)]
         total_amount_ind = header.index('total_amount')
 
         # Split into columns.
