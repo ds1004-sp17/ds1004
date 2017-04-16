@@ -7,14 +7,14 @@ module load pandas/0.18.1
 # Print this file out.
 cat run_test.sh
 
-hdfs dfs -mkdir taxis_results/
-hdfs dfs -rm -r -f taxis_results/*
+hdfs dfs -mkdir taxis_test_results/
+hdfs dfs -rm -r -f taxis_test_results/*
 
 time spark-submit column_analysis.py \
-  --input_dir /user/ch1751/public/taxis/ \
-  --save_path taxis_results/ \
+  --input_dir /user/ch1751/public/taxis_test/ \
+  --save_path taxis_test_results/ \
   --print_invalid_rows \
   --cache
 
 echo 'Saved files available in:'
-hdfs ls taxis_text_results/
+hdfs -ls taxis_test_results/
