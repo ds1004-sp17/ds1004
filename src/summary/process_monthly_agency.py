@@ -4,7 +4,7 @@ import os
 
 
 # create result folder to store figures if not exists
-result_dir = "result"
+result_dir = "../fig/agency"
 if not os.path.exists(result_dir):
      os.makedirs(result_dir)
 
@@ -16,14 +16,14 @@ def plot_nums_in_month_by_agency_year():
     filename = "nums_in_month_by_agency_year.txt"
     dic = {} # years * months
     min_year = 2010
-    max_year = 2017
+    max_year = 2016
     NMONTH = 12
 
     with open(filename, 'r') as f:
         for line in f:
             k, v = line.strip().split("\t")
             agency, y = k.split(", ")
-            if int(y) <= 2009:
+            if int(y) < min_year or int(y) > max_year:
                 continue
 
             m, n, avg = v.split(", ")
