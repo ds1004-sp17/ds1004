@@ -327,7 +327,7 @@ def csv_row_read(x):
 
 ################################################################################
 
-def process_one_file(filepath, whitelist_columns=None):
+def process_one_file(sc, filepath, whitelist_columns=None):
     '''Breaks a file into columns.
 
     Args:
@@ -343,7 +343,7 @@ def process_one_file(filepath, whitelist_columns=None):
     expected_year, expected_month = read_file_path(filepath)
 
     # Load the text file and split out the header.
-    rdd = sc.textFile(file_path, minPartitions=args.min_partitions)
+    rdd = sc.textFile(filepath, minPartitions=args.min_partitions)
     header_line = rdd.first()
     header = csv_row_read(header_line)
     # Filter empty lines and the header.
@@ -382,9 +382,30 @@ def main():
     print('='*80 + '\n' + 'BIG DATA TAXIS PARSER' + '\n' + '='*80)
 
     if args.dump and args.keep_valid_rate > 0.1:
-        print('\nWarning: --dump is set but keep_rate is {0}, which could \n'
-                'dump a lot of data into the terminal!'.format(
-                    args.keep_valid_rate))
+        warn_msg:'''
+WARNING WARNING WARNING
+
+Option --dump will print file contents to the terminal.
+Setting keep rate to a high value ({0}) may cause overload.
+This parser will dump the first 10k rows.
+
+WARNING WARNING WARNING
+'''
+        print(warn_msg.format(args.keep_valid_rate))
+        raw_input('Press Enter to continue, or Ctrl-C to quit')
+
+    if not args.dump and args.keep_valid_rate < 1.0 or \
+            args.keep_invalid_rate < 1.0:
+        warn_msg:'''
+WARNING WARNING WARNING
+
+Options --keep_valid/invalid_rates are set without --dump.
+These options are usually for controlling the stuff that gets
+printed to terminal. You probably want to set this at 1?
+
+WARNING WARNING WARNING
+'''
+        print(warn_msg.format(args.keep_valid_rate))
         raw_input('Press Enter to continue, or Ctrl-C to quit')
 
     # If your code calls out to other python files, add them here.
@@ -440,7 +461,7 @@ def main():
             filepath = os.path.join(args.input_dir, filename)
             print('Getting:', filepath)
 
-            columns = process_one_file(filepath, user_columns)
+            columns = process_one_file(sc, filepath, user_columns)
             for col, values, missing_rows in columns:
                 if col not in column_values:
                     print('{0}: Unknown column: {1}'.format(filename, col))
@@ -463,7 +484,7 @@ def main():
         # defined per column.
         parsed_values = parsed_values.filter(drop_values).map(to_csv)
         if args.dump:
-            for row in values.collect():
+            for row in all_values.take(1000):
                 print(row)
         else:
             values.saveAsTextFile(args.save_path + '/{}.csv'.format(col))
