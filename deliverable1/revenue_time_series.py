@@ -78,7 +78,7 @@ def main():
         # Filter out invalid currency amounts
         rows = rows.filter(lambda x: filter_amount)
 
-        values = rows.map(lambda x: (matches_date(x[pickup_datetime_ind])['year_month'], (1, x[total_amount_ind])))
+        values = rows.map(lambda x: (matches_date(x[pickup_datetime_ind])['year_month'], (1, float(x[total_amount_ind]))))
         values = values.reduceByKey(lambda x, y: (x[0]+y[0], x[1]+y[1]))
         values_list.append(values)
 
