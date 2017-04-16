@@ -71,6 +71,7 @@ def main():
         values_list.append(values)
 
     result = sc.union(values_list)
+    result = result.reduceByKey(add)
     result.saveAsTextFile(args.output_path)
 
 
