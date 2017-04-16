@@ -11,13 +11,15 @@ cat run_test.sh
 
 hdfs dfs -mkdir taxis_results/
 hdfs dfs -rm -r -f taxis_results/*
+hdfs dfs -mkdir taxis_results/_tmp/
 
 time spark-submit column_analysis.py \
   --input_dir /user/ch1751/public/taxis/ \
   --save_path taxis_results/ \
-  --print_invalid_rows \
-  --min_partitions 10 \
-  --cache
+  --tempdir taxis_results/_tmp \
+  --min_partitions 5
+
+hdfs dfs -rm -r -f taxis_results/_tmp/
 
 echo 'Saved files available in:'
 hdfs -ls taxis_results/

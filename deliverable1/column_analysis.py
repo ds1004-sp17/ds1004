@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import csv
 import re
+import uuid
 import argparse
 import os
 import random
@@ -38,6 +39,8 @@ parser.add_argument('--print_invalid_rows', action='store_true',
                     'is missing.')
 parser.add_argument('--loglevel', type=str, default='WARN',
                     help='log verbosity.')
+parser.add_argument('--tempdir', type=str, default='./_tmp',
+                    help='temporary file directory.')
 args = parser.parse_args()
 
 
@@ -344,8 +347,9 @@ def process_one_file(sc, filepath, whitelist_columns=None):
     Returns:
         a list of CSV line RDDs, one for each column.
 
-        Each column emits a tuple: (colname, RDD, invalid_rows) where the
-        second value are rows that don't contain this column.
+        Each column emits a tuple: (colname, values, invalid_rows)
+        'values' and 'invalid_rows' are paths to temporary files that contain
+        the data we want.
     '''
     # This helps date column validation.
     expected_year, expected_month = read_file_path(filepath)
@@ -379,6 +383,9 @@ def process_one_file(sc, filepath, whitelist_columns=None):
         if whitelist_columns and col not in whitelist_columns:
             continue
 
+        values_filename = os.path.join(args.tempdir, str(uuid.uuid1()))
+        invalid_rows_filename = os.path.join(args.tempdir, str(uuid.uuid1()))
+
         # Get rows that have the containing column.
         rows = all_rows.filter(filter_row_col_num(col_id))
         rows_missing_this_col = all_rows\
@@ -387,10 +394,17 @@ def process_one_file(sc, filepath, whitelist_columns=None):
                 .map(filepath_printer(filepath))
                 # Tag the invalid row so we know which file it's from.
 
-        # Get all unique values and analyze.
+        # Get all unique values.
         values = rows.map(col_getter(col_id))
+        # These are just strings; save to a text file.
+        values.saveAsTextFile(values_filename)
+        rows_missing_this_col.saveAsTextFile(invalid_rows_filename)
 
-        column_results.append(('' + col, values, rows_missing_this_col))
+        column_results.append(('' + col,
+            values_filename, invalid_rows_filename))
+
+    all_rows.unpersist()
+    del all_rows
     return column_results
 
 ################################################################################
@@ -500,23 +514,23 @@ WARNING WARNING WARNING
                 else:
                     # Unknown exception.
                     raise
-            for col, values, missing_rows in columns:
+            for col, values_file, missing_rows_file in columns:
                 if col not in column_values:
                     print('{0}: Unknown column: {1}'.format(filename, col))
                     continue
-                column_values[col].append(values)
-                invalid_rows[col].append(missing_rows)
+                column_values[col].append(values_file)
+                invalid_rows[col].append(missing_rows_file)
             file_count += 1
 
     # After collecting columns, parse them all.
-    for col, values in column_values.items():
+    for col, value_paths in column_values.items():
         print('----- Analyzing Column: {0} [found in {1}/{2} files] -----'.\
                 format(col, len(values), file_count))
 
         if col not in user_columns or len(values) == 0:
             continue
+        values = [sc.textFile(path) for path in value_paths]
         all_values = sc.union(values) # All values from all items.
-        all_invalids = sc.union(invalid_rows[col]) # All invalid rows.
         unique_values = all_values.map(lambda row: (row, 1)).reduceByKey(add)
         parsed_values = unique_values.map(column_dict[col])
 
@@ -535,6 +549,9 @@ WARNING WARNING WARNING
         # Dump some of the invalid rows.
         if args.print_invalid_rows:
             print('Here are some of the invalid rows:')
+            invalid_paths = invalid_rows[col]
+            invalid_files = [sc.textFile(path) for path in invalid_paths]
+            all_invalids = sc.union(invalid_files)
             for row in all_invalids.take(100):
                 print(row)
         
