@@ -50,7 +50,7 @@ lib/*
 
 metastore_db
 
-
+*.out
 data
 
 
