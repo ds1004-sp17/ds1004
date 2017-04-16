@@ -7,7 +7,7 @@ module load python/gnu/2.7.11
 module load pandas/0.18.1
 
 # Print this file out.
-cat run_test.sh
+cat run_real.sh
 
 hdfs dfs -mkdir taxis_results/
 hdfs dfs -rm -r -f taxis_results/*
