@@ -339,7 +339,7 @@ def parse_17_trip_type(x):
     else:
         try:
             int(key)
-            if key not in ('1','2')
+            if key not in ('1','2'):
                 semantic_type = 'out of range trip_type'
                 data_label = 'INVALID'
         except:
@@ -425,6 +425,7 @@ def process_one_file(sc, filepath, whitelist_columns=None):
         for col_id, icol in enumerate(header):
             col = icol.strip().lower()  # Fix capitalization issues in greens
             if whitelist_columns and col not in whitelist_columns:
+                print('----- {0}: Skipping column: {1} -----'.format(filepath, col))
                 continue
 
             values_filename = os.path.join(args.tempdir, str(uuid.uuid4()))
@@ -499,18 +500,21 @@ WARNING WARNING WARNING
     sc.addFile('taxi_zone_lookup.csv')
 
     # All the possible columns. Some years may only have a subset of columns.
+    # All columns should be lowercase.
     column_dict = {
         'vendor_id': parse_0_vendor, # 2013-2014 formatting.
-        'VendorID': parse_0_vendor,
+        'vendorid': parse_0_vendor,
         # Date time column for 2014.
         'pickup_datetime': parse_1_pickup_datetime,
         'dropoff_datetime': parse_2_dropoff_datetime,
         # Date time column for 2015-2016.
         'tpep_pickup_datetime': parse_1_pickup_datetime,
         'tpep_dropoff_datetime': parse_2_dropoff_datetime,
+        'lpep_pickup_datetime': parse_1_pickup_datetime,
+        'lpep_dropoff_datetime': parse_2_dropoff_datetime,
         # Locations.
-        'PULocationID': parse_pu_location_id,
-        'DOLocationID': parse_do_location_id,
+        'pulocationid': parse_pu_location_id,
+        'dolocationid': parse_do_location_id,
         # Locations (pre-2016).
         'pickup_longitude': locations.parse_longitude,
         'pickup_latitude': locations.parse_latitude,
@@ -530,19 +534,22 @@ WARNING WARNING WARNING
         'improvement_surcharge': parse_15_improvement,
         'total_amount': parse_16_total,
         # Green taxis only.
-        'Trip_type': parse_17_trip_type,
-        'Ehail_fee': parse_18_ehail_fee,
+        'trip_type': parse_17_trip_type,
+        'ehail_fee': parse_18_ehail_fee,
     }
+    for colname in column_dict.keys():
+        assert colname == colname.lower()
 
     user_columns = set(column_dict.keys())
     if args.columns:
         print('Only doing columns:', args.columns)
-        user_columns = set(args.columns.split(','))
+        user_columns = set(args.columns.lower().split(','))
 
     filename_format = args.taxi_type + '_tripdata_{0}-{1:02d}.csv'
     column_values = {}
     invalid_rows = {}
     for col in user_columns:
+        col = col.lower()
         column_values[col] = []
         invalid_rows[col] = []
 
@@ -592,11 +599,14 @@ WARNING WARNING WARNING
 
     # After collecting columns, parse them all.
     for col, value_paths in column_values.items():
+        if col not in user_columns:
+            continue
         print('----- Analyzing Column: {0} [found in {1}/{2} files] -----'.\
                 format(col, len(value_paths), file_count))
-
-        if col not in user_columns or len(value_paths) == 0:
+        if len(value_paths) == 0:
             continue
+        col = col.lower()
+
         values = [sc.textFile(path, minPartitions=args.tempfile_partitions)\
                 for path in value_paths]
         all_values = sc.union(values) # All values from all items.
