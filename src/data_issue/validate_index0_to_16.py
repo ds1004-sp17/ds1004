@@ -29,7 +29,7 @@ if __name__ == "__main__":
 	unique_key = line.map(lambda x: (x[0].encode('utf-8')))\
 					.map(lambda x:verificate_unique_key(x))\
 					.map(lambda x: str(x[0])+", Plain Text, Unique identifier of a Service Request (SR) in the open data set, " + str(x[1]))\
-					.saveAsTextFile("00_uniquekey.out")
+					.saveAsTextFile("valid_0.out")
 
 	# Index[1]
 	def verificate_date_related(date):
@@ -52,13 +52,13 @@ if __name__ == "__main__":
 	created_date = line.map(lambda x: (x[1].encode('utf-8')))\
 					.map(lambda x: verificate_date_related(x))\
 					.map(lambda x: str(x[0])+", Date & Time, Date SR was created, " + str(x[1]))\
-					.saveAsTextFile("01_created_date.out")
+					.saveAsTextFile("valid_1.out")
 
 	# Index[2]
 	close_date = line.map(lambda x: (x[2].encode('utf-8')))\
 					.map(lambda x:verificate_date_related(x))\
 					.map(lambda x: str(x[0])+", Date & Time, Date SR was closed by responding agency, " + str(x[1]))\
-					.saveAsTextFile("02_close_date.out")
+					.saveAsTextFile("valid_2.out")
 
 	
 	def general_verificate(contents):
@@ -75,32 +75,32 @@ if __name__ == "__main__":
 	agency = line.map(lambda x: (x[3].encode('utf-8')))\
 					.map(lambda x:general_verificate(x))\
 					.map(lambda x: str(x[0])+", Plain Text, Acronym of responding City Government Agency, " + str(x[1]))\
-					.saveAsTextFile("03_agency.out")
+					.saveAsTextFile("valid_3.out")
 
 
 	# Index[4]
 	agency_name = line.map(lambda x: (x[4].encode('utf-8')))\
 					.map(lambda x:general_verificate(x))\
 					.map(lambda x: str(x[0])+", Plain Text, This is the fist level of a hierarchy identifying the topic of the incident or condition. Complaint Type may have a corresponding Descriptor (below) or may stand alone, " + str(x[1]))\
-					.saveAsTextFile("04_agency_name.out")
+					.saveAsTextFile("valid_4.out")
 
 	# Index[5]
 	complaint_type = line.map(lambda x: (x[5].encode('utf-8')))\
 					.map(lambda x:general_verificate(x))\
 					.map(lambda x: str(x[0])+", Plain Text, Full Agency name of responding City Government Agency, " + str(x[1]))\
-					.saveAsTextFile("05_complaint_type.out")
+					.saveAsTextFile("valid_5.out")
 
 	# Index[6]
 	descriptor = line.map(lambda x:(x[6].encode('utf-8')))\
 						.map(lambda x:general_verificate(x))\
 						.map(lambda x: str(x[0])+", Plain Text, This is associated to the Complaint Type, and provides further detail on the incident or condition. Descriptor values are dependent on the Complaint Type, and are not always required in SR, " + str(x[1]))\
-						.saveAsTextFile("06_descriptor.out")
+						.saveAsTextFile("valid_6.out")
 
 	# Index[7]
 	location_type = line.map(lambda x:(x[7].encode('utf-8')))\
 						.map(lambda x:general_verificate(x))\
 						.map(lambda x: str(x[0])+", Plain Text, Describes the type of location used in the address information, " + str(x[1]))\
-						.saveAsTextFile("07_location_type.out")
+						.saveAsTextFile("valid_7.out")
 
 
 	# Index[8]
@@ -124,60 +124,60 @@ if __name__ == "__main__":
 	incident_zip = line.map(lambda x:(x[8].encode('utf-8')))\
 						.map(lambda x:verificate_incident_zip(x))\
 						.map(lambda x: str(x[0])+", Plain Text, Incident location zip code, provided by geo validation, " + str(x[1]))\
-						.saveAsTextFile("08_incident_zip.out")
+						.saveAsTextFile("valid_8.out")
 
 	# Index[9]
 	incident_address = line.map(lambda x:(x[9].encode('utf-8')))\
 						.map(lambda x:general_verificate(x))\
 						.map(lambda x: str(x[0])+", Plain Text, House number of incident address provided by submitter, " + str(x[1]))\
-						.saveAsTextFile("09_incident_address.out")
+						.saveAsTextFile("valid_9.out")
 
 	# Index[10]
 	street_name = line.map(lambda x:(x[10].encode('utf-8')))\
 						.map(lambda x:general_verificate(x))\
 						.map(lambda x: str(x[0])+", Plain Text, Street name of incident address provided by the submitter, " + str(x[1]))\
-						.saveAsTextFile("10_street_name.out")
+						.saveAsTextFile("valid_10.out")
 
 	# Index[11]
 	cross_st_01 = line.map(lambda x:(x[11].encode('utf-8')))\
 						.map(lambda x:general_verificate(x))\
 						.map(lambda x: str(x[0])+", Plain Text, First Cross street based on the geo validated incident location, " + str(x[1]))\
-						.saveAsTextFile("11_cross_st_01.out")
+						.saveAsTextFile("valid_11.out")
 
 
 	# Index[12]
 	cross_st_02 = line.map(lambda x:(x[12].encode('utf-8')))\
 						.map(lambda x:general_verificate(x))\
 						.map(lambda x: str(x[0])+", Plain Text, Second Cross Street based on the geo validated incident location, " + str(x[1]))\
-						.saveAsTextFile("12_cross_st_02.out")
+						.saveAsTextFile("valid_12.out")
 
 
 	# Index[13]
 	intersection_st_01 = line.map(lambda x:(x[13].encode('utf-8')))\
 							.map(lambda x:general_verificate(x))\
 							.map(lambda x: str(x[0])+", Plain Text, First intersecting street based on geo validated incident location, " + str(x[1]))\
-							.saveAsTextFile("13_intersection_st_01.out")
+							.saveAsTextFile("valid_13.out")
 
 
 	# Index[14]
 	intersection_st_02 = line.map(lambda x:(x[14].encode('utf-8')))\
 							.map(lambda x:general_verificate(x))\
 							.map(lambda x: str(x[0])+", Plain Text, Second intersecting street based on geo validated incident location, " + str(x[1]))\
-							.saveAsTextFile("14_intersection_st_02.out")
+							.saveAsTextFile("valid_14.out")
 
 
 	# Index[15]
 	address_type = line.map(lambda x:(x[15].encode('utf-8')))\
 						.map(lambda x:general_verificate(x))\
 						.map(lambda x: str(x[0])+", Plain Text, Type of incident location information available, " + str(x[1]))\
-						.saveAsTextFile("15_address_type.out")
+						.saveAsTextFile("valid_15.out")
 
 
 	# Index[16]
 	city = line.map(lambda x:(x[16].encode('utf-8')))\
 				.map(lambda x:general_verificate(x))\
 				.map(lambda x: str(x[0])+", Plain Text, City of the incident location provided by geovalidation, " + str(x[1]))\
-				.saveAsTextFile("16_city.out")
+				.saveAsTextFile("valid_16.out")
 	
 	sc.stop()
 
