@@ -84,7 +84,7 @@ def main():
         header_list = [x.lower().strip() for x in csv_row_read(header)]
         rdd = rdd.filter(lambda row: row != header)
 
-        pickup_datetime_ind = header_list.index('tpep_pickup_datetime')
+        pickup_datetime_ind = 1
         distance_ind = header_list.index('trip_distance')
         total_amount_ind = header_list.index('total_amount')
 
