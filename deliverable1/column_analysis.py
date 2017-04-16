@@ -51,7 +51,13 @@ parser.add_argument('--loglevel', type=str, default='WARN',
                     help='log verbosity.')
 parser.add_argument('--tempdir', type=str, default='./_tmp',
                     help='temporary file directory.')
+parser.add_argument('--taxi_type', type=str, default='yellow',
+                    help='taxi type (either yellow or green)')
 args = parser.parse_args()
+
+
+if args.taxi_type not in ['yellow', 'green']:
+    raise ValueError('Invalid taxi type.')
 
 
 # Find out which year/month we're dealing with.
@@ -325,6 +331,30 @@ def parse_16_total(x):
     return (key, base_type, semantic_type, data_label, occur_count)
 
 
+def parse_17_trip_type(x):
+    key, occur_count = x
+    base_type, semantic_type, data_label = 'INT', 'trip_type', 'VALID'
+    if key is None:
+        base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
+    else:
+        try:
+            int(key)
+            if key not in ('1','2')
+                semantic_type = 'out of range trip_type'
+                data_label = 'INVALID'
+        except:
+            base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
+
+def parse_18_ehail_fee(x):
+    # We don't know anything about ehail_fee, so just pass it through.
+    key, occur_count = x
+    base_type, semantic_type, data_label = 'STRING', 'unknown', 'UNKNOWN'
+    if key is None:
+        base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
 
 ################################################################################
 
@@ -393,7 +423,7 @@ def process_one_file(sc, filepath, whitelist_columns=None):
         # Split off each column and analyze.
         column_results = []
         for col_id, icol in enumerate(header):
-            col = icol.strip() # Closure
+            col = icol.strip().lower()  # Fix capitalization issues in greens
             if whitelist_columns and col not in whitelist_columns:
                 continue
 
@@ -498,7 +528,10 @@ WARNING WARNING WARNING
         'tip_amount': parse_13_tip,
         'tolls_amount': parse_14_tolls,
         'improvement_surcharge': parse_15_improvement,
-        'total_amount': parse_16_total
+        'total_amount': parse_16_total,
+        # Green taxis only.
+        'Trip_type': parse_17_trip_type,
+        'Ehail_fee': parse_18_ehail_fee,
     }
 
     user_columns = set(column_dict.keys())
@@ -506,7 +539,7 @@ WARNING WARNING WARNING
         print('Only doing columns:', args.columns)
         user_columns = set(args.columns.split(','))
 
-    filename_format = 'yellow_tripdata_{0}-{1:02d}.csv'
+    filename_format = args.taxi_type + '_tripdata_{0}-{1:02d}.csv'
     column_values = {}
     invalid_rows = {}
     for col in user_columns:
