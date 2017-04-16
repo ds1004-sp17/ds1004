@@ -3,8 +3,35 @@ from pyspark import SparkContext
 from operator import add
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),'..')))
-from utils import sum_none, check_datetime, get_date2
+
+
+def check_datetime(dt):
+    try:
+        d = datetime.strptime(dt, "%m/%d/%Y %I:%M:%S %p")
+        if d.year < 2009 or d.year > 2017:
+            return False
+    except ValueError:
+        return False
+
+    return True
+
+def sum_none(x):
+    s = 0
+    for i in x:
+        if i == None:
+            s = s
+        else:
+            s += i
+    return s
+
+def get_date(dt):
+    d = datetime.strptime(dt, "%m/%d/%Y %I:%M:%S %p")
+    return str(d.year), str(d.month), str(d.day)
+
+
+def get_date2(dt):
+    d = datetime.strptime(dt, "%m/%d/%Y %I:%M:%S %p")
+    return str(d.date())
 
 
 if __name__ == "__main__":
