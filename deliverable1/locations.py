@@ -15,6 +15,11 @@ def process_location_id(pair):
         return (value, 'STRING', 'invalid location id', 'INVALID', occ)
     if intval not in unique_location_ids:
         return (value, 'INTEGER', 'ID for nonexistent location', 'INVALID', occ)
+    # There are special location IDs for invalid values.
+    if intval == 264:
+        return (value, 'NULL', 'Unknown Value (NV)', 'INVALID', occ)
+    if intval == 265:
+        return (value, 'NULL', 'Unknown Value (NA)', 'INVALID', occ)
     return (value, 'INTEGER', 'Location ID', 'VALID', occ)
 
 def parse_latitude(pair):
