@@ -22,6 +22,6 @@ time spark-submit column_analysis.py \
 hdfs dfs -rm -r -f taxis_results/_tmp/
 
 echo 'Saved files available in:'
-hdfs -ls taxis_results/
+hdfs dfs -ls taxis_results/
 
 #### THIS RUNS ON THE ENTIRE TAXIS DATASET ####
