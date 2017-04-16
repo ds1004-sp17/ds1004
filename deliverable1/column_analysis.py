@@ -488,7 +488,7 @@ WARNING WARNING WARNING
 
     # After collecting columns, parse them all.
     for col, values in column_values.items():
-        print('----- Analyzing Column: {0} [{1}] -----'.format(
+        print('----- Analyzing Column: {0} [found in {1} files] -----'.format(
             col, len(values)))
 
         if col not in user_columns or len(values) == 0:
@@ -506,7 +506,7 @@ WARNING WARNING WARNING
             for row in parsed_values.take(1000):
                 print(row)
         else:
-            values.saveAsTextFile(args.save_path + '/{}.csv'.format(col))
+            parsed_values.saveAsTextFile(args.save_path + '/{}.csv'.format(col))
 
         # Dump some of the invalid rows.
         if args.print_invalid_rows:
