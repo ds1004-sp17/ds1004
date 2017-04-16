@@ -49,13 +49,14 @@ def main():
         filepaths = [x.strip() for x in filepaths]
 
     for col, filt in (('total_amount', 5), ('tolls_amount', 1),('tip_amount', 1),('fare_amount',5)):
+        values_list = []
         for filename in filepaths:
             rdd = sc.textFile(filename, minPartitions=args.min_partitions)
             header = rdd.first() #extract header
             header_list = [x.lower().strip() for x in csv_row_read(header)]
             rdd = rdd.filter(lambda row: row != header)
 
-            ind = header_list.index('total_amount')
+            ind = header_list.index(col)
 
             all_rows = rdd.map(lambda x: csv_row_read(x))
             rows = all_rows.filter(lambda col: len(col) >= ind)
