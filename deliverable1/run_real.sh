@@ -17,7 +17,8 @@ time spark-submit column_analysis.py \
   --input_dir /user/ch1751/public/taxis/ \
   --save_path taxis_results/ \
   --tempdir taxis_results/_tmp \
-  --min_partitions 5
+  --cache \
+  --min_partitions 20
 
 hdfs dfs -rm -r -f taxis_results/_tmp/
 
