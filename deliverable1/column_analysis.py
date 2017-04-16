@@ -24,7 +24,8 @@ parser.add_argument('--min_year', type=int, default=2013,
 parser.add_argument('--max_year', type=int, default=2016,
                     help='parse up to this year (inclusive).')
 parser.add_argument('--min_partitions', type=int, default=5,
-                    help='minimum number of data partitions when loading')
+                    help='minimum number of data partitions when loading raw '
+                    'data for a single month')
 parser.add_argument('--tempfile_partitions', type=int, default=3,
                     help='minimum number of data partitions for the per-month/'
                     'per-column temp files.')
