@@ -360,21 +360,21 @@ def process_one_file(sc, filepath, whitelist_columns=None):
 
     # Split off each column and analyze.
     column_results = []
-    for i, col in enumerate(header):
-        col = col.strip()
+    for i, icol in enumerate(header):
+        col = icol.strip() # Closure
+        col_id = i # Important to establish a closure.
         if whitelist_columns and col not in whitelist_columns:
             continue
 
         # Get rows that have the containing column.
-        rows = all_rows.filter(lambda col: len(col) > i)
+        rows = all_rows.filter(lambda col: len(col) > col_id)
         rows_missing_this_col = all_rows\
-                .filter(lambda col: len(col) <= i)\
+                .filter(lambda col: len(col) <= col_id)\
                 .map(to_csv)\
                 .map(lambda line: filepath + ':' + line)
                 # Tag the invalid row so we know which file it's from.
 
         # Get all unique values and analyze.
-        col_id = i # Important to establish a closure.
         values = rows.map(lambda row: row[col_id])
 
         column_results.append((col, values, rows_missing_this_col))
