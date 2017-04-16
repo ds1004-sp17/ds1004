@@ -375,7 +375,7 @@ def process_one_file(sc, filepath, whitelist_columns=None):
 
         # Get all unique values and analyze.
         col_id = i # Important to establish a closure.
-        values = rows.map(lambda row: row[i])
+        values = rows.map(lambda row: row[col_id])
 
         column_results.append((col, values, rows_missing_this_col))
     return column_results
