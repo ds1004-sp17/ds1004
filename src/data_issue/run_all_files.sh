@@ -5,7 +5,7 @@ export PYTHONHASHSEED=0
 export SPARK_YARN_USER_ENV=PYTHONHASHSEED=0
 
 # The input csv file
-filename = "$2"
+filename="$1"
 
 mkdir basic_out
 spark-submit basic_statistics_info.py "$filename"
