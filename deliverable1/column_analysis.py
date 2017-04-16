@@ -500,7 +500,9 @@ WARNING WARNING WARNING
 
         # For each tuple returned by the parse_func, dup it to a csv
         # defined per column.
-        parsed_values = parsed_values.filter(drop_values).map(to_csv)
+        parsed_values = parsed_values\
+                .sortBy(lambda row: row[0])\
+                .filter(drop_values).map(to_csv)
         if args.dump:
             print('Some tagged rows:')
             for row in parsed_values.take(1000):
