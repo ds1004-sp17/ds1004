@@ -3,6 +3,7 @@ from pyspark import SparkContext
 from operator import add
 import sys
 import os
+from datetime import datetime
 
 def check_datetime(dt):
     try:
