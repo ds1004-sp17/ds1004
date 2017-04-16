@@ -20,9 +20,9 @@ parser = argparse.ArgumentParser(description='Big Data Taxi Parser')
 parser.add_argument('--input_dir', type=str, default='public/taxis_test',
                     help='location of csv files in HDFS.')
 parser.add_argument('--min_year', type=int, default=2013,
-                    help='first year to begin parsing.')
+                    help='parse from this year.')
 parser.add_argument('--max_year', type=int, default=2016,
-                    help='last year to begin parsing (inclusive).')
+                    help='parse up to this year (inclusive).')
 parser.add_argument('--min_partitions', type=int, default=5,
                     help='minimum number of data partitions when loading')
 parser.add_argument('--tempfile_partitions', type=int, default=3,
