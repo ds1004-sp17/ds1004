@@ -48,20 +48,21 @@ def _process(pair):
         pair: (date_string, occurrence_count)
     Returns:
         row: a list/tuple of values to be csv'ed. Columns:
-             (value, base_type, semantic_data_type, label)'''
+             (value, base_type, semantic_data_type, label)
+        date: the parsed date, for further analysis. If parse failed,
+            this value is None.'''
 
-    date_string, occurrence_count = pair
+    date_string, occur_count = pair
     if date_string is None:
-        return (None, 'NULL', 'missing value', 'INVALID'), \
-                occurrence_count, None
+        return (None, 'NULL', 'missing value', 'INVALID', occur_count), None
 
     date = matches_date(date_string)
     if not date:
-        return (date_string, 'STRING', 'unknown value', 'INVALID'), \
-                occurrence_count, None
+        return (date_string, 'STRING', 'invalid date', 'INVALID',
+                occur_count), None
 
-    return (date_string, 'STRING', 'date and time value', 'VALID'), \
-            occurrence_count, date
+    return (date_string, 'STRING', 'date and time value', 'VALID',
+            occur_count), date
 
 def process_pickup(pair, expected_year, expected_month):
     '''Process pickup dates.
@@ -72,10 +73,10 @@ def process_pickup(pair, expected_year, expected_month):
     Returns:
         row: Tuple of values in the correct format.'''
 
-    row, occurrence, date = _process(pair)
+    row, date = _process(pair)
     if not date:
         return row
-    (date_string, base_type, semantic_type, validity) = row
+    (date_string, base_type, semantic_type, validity, occurrence) = row
     semantic_type = 'valid pickup date'
     # Check if value is within desired date range.
     # Pickup dates should be strictly inside the date range.
@@ -83,7 +84,7 @@ def process_pickup(pair, expected_year, expected_month):
         if date['year'] != expected_year or date['month'] != expected_month:
             semantic_type = 'pickup date (out of range for file)'
             validity = 'INVALID'
-    return (date_string, base_type, semantic_type, validity)
+    return (date_string, base_type, semantic_type, validity, occurrence)
 
 
 def process_dropoff(pair, expected_year, expected_month):
@@ -95,10 +96,10 @@ def process_dropoff(pair, expected_year, expected_month):
     Returns:
         row: Tuple of values in the correct format.'''
 
-    row, occurrence, date = _process(pair)
+    row, date = _process(pair)
     if not date:
         return row
-    (date_string, base_type, semantic_type, validity) = row
+    (date_string, base_type, semantic_type, validity, occurrence) = row
     # Check if value is within desired date range.
     # Pickup dates should be strictly inside the date range.
     semantic_type = 'valid dropoff date'
@@ -116,10 +117,5 @@ def process_dropoff(pair, expected_year, expected_month):
             # Any other date, we deem it invalid.
             semantic_type = 'dropoff date (out of range for file)'
             validity = 'INVALID'
-    return (date_string, base_type, semantic_type, validity)
-
-#def process_dropoff(pair):
-
-
-#def process_dropoff(pair):
+    return (date_string, base_type, semantic_type, validity, occurrence)
 
