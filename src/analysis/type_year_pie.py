@@ -17,12 +17,12 @@ if __name__ == "__main__":
 					  .mapPartitions(lambda x: reader(x, delimiter = ',',quotechar = '"'))
 
 	## number of complaint by agency each day in years
-	type__year_pie = complaints.filter(lambda x : check_datetime(x[1])) \
+	type_year_pie = complaints.filter(lambda x : check_datetime(x[1])) \
           .map(lambda x: ((get_date(x[1])[0],x[5]), 1)) \
           .foldByKey(0, add) \
           .map(lambda x : "%s,%s,%d" % (x[0][0], x[0][1], x[1]))
 
 
-	type__year_pie.saveAsTextFile("type__year_pie.out")
+	type_year_pie.saveAsTextFile("type_year_pie.out")
 
 	sc.stop()
