@@ -38,6 +38,6 @@ def parse_longitude(pair):
     if lng < -90.0 or lng > 90.0:
         return (value, 'FLOAT', 'invalid longitude value.', 'INVALID', occ)
     if lng < latlng_bound_min[1] or lng > latlng_bound_max[1]:
-        return (value, 'FLOAT', 'valid outlier longitude.', 'OUTLIER' occ)
+        return (value, 'FLOAT', 'valid outlier longitude.', 'OUTLIER', occ)
     return (value, 'FLOAT', 'valid longitude', 'VALID', occ)
 

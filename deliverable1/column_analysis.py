@@ -29,6 +29,8 @@ parser.add_argument('--keep_valid_rate', type=float, default=1.0,
                     help='how many valid values to keep (for debugging).')
 parser.add_argument('--keep_invalid_rate', type=float, default=1.0,
                     help='how many invalid values to keep (for debugging).')
+parser.add_argument('--columns', type=str, default=None,
+                    help='what columns to run analysis for (default all)')
 parser.add_argument('--loglevel', type=str, default='WARN',
                     help='log verbosity.')
 args = parser.parse_args()
@@ -325,11 +327,12 @@ def csv_row_read(x):
 
 ################################################################################
 
-def process_one_file(filepath):
+def process_one_file(filepath, whitelist_columns=None):
     '''Breaks a file into columns.
 
     Args:
         filepath: string, where to get the file
+        whitelist_columns: only analyze these columns.
     Returns:
         a list of CSV line RDDs, one for each column.
 
@@ -353,14 +356,16 @@ def process_one_file(filepath):
     column_results = []
     for i, col in enumerate(header):
         col = col.strip()
+        if whitelist_columns and col not in whitelist_columns:
+            continue
 
         # Get rows that have the containing column.
         rows = all_rows.filter(lambda col: len(col) > i)
         rows_missing_this_col = all_rows\
                 .filter(lambda col: len(col) <= i)\
                 .map(to_csv)\
-                # Tag the invalid row so we know which file it's from.
                 .map(lambda line: filepath + ':' + line)
+                # Tag the invalid row so we know which file it's from.
 
         # Get all unique values and analyze.
         values = rows.map(lambda row: row[i])
@@ -419,6 +424,11 @@ def main():
         'total_amount': parse_16
     }
 
+    user_columns = set(column_dict.keys())
+    if args.columns:
+        print('Only doing columns:', args.columns)
+        user_columns = set(args.columns.split(','))
+
     filename_format = 'yellow_tripdata_{0}-{1:02d}.csv'
     column_values = {col_name: [] for col_name in column_dict.keys()}
     invalid_rows = {col_name: [] for col_name in column_dict.keys()}
@@ -430,7 +440,7 @@ def main():
             filepath = os.path.join(args.input_dir, filename)
             print('Getting:', filepath)
 
-            columns = process_one_file(filepath)
+            columns = process_one_file(filepath, user_columns)
             for col, values, missing_rows in columns:
                 if col not in column_values:
                     print('{0}: Unknown column: {1}'.format(filename, col))
@@ -442,9 +452,10 @@ def main():
     for col, values in column_values.items():
         print('----- Analyzing Column: {0} -----'.format(col))
 
-        if len(values) == 0:
+        if col not in user_columns or len(values) == 0:
             continue
         all_values = sc.union(values) # All values from all items.
+        all_invalids = sc.union(invalid_rows[col]) # All invalid rows.
         unique_values = all_values.map(lambda row: (row, 1)).reduceByKey(add)
         parsed_values = unique_values.map(column_dict[col])
 
@@ -458,7 +469,7 @@ def main():
             values.saveAsTextFile(args.save_path + '/{}.csv'.format(col))
 
         # Dump some of the invalid rows.
-        for row in rows_non.take(100):
+        for row in all_invalids.take(100):
             print(row)
         
 
