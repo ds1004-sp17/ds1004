@@ -12,6 +12,5 @@ hdfs dfs -rm -r -f taxis_test_results/*
 time spark-submit column_analysis.py \
   --input_dir /user/ch1751/public/taxis_test/ \
   --save_path taxis_test_results/ \
-  --keep_valid_rate 1e-5 \
   --keep_invalid_rate 0.1 \
   --dump

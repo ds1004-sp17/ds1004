@@ -31,6 +31,9 @@ parser.add_argument('--keep_invalid_rate', type=float, default=1.0,
                     help='how many invalid values to keep (for debugging).')
 parser.add_argument('--columns', type=str, default=None,
                     help='what columns to run analysis for (default all)')
+parser.add_argument('--print_invalid_rows', action='store_true',
+                    help='for each column, print some rows where the column '
+                    'is missing.')
 parser.add_argument('--loglevel', type=str, default='WARN',
                     help='log verbosity.')
 args = parser.parse_args()
@@ -96,13 +99,16 @@ def parse_0_vendor(x):
             data_label = 'INVALID'
     return (key, base_type, semantic_type, data_label, occur_count)
 
+# These date parsers can actually check the date against the file name.
+# However the output format that we have (keyed by value) doesn't allow
+# us to take advantage of this. For example, 2015-02-01 can be valid or invalid
+# depending on whether it's in the February or July file.
 
 def parse_1_pickup_datetime(x):
-    return datetimes.process_pickup(x, expected_year, expected_month)
-
+    return datetimes.process_pickup(x, None, None)
 
 def parse_2_dropoff_datetime(x):
-    return datetimes.process_dropoff(x, expected_year, expected_month)
+    return datetimes.process_dropoff(x, None, None)
 
 # 'PULocationID': parse_7,
 def parse_pu_location_id(x):
@@ -387,12 +393,11 @@ WARNING WARNING WARNING
 
 Option --dump will print file contents to the terminal.
 Setting keep rate to a high value ({0}) may cause overload.
-This parser will dump the first 10k rows per column.
+This parser will dump the first 1k rows per column.
 
 WARNING WARNING WARNING
 '''
         print(warn_msg.format(args.keep_valid_rate))
-        raw_input('Press Enter to continue, or Ctrl-C to quit')
 
     if not args.dump and (args.keep_valid_rate < 1.0 or \
             args.keep_invalid_rate < 1.0):
@@ -406,7 +411,6 @@ printed to terminal. You probably want to set this at 1?
 WARNING WARNING WARNING
 '''
         print(warn_msg.format(args.keep_valid_rate))
-        raw_input('Press Enter to continue, or Ctrl-C to quit')
 
     # If your code calls out to other python files, add them here.
     sc.addPyFile('datetimes.py')
@@ -484,14 +488,17 @@ WARNING WARNING WARNING
         # defined per column.
         parsed_values = parsed_values.filter(drop_values).map(to_csv)
         if args.dump:
-            for row in all_values.take(1000):
+            print('Some tagged rows:')
+            for row in parsed_values.take(1000):
                 print(row)
         else:
             values.saveAsTextFile(args.save_path + '/{}.csv'.format(col))
 
         # Dump some of the invalid rows.
-        for row in all_invalids.take(100):
-            print(row)
+        if args.print_invalid_rows:
+            print('Here are some of the invalid rows:')
+            for row in all_invalids.take(100):
+                print(row)
         
 
 if __name__ == '__main__':
