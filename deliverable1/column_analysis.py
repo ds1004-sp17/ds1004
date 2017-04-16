@@ -313,12 +313,15 @@ def main():
         # Locations.
         'PULocationID': parse_pu_location_id,
         'DOLocationID': parse_do_location_id,
+        # Locations (pre-2016).
+        'pickup_longitude': locations.parse_longitude,
+        'pickup_latitude': locations.parse_latitude,
+        'dropoff_longitude': locations.parse_longitude,
+        'dropoff_latitude': locations.parse_latitude,
         # 'passenger_count': parse_3_passenger_count,
         # 'trip_distance': parse_4_trip_distance,
         # 'RatecodeID': parse_5_rate_code,
         # 'store_and_fwd_flag': parse_6_store_and_fwd,
-        # 'PULocationID': parse_7,
-        # 'DOLocationID': parse_8,
         # 'payment_type': parse_9_payment_type,
         # 'fare_amount': parse_10_fare,
         # 'extra': parse_11,
