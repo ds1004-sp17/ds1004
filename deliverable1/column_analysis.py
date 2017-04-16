@@ -416,12 +416,12 @@ def main():
         'store_and_fwd_flag': parse_6_store_and_fwd,
         'payment_type': parse_9_payment_type,
         'fare_amount': parse_10_fare,
-        'extra': parse_11,
-        'mta_tax': parse_12,
-        'tip_amount': parse_13,
-        'tolls_amount': parse_14,
-        'improvement_surcharge': parse_15,
-        'total_amount': parse_16
+        'extra': parse_11_extra,
+        'mta_tax': parse_12_tax,
+        'tip_amount': parse_13_tip,
+        'tolls_amount': parse_14_tolls,
+        'improvement_surcharge': parse_15_improvement,
+        'total_amount': parse_16_total
     }
 
     user_columns = set(column_dict.keys())
