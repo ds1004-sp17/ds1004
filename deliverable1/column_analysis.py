@@ -382,21 +382,21 @@ def main():
     print('='*80 + '\n' + 'BIG DATA TAXIS PARSER' + '\n' + '='*80)
 
     if args.dump and args.keep_valid_rate > 0.1:
-        warn_msg:'''
+        warn_msg = '''
 WARNING WARNING WARNING
 
 Option --dump will print file contents to the terminal.
 Setting keep rate to a high value ({0}) may cause overload.
-This parser will dump the first 10k rows.
+This parser will dump the first 10k rows per column.
 
 WARNING WARNING WARNING
 '''
         print(warn_msg.format(args.keep_valid_rate))
         raw_input('Press Enter to continue, or Ctrl-C to quit')
 
-    if not args.dump and args.keep_valid_rate < 1.0 or \
-            args.keep_invalid_rate < 1.0:
-        warn_msg:'''
+    if not args.dump and (args.keep_valid_rate < 1.0 or \
+            args.keep_invalid_rate < 1.0):
+        warn_msg = '''
 WARNING WARNING WARNING
 
 Options --keep_valid/invalid_rates are set without --dump.
