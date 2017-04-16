@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import csv
 import re
 import argparse
@@ -11,7 +13,7 @@ import locations
 from pyspark import SparkContext
 
 parser = argparse.ArgumentParser(description='Big Data Taxi Parser')
-parser.add_argument('--input_dir', type=str, default='test_inputs.txt',
+parser.add_argument('--input_dir', type=str, default='public/taxis_test',
                     help='location of csv files in HDFS.')
 parser.add_argument('--min_year', type=int, default=2013,
                     help='first year to begin parsing.')
@@ -27,6 +29,8 @@ parser.add_argument('--keep_valid_rate', type=float, default=1.0,
                     help='how many valid values to keep (for debugging).')
 parser.add_argument('--keep_invalid_rate', type=float, default=1.0,
                     help='how many invalid values to keep (for debugging).')
+parser.add_argument('--loglevel', type=str, default='WARN',
+                    help='log verbosity.')
 args = parser.parse_args()
 
 
@@ -355,14 +359,14 @@ def process_one_file(filepath):
 
     # Date column changes from 2015.
     if expected_year < 2015:
-        column_dict['pickup_datetime'] =
+        column_dict['pickup_datetime'] = \
             pickup_datetime_parser(expected_year, expected_month)
-        column_dict['dropoff_datetime'] =
+        column_dict['dropoff_datetime'] = \
             pickup_datetime_parser(expected_year, expected_month)
     else:
-        column_dict['tpep_pickup_datetime'] =
+        column_dict['tpep_pickup_datetime'] = \
             pickup_datetime_parser(expected_year, expected_month)
-        column_dict['tpep_dropoff_datetime'] =
+        column_dict['tpep_dropoff_datetime'] = \
             pickup_datetime_parser(expected_year, expected_month)
 
     # Locations are different before/after 2016.
@@ -409,6 +413,12 @@ def process_one_file(filepath):
 
 def main():
     sc = SparkContext()
+    sc.setLogLevel(args.loglevel)
+
+    if args.dump and args.keep_valid_rate > 0.1:
+        print('Warning: --dump is set but keep_rate is {0}, which could dump\n'
+                'a lot of data into the terminal!'.format(args.keep_valid_rate))
+        raw_input('Press Enter to continue, or Ctrl-C to quit')
 
     # If your code calls out to other python files, add them here.
     sc.addPyFile('datetimes.py')
