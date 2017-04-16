@@ -4,7 +4,7 @@ from operator import add
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),'..')))
-from utils import sum_none, check_datetime, get_date
+from analysis.utils import sum_none, check_datetime, get_date
 
 
 if __name__ == "__main__":
