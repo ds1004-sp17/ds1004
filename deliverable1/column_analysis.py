@@ -5,6 +5,7 @@ import random
 from cStringIO import StringIO
 from operator import add
 import datetimes
+import locations
 
 from pyspark import SparkContext
 
@@ -82,6 +83,13 @@ def parse_1_pickup_datetime(x):
 def parse_2_dropoff_datetime(x):
     return datetimes.process_dropoff(x, expected_year, expected_month)
 
+# 'PULocationID': parse_7,
+def parse_pu_location_id(x):
+    return locations.process_location_id(x)
+
+# 'DOLocationID': parse_8,
+def parse_do_location_id(x):
+    return locations.process_location_id(x)
 
 def parse_3_passenger_count(x):
     key, occur_count = x
@@ -302,6 +310,9 @@ def main():
         # Date time column for 2015.
         'tpep_pickup_datetime': parse_1_pickup_datetime,
         'tpep_dropoff_datetime': parse_2_dropoff_datetime,
+        # Locations.
+        'PULocationID': parse_pu_location_id,
+        'DOLocationID': parse_do_location_id,
         # 'passenger_count': parse_3_passenger_count,
         # 'trip_distance': parse_4_trip_distance,
         # 'RatecodeID': parse_5_rate_code,
@@ -322,6 +333,8 @@ def main():
 
     # If your code calls out to other python files, add them here.
     sc.addPyFile('datetimes.py')
+    sc.addPyFile('locations.py')
+    sc.addFile('taxi_zone_lookup.csv')
 
     rdd = sc.textFile(args.file_path, minPartitions=args.min_partitions)
     header_line = rdd.first()
