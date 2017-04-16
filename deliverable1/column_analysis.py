@@ -29,6 +29,8 @@ parser.add_argument('--keep_valid_rate', type=float, default=1.0,
                     help='how many valid values to keep (for debugging).')
 parser.add_argument('--keep_invalid_rate', type=float, default=1.0,
                     help='how many invalid values to keep (for debugging).')
+parser.add_argument('--cache', action='store_true', default=True,
+                    help='cache CSV-parsed rows to speed up processing')
 parser.add_argument('--columns', type=str, default=None,
                     help='what columns to run analysis for (default all)')
 parser.add_argument('--print_invalid_rows', action='store_true',
@@ -357,7 +359,10 @@ def process_one_file(sc, filepath, whitelist_columns=None):
 
     # Split each row into columns.
     all_rows = rdd.map(lambda x: csv_row_read(x))
+    if args.cache:
+        all_rows = all_rows.cache()
 
+    # These functions capture variable values (a closure)
     def filter_row_col_num(col_id):
         return (lambda row: len(row) > col_id)
     def filter_row_col_invalid(col_id):
@@ -421,6 +426,9 @@ WARNING WARNING WARNING
 '''
         print(warn_msg.format(args.keep_valid_rate))
 
+    if args.cache:
+        print('Using caching.')
+
     # If your code calls out to other python files, add them here.
     sc.addPyFile('datetimes.py')
     sc.addPyFile('locations.py')
@@ -472,24 +480,38 @@ WARNING WARNING WARNING
         invalid_rows[col] = []
 
     # For each year and each month, read in columns.
+    file_count = 0
     for year in range(args.min_year, args.max_year + 1):
         for month in range(1, 13):
             filename = filename_format.format(year, month)
             filepath = os.path.join(args.input_dir, filename)
             print('Getting:', filepath)
 
-            columns = process_one_file(sc, filepath, user_columns)
+            # Read columns from each file, then group columns together.
+            # Later, these columns are unioned and parsed together so their
+            # counts are merged.
+            try:
+                columns = process_one_file(sc, filepath, user_columns)
+            except Exception as e:
+                if 'Input path does not exist' in str(e):
+                    print('-------- File {0} does not exist!! ---------'\
+                            .format(filepath))
+                    continue
+                else:
+                    # Unknown exception.
+                    raise
             for col, values, missing_rows in columns:
                 if col not in column_values:
                     print('{0}: Unknown column: {1}'.format(filename, col))
                     continue
                 column_values[col].append(values)
                 invalid_rows[col].append(missing_rows)
+            file_count += 1
 
     # After collecting columns, parse them all.
     for col, values in column_values.items():
-        print('----- Analyzing Column: {0} [found in {1} files] -----'.format(
-            col, len(values)))
+        print('----- Analyzing Column: {0} [found in {1}/{2} files] -----'.\
+                format(col, len(values), file_count))
 
         if col not in user_columns or len(values) == 0:
             continue
