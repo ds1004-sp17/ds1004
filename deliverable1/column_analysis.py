@@ -105,7 +105,7 @@ def parse_0_vendor(x):
     base_type = 'INT'
     semantic_type = 'vendor id'
     data_label = 'VALID'  #VALID | NULL | INVALID
-    if key is None:
+    if key is None or len(key) == 0:
         base_type = 'NULL'
         semantic_type = 'unknown value'
         data_label = 'NULL'
@@ -142,7 +142,7 @@ def parse_do_location_id(x):
 def parse_3_passenger_count(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'INT', 'passenger count', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type = 'NULL'
         semantic_type = 'missing value'
         data_label = 'NULL'
@@ -161,7 +161,7 @@ def parse_3_passenger_count(x):
 def parse_4_trip_distance(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'FLOAT', 'distance (miles)', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type = 'NULL'
         semantic_type = 'missing value'
         data_label = 'NULL'
@@ -181,7 +181,7 @@ def parse_4_trip_distance(x):
 def parse_5_rate_code(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'INT', 'rate code id', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
@@ -200,7 +200,7 @@ def parse_5_rate_code(x):
 def parse_6_store_and_fwd(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'BOOLEAN', 'store and forward flag', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         if key not in ('Y', 'N'):
@@ -211,7 +211,7 @@ def parse_6_store_and_fwd(x):
 def parse_9_payment_type(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'INT', 'payment_type', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
@@ -226,7 +226,7 @@ def parse_9_payment_type(x):
 def parse_10_fare(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'FLOAT', 'extra charge (dollars)', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
@@ -241,7 +241,7 @@ def parse_10_fare(x):
 def parse_11_extra(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'FLOAT', 'extra charge (dollars)', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
@@ -256,7 +256,7 @@ def parse_11_extra(x):
 def parse_12_tax(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'FLOAT', 'mta tax (dollars)', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
@@ -271,7 +271,7 @@ def parse_12_tax(x):
 def parse_15_improvement(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'FLOAT', 'improvement surcharge (dollars)', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
@@ -286,7 +286,7 @@ def parse_15_improvement(x):
 def parse_13_tip(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'FLOAT', 'tip (dollars)', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
@@ -302,7 +302,7 @@ def parse_13_tip(x):
 def parse_14_tolls(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'FLOAT', 'tolls (dollars)', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
@@ -318,7 +318,7 @@ def parse_14_tolls(x):
 def parse_16_total(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'FLOAT', 'total (dollars)', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
@@ -334,7 +334,7 @@ def parse_16_total(x):
 def parse_17_trip_type(x):
     key, occur_count = x
     base_type, semantic_type, data_label = 'INT', 'trip_type', 'VALID'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     else:
         try:
@@ -351,7 +351,7 @@ def parse_18_ehail_fee(x):
     # We don't know anything about ehail_fee, so just pass it through.
     key, occur_count = x
     base_type, semantic_type, data_label = 'STRING', 'unknown', 'UNKNOWN'
-    if key is None:
+    if key is None or len(key) == 0:
         base_type, semantic_type, data_label = 'NULL', 'missing value', 'NULL'
     return (key, base_type, semantic_type, data_label, occur_count)
 

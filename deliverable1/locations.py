@@ -9,6 +9,8 @@ latlng_bound_max = (41.3163, -72.9223) # Yale, CT
 
 def process_location_id(pair):
     value, occ = pair
+    if value is None or len(value) == 0:
+        return (value, 'STRING', 'empty string', 'INVALID', occ)
     try:
         intval = int(value)
     except ValueError:
@@ -24,6 +26,8 @@ def process_location_id(pair):
 
 def parse_latitude(pair):
     value, occ = pair
+    if value is None or len(value) == 0:
+        return (value, 'STRING', 'empty string', 'INVALID', occ)
     try:
         lat = float(value)
     except ValueError:
@@ -36,6 +40,8 @@ def parse_latitude(pair):
 
 def parse_longitude(pair):
     value, occ = pair
+    if value is None or len(value) == 0:
+        return (value, 'STRING', 'empty string', 'INVALID', occ)
     try:
         lng = float(value)
     except ValueError:

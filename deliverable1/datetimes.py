@@ -53,7 +53,7 @@ def _process(pair):
             this value is None.'''
 
     date_string, occur_count = pair
-    if date_string is None:
+    if date_string is None or len(date_string) == 0:
         return (None, 'NULL', 'missing value', 'INVALID', occur_count), None
 
     date = matches_date(date_string)
