@@ -20,7 +20,7 @@
 *.tar
 *.zip
 
-Notes
+Notes/
 # Logs and databases #
 ######################
 *.log
@@ -43,8 +43,14 @@ lib/*
 *.pyc
 *.txt
 *.csv
+*.ipynb
 .*.crc
 .*.swp
 */result/*
+
+metastore_db
+
+
+data
 
 
