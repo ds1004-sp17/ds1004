@@ -13,4 +13,5 @@ time spark-submit column_analysis.py \
   --input_dir /user/ch1751/public/taxis_test/ \
   --save_path taxis_test_results/ \
   --keep_invalid_rate 0.1 \
+  --columns VendorID \
   --dump

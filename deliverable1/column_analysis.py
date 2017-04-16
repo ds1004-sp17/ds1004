@@ -358,26 +358,34 @@ def process_one_file(sc, filepath, whitelist_columns=None):
     # Split each row into columns.
     all_rows = rdd.map(lambda x: csv_row_read(x))
 
+    def filter_row_col_num(col_id):
+        return (lambda row: len(row) > col_id)
+    def filter_row_col_invalid(col_id):
+        return (lambda row: len(row) <= col_id)
+    def filepath_printer(filepath):
+        return (lambda line: filepath + ':' + line)
+    def col_getter(col_id):
+        return (lambda row: row[col_id])
+
     # Split off each column and analyze.
     column_results = []
-    for i, icol in enumerate(header):
+    for col_id, icol in enumerate(header):
         col = icol.strip() # Closure
-        col_id = i # Important to establish a closure.
         if whitelist_columns and col not in whitelist_columns:
             continue
 
         # Get rows that have the containing column.
-        rows = all_rows.filter(lambda col: len(col) > col_id)
+        rows = all_rows.filter(filter_row_col_num(col_id))
         rows_missing_this_col = all_rows\
-                .filter(lambda col: len(col) <= col_id)\
+                .filter(filter_row_col_invalid(col_id))\
                 .map(to_csv)\
-                .map(lambda line: filepath + ':' + line)
+                .map(filepath_printer(filepath))
                 # Tag the invalid row so we know which file it's from.
 
         # Get all unique values and analyze.
-        values = rows.map(lambda row: row[col_id])
+        values = rows.map(col_getter(col_id))
 
-        column_results.append((col, values, rows_missing_this_col))
+        column_results.append(('' + col, values, rows_missing_this_col))
     return column_results
 
 ################################################################################
