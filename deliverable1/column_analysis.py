@@ -6,6 +6,7 @@ import uuid
 import argparse
 import os
 import random
+import threading
 from cStringIO import StringIO
 from operator import add
 from multiprocessing.pool import ThreadPool
@@ -24,6 +25,9 @@ parser.add_argument('--max_year', type=int, default=2016,
                     help='last year to begin parsing.')
 parser.add_argument('--min_partitions', type=int, default=5,
                     help='minimum number of data partitions when loading')
+parser.add_argument('--tempfile_partitions', type=int, default=5,
+                    help='minimum number of data partitions for the per-month/'
+                    'per-column temp files.')
 parser.add_argument('--save_path', type=str, default='./',
                     help='directory in HDFS to save files to.')
 parser.add_argument('--dump', action='store_true',
@@ -32,8 +36,6 @@ parser.add_argument('--keep_valid_rate', type=float, default=1.0,
                     help='how many valid values to keep (for debugging).')
 parser.add_argument('--keep_invalid_rate', type=float, default=1.0,
                     help='how many invalid values to keep (for debugging).')
-parser.add_argument('--cache', action='store_true', default=True,
-                    help='cache CSV-parsed rows to speed up processing')
 parser.add_argument('--columns', type=str, default=None,
                     help='what columns to run analysis for (default all)')
 parser.add_argument('--print_invalid_rows', action='store_true',
@@ -340,6 +342,8 @@ def csv_row_read(x):
 
 ################################################################################
 
+lock = threading.Lock()
+
 def process_one_file(sc, filepath, whitelist_columns=None):
     '''Breaks a file into columns.
 
@@ -353,61 +357,69 @@ def process_one_file(sc, filepath, whitelist_columns=None):
         'values' and 'invalid_rows' are paths to temporary files that contain
         the data we want.
     '''
-    # This helps date column validation.
-    expected_year, expected_month = read_file_path(filepath)
+    lock.acquire()
+    released = False
+    try:
+        print('Getting:', filepath)
+        # This helps date column validation.
+        expected_year, expected_month = read_file_path(filepath)
 
-    # Load the text file and split out the header.
-    rdd = sc.textFile(filepath, minPartitions=args.min_partitions)
-    header_line = rdd.first()
-    header = csv_row_read(header_line)
-    # Filter empty lines and the header.
-    rdd = rdd.filter(lambda row: len(row) > 0 and row != header_line)
+        # Load the text file and split out the header.
+        rdd = sc.textFile(filepath, minPartitions=args.min_partitions)
+        header_line = rdd.first()
+        header = csv_row_read(header_line)
+        # Filter empty lines and the header.
+        rdd = rdd.filter(lambda row: len(row) > 0 and row != header_line)
 
-    # Split each row into columns.
-    all_rows = rdd.map(lambda x: csv_row_read(x))
-    if args.cache:
-        all_rows = all_rows.cache()
+        # Split each row into columns.
+        all_rows = rdd.map(lambda x: csv_row_read(x))
 
-    # These functions capture variable values (a closure)
-    def filter_row_col_num(col_id):
-        return (lambda row: len(row) > col_id)
-    def filter_row_col_invalid(col_id):
-        return (lambda row: len(row) <= col_id)
-    def filepath_printer(filepath):
-        return (lambda line: filepath + ':' + line)
-    def col_getter(col_id):
-        return (lambda row: row[col_id])
+        # These functions capture variable values (a closure)
+        def filter_row_col_num(col_id):
+            return (lambda row: len(row) > col_id)
+        def filter_row_col_invalid(col_id):
+            return (lambda row: len(row) <= col_id)
+        def filepath_printer(filepath):
+            return (lambda line: filepath + ':' + line)
+        def col_getter(col_id):
+            return (lambda row: row[col_id])
 
-    # Split off each column and analyze.
-    column_results = []
-    for col_id, icol in enumerate(header):
-        col = icol.strip() # Closure
-        if whitelist_columns and col not in whitelist_columns:
-            continue
+        # Split off each column and analyze.
+        column_results = []
+        for col_id, icol in enumerate(header):
+            col = icol.strip() # Closure
+            if whitelist_columns and col not in whitelist_columns:
+                continue
 
-        values_filename = os.path.join(args.tempdir, str(uuid.uuid4()))
-        invalid_rows_filename = os.path.join(args.tempdir, str(uuid.uuid4()))
+            values_filename = os.path.join(args.tempdir, str(uuid.uuid4()))
+            invalid_rows_filename = os.path.join(args.tempdir, str(uuid.uuid4()))
 
-        # Get rows that have the containing column.
-        rows = all_rows.filter(filter_row_col_num(col_id))
-        rows_missing_this_col = all_rows\
-                .filter(filter_row_col_invalid(col_id))\
-                .map(to_csv)\
-                .map(filepath_printer(filepath))
-                # Tag the invalid row so we know which file it's from.
+            # Get rows that have the containing column.
+            rows = all_rows.filter(filter_row_col_num(col_id))
+            rows_missing_this_col = all_rows\
+                    .filter(filter_row_col_invalid(col_id))\
+                    .map(to_csv)\
+                    .map(filepath_printer(filepath))
+                    # Tag the invalid row so we know which file it's from.
 
-        # Get all unique values.
-        values = rows.map(col_getter(col_id))
-        # These are just strings; save to a text file.
-        values.saveAsTextFile(values_filename)
-        rows_missing_this_col.saveAsTextFile(invalid_rows_filename)
+            # Get all unique values.
+            values = rows.map(col_getter(col_id))
+            lock.release()
+            released = True
+            # The heavy operations we can do in parallel.
+            # These are just strings; save to a text file.
+            values.saveAsTextFile(values_filename)
+            rows_missing_this_col.saveAsTextFile(invalid_rows_filename)
+            released = False
+            lock.acquire()
 
-        column_results.append(('' + col,
-            values_filename, invalid_rows_filename))
+            column_results.append(('' + col,
+                values_filename, invalid_rows_filename))
 
-    all_rows.unpersist()
-    del all_rows
-    return column_results
+        return column_results
+    finally:
+        if not released:
+            lock.release()
 
 ################################################################################
 
@@ -444,9 +456,6 @@ printed to terminal. You probably want to set this at 1?
 WARNING WARNING WARNING
 '''
         print(warn_msg.format(args.keep_valid_rate))
-
-    if args.cache:
-        print('Using caching.')
 
     # If your code calls out to other python files, add them here.
     sc.addPyFile('datetimes.py')
@@ -500,11 +509,9 @@ WARNING WARNING WARNING
 
     # A worker task to be fed through the pool.
     def process_file(arg):
-        sleep(random.random() * 5.0)
         year, month = arg
         filename = filename_format.format(year, month)
         filepath = os.path.join(args.input_dir, filename)
-        print('Getting:', filepath)
 
         # Read columns from each file, then group columns together.
         # Later, these columns are unioned and parsed together so their
@@ -551,7 +558,8 @@ WARNING WARNING WARNING
 
         if col not in user_columns or len(value_paths) == 0:
             continue
-        values = [sc.textFile(path) for path in value_paths]
+        values = [sc.textFile(path, minPartitions=args.tempfile_partitions)\
+                for path in value_paths]
         all_values = sc.union(values) # All values from all items.
         unique_values = all_values.map(lambda row: (row, 1)).reduceByKey(add)
         parsed_values = unique_values.map(column_dict[col])
@@ -572,7 +580,8 @@ WARNING WARNING WARNING
         if args.print_invalid_rows:
             print('Here are some of the invalid rows:')
             invalid_paths = invalid_rows[col]
-            invalid_files = [sc.textFile(path) for path in invalid_paths]
+            invalid_files = [sc.textFile(path, minPartitions=\
+                    args.tempfile_partitions) for path in invalid_paths]
             all_invalids = sc.union(invalid_files)
             for row in all_invalids.take(100):
                 print(row)
