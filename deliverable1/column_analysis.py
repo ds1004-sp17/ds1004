@@ -419,6 +419,7 @@ WARNING WARNING WARNING
 
     # All the possible columns. Some years may only have a subset of columns.
     column_dict = {
+        'vendor_id': parse_0_vendor,
         'VendorID': parse_0_vendor,
         # Date time column for 2014.
         'pickup_datetime': parse_1_pickup_datetime,
