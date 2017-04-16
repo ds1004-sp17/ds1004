@@ -20,6 +20,7 @@ filename="$1"
 ./run.sh nums_in_hour_by_agency "$filename"
 ./run.sh nums_in_month_by_agency_year "$filename"
 ./run.sh check_zipcode "$filename"
+./run.sh type_in_hour_monthly "$filename"
 
 
 # The commands below run sparkSQL
