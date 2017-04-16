@@ -510,6 +510,7 @@ WARNING WARNING WARNING
         # Date time column for 2015-2016.
         'tpep_pickup_datetime': parse_1_pickup_datetime,
         'tpep_dropoff_datetime': parse_2_dropoff_datetime,
+        # Green taxis dates.
         'lpep_pickup_datetime': parse_1_pickup_datetime,
         'lpep_dropoff_datetime': parse_2_dropoff_datetime,
         # Locations.
@@ -523,7 +524,7 @@ WARNING WARNING WARNING
         # More fields.
         'passenger_count': parse_3_passenger_count,
         'trip_distance': parse_4_trip_distance,
-        'RatecodeID': parse_5_rate_code,
+        'ratecodeid': parse_5_rate_code,
         'store_and_fwd_flag': parse_6_store_and_fwd,
         'payment_type': parse_9_payment_type,
         'fare_amount': parse_10_fare,
@@ -538,7 +539,7 @@ WARNING WARNING WARNING
         'ehail_fee': parse_18_ehail_fee,
     }
     for colname in column_dict.keys():
-        assert colname == colname.lower()
+        assert colname == colname.lower(), colname
 
     user_columns = set(column_dict.keys())
     if args.columns:
