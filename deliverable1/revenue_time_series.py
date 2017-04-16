@@ -65,18 +65,18 @@ def main():
 
         rdd = sc.textFile(filename, minPartitions=args.min_partitions)
         header = rdd.first() #extract header
+        header_list = [x.lower().strip() for x in csv_row_read(header)]
         rdd = rdd.filter(lambda row: row != header)
 
-        header = [x.lower().strip() for x in csv_row_read(header)]
-        total_amount_ind = header.index('total_amount')
+        total_amount_ind = header_list.index('total_amount')
 
         # Split into columns.
         all_rows = rdd.map(lambda x: csv_row_read(x))
         # Get rows that have the containing column.
-        rows = all_rows.filter(lambda col: len(col) > total_amount_ind)
+        rows = all_rows.filter(lambda col: len(col) >= total_amount_ind)
 
         # Filter out invalid currency amounts
-        rows = rows.filter(lambda x: filter_amount)
+        rows = rows.filter(lambda x: filter_amount(x, total_amount_ind))
 
         values = rows.map(lambda x: (matches_date(x[pickup_datetime_ind])['year_month'], (1, float(x[total_amount_ind]))))
         values = values.reduceByKey(lambda x, y: (x[0]+y[0], x[1]+y[1]))
