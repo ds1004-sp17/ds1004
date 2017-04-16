@@ -500,7 +500,7 @@ WARNING WARNING WARNING
 
     # A worker task to be fed through the pool.
     def process_file(arg):
-        sleep(random.random() * 3.0)
+        sleep(random.random() * 5.0)
         year, month = arg
         filename = filename_format.format(year, month)
         filepath = os.path.join(args.input_dir, filename)
