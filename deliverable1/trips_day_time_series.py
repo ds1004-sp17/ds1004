@@ -29,7 +29,7 @@ def matches_date(string):
         'hour': int(match.group(4)),
         'minute': int(match.group(5)),
         'second': int(match.group(6)),
-        'year_month': str(match.group(1)) + "/" + str(match.group(2))
+        'year_month': str(match.group(1)) + "/" + str(match.group(2)),
         'year_month_day': str(match.group(1)) + "/" + str(match.group(2)) + "/" + str(match.group(3))
     }
     return date
