@@ -24,9 +24,9 @@ def matches_date(string):
 def csv_row_read(x):
     return next(csv.reader([x]))
 
-def to_float(x):
+def filt_int(x, filt):
     try:
-        return float(x)
+        return int(float(x) // filt * filt)
     except:
         return x
 
@@ -35,7 +35,7 @@ def main():
     parser = argparse.ArgumentParser(description='Parser for time-series of trips')
 
     parser.add_argument('--filepaths_file', type=str, required=True)
-    parser.add_argument('--min_partitions', type=int, default=5,
+    parser.add_argument('--min_partitions', type=int, default=20,
                         help='minimum number of data partitions when loading')
     parser.add_argument('--output_path', type=str, required=True,
                         help='path for output file')
@@ -61,12 +61,15 @@ def main():
             all_rows = rdd.map(lambda x: csv_row_read(x))
             rows = all_rows.filter(lambda col: len(col) >= ind)
 
-            values = rows.map(lambda x: (int(to_float(x[ind]) // filt * filt), 1))
+            values = rows.map(lambda x: (filt_int(x[ind], filt), 1))
             values = values.reduceByKey(add)
-            values_list.append(values)
+            values_list.append(values.collect())
+            del rdd, all_rows, rows, values
+        rdd = sc.parallelize(values_list).flatMap(lambda x: x).reduceByKey(add)
+        rdd.saveAsTextFile(args.output_path + '_' + col)
 
-        result = sc.union(values_list).reduceByKey(add)
-        result.saveAsTextFile(args.output_path + '_' + col)
+        # result = sc.union(values_list).reduceByKey(add)
+        # result.saveAsTextFile(args.output_path + '_' + col)
 
 
 

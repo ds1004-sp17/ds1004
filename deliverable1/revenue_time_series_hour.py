@@ -49,7 +49,7 @@ def main():
     parser = argparse.ArgumentParser(description='Parser for time-series of trips')
 
     parser.add_argument('--filepaths_file', type=str, required=True)
-    parser.add_argument('--min_partitions', type=int, default=5,
+    parser.add_argument('--min_partitions', type=int, default=20,
                         help='minimum number of data partitions when loading')
     parser.add_argument('--output_path', type=str, required=True,
                         help='path for output file')
@@ -82,10 +82,10 @@ def main():
 
         values = rows.map(lambda x: (matches_date(x[pickup_datetime_ind])['hour'], (1, float(x[total_amount_ind]))))
         values = values.reduceByKey(lambda x, y: (x[0]+y[0], x[1]+y[1]))
-        values_list.append(values)
+        values_list.append(values.collect())
 
-    result = sc.union(values_list).reduceByKey(add)
-    result.saveAsTextFile(args.output_path)
+    rdd = sc.parallelize(values_list).flatMap(lambda x: x).reduceByKey(add)
+    rdd.saveAsTextFile(args.output_path)
 
 
 
