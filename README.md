@@ -2,6 +2,10 @@
  
 The project is about processing the data of [NYC complaints](https://data.cityofnewyork.us/Social-Services/311/wpe2-h2i5).
 
+Attention:
+There are two datasets contain 2010-present dataset, one contains 52 columns and another contains 53 columns.
+The one we use contains 52 columns.
+
 ## How to run
 
 After cloning the repository,
