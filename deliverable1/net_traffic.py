@@ -49,7 +49,7 @@ def process_pair(columns, time_index, loc_id_index):
     '''Processes either input date/pickup, or output date/pickup'''
     date_str = columns[time_index]
     loc_str = columns[loc_id_index]
-    _, _, d = datetimes._process(date_str)
+    d = datetimes.matches_date(date_str)
     if d is None:
         return None
     try:
@@ -69,7 +69,7 @@ def process(string):
         [None], or tuple of
             (key: (location, is_weekend, in/out, hour, minute), count: 1)
         If 'string' is invalid, returns [None].'''
-    columns = csv_row_read[string]
+    columns = csv_row_read(string)
     if len(columns) < 10:
         return [None]
     try:
@@ -119,7 +119,10 @@ def main():
     not_null = lambda x: x is not None
     all_data = sc.union([sc.textFile(x) for x in filepaths])
     counts = all_data.flatMap(process).filter(not_null).reduceByKey(tuple_add)
-    counts.map(format_add_result).saveAsTextFile(args.save_path)
+    counts\
+        .sortByKey()\
+        .map(format_add_result)\
+        .saveAsTextFile(args.save_path)
 
 if __name__ == '__main__':
     main()
