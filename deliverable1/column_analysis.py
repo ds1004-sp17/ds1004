@@ -592,7 +592,7 @@ WARNING WARNING WARNING
             continue
         for col, values_file, missing_rows_file in columns:
             if col not in column_values:
-                print('{0}: Unknown column: {1}'.format(filename, col))
+                print('Unknown column: {0}'.format(col))
                 continue
             column_values[col].append(values_file)
             invalid_rows[col].append(missing_rows_file)
