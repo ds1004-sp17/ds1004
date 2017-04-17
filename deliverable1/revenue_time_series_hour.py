@@ -84,7 +84,7 @@ def main():
         values = values.reduceByKey(lambda x, y: (x[0]+y[0], x[1]+y[1]))
         values_list.append(values.collect())
 
-    rdd = sc.parallelize(values_list).flatMap(lambda x: x).reduceByKey(add)
+    rdd = sc.parallelize(values_list).flatMap(lambda x: x).reduceByKey(lambda x, y: (x[0]+y[0], x[1]+y[1]))
     rdd.saveAsTextFile(args.output_path)
 
 
