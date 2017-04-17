@@ -6,10 +6,16 @@ import matplotlib.pyplot as plt
 import plotly.plotly as py
 import plotly.graph_objs as go
 from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
+import plotly.figure_factory as ff
 import folium
+import json
 
 
 def plot_num_agency_day(file, save_path = '../../figs/', save_name = 'num_agency_day'):
+
+	if(not os.path.isfile(file)):
+		print('file not exist')
+		return None
 
 	num_agency_day = pd.read_csv(file, names= ['date', 'type', 'num'])
 	num_agency_day = num_agency_day.sort_values(['date'])
@@ -54,6 +60,10 @@ def plot_num_agency_day(file, save_path = '../../figs/', save_name = 'num_agency
 # fig2
 
 def plot_box_agency_day(file, save_path = '../../figs/', save_name = 'box_agency_year'):
+	if(not os.path.isfile(file)):
+		print('file not exist')
+		return None	
+
 	num_agency_day_box = pd.read_csv(file, names= ['date', 'agency', 'list'])
 
 	num_agency_day_box = num_agency_day_box.sort_values(['date','agency'])
@@ -85,6 +95,10 @@ def plot_box_agency_day(file, save_path = '../../figs/', save_name = 'box_agency
 ## fig3
 
 def plot_bar_agency_month(file, save_path = '../../figs/', save_name = 'bar_agency_month'):
+	if(not os.path.isfile(file)):
+		print('file not exist')
+		return None	
+
 	month_agency_bar = pd.read_csv(file, names= ['date', 'agency','type','num'])
 
 	month_agency_bar = month_agency_bar.sort_values(['date','agency','type'])
@@ -114,6 +128,9 @@ def plot_bar_agency_month(file, save_path = '../../figs/', save_name = 'bar_agen
 ## fig4
 
 def plot_type_year_pie(file, save_path = '../../figs/', save_name = 'type_year_pie'):
+	if(not os.path.isfile(file)):
+		print('file not exist')
+		return None
 
 	type_year_pie = pd.read_csv(file, names= ['year','type','num'])
 	type_year_pie = type_year_pie.sort_values(['year','type'])
@@ -158,6 +175,120 @@ def plot_type_year_pie(file, save_path = '../../figs/', save_name = 'type_year_p
 	save_path = os.path.join(save_path, save_name)
 	plot(fig, filename=save_path + '.html', auto_open=False)
 
+# fig5
+def plot_board_agency_year(file, save_path = '../../figs/', save_name = 'board_agency_year'):
+	if(not os.path.isfile(file)):
+		print('file not exist')
+		return None
+	board_agency_year = pd.read_csv(file, names= ['year','agency','board','num'])
+
+	board_agency_2017 = board_agency_year.loc[board_agency_year.year == 2017]
+	board_agency_2017 = board_agency_2017.pivot(index = 'agency',columns = 'board',values='num').reset_index()
+	labels_agency = list(board_agency_2017.agency)
+
+	board_agency_2017 = board_agency_2017.iloc[:,2:]
+	board_agency_2017 = board_agency_2017.fillna(0)
+
+	labels_board = list(board_agency_2017.columns)
+
+	# Initialize figure by creating upper dendrogram
+	data = [
+	    go.Heatmap(
+	        z=np.array(board_agency_2017),
+	        x=labels_board,
+	        y=labels_agency,
+	        colorscale='Viridis',
+	    )
+	]
+
+	layout = go.Layout(
+	    title='Numbers of complaints of different Brought ',
+	    xaxis = dict(ticks='', nticks=36),
+	    yaxis = dict(ticks='' )
+	)
+
+	fig = go.Figure(data=data, layout=layout)
+
+	save_path = os.path.join(save_path, save_name)
+	plot(fig, filename=save_path + '.html', auto_open=False)
+
+
+# fig 6
+
+def plot_scatter_matrix(file, save_path = '../../figs/', save_name = 'scatter_matrix'):
+	if(not os.path.isfile(file)):
+		print('file not exist')
+		return None
+	scatter_matrix = pd.read_csv(file, names= ['year','brought','num'])
+	scatter_matrix.num = scatter_matrix.num / 10000.0
+	scatter_matrix = scatter_matrix.pivot(index = 'year', columns ='brought', values = 'num').reset_index()
+	scatter_matrix.year = scatter_matrix.year.astype(np.str)
+	scatter_matrix.fillna(0)
+
+	fig = ff.create_scatterplotmatrix(scatter_matrix, diag='box', index='year',
+	                                  height=800, width=800,title = 'Distribution of every brought each year')
+	save_path = os.path.join(save_path, save_name)
+	plot(fig, filename=save_path + '.html', auto_open=False)
+
+
+# fig 7
+
+def plot_bubble_average_agency(file, save_path = '../../figs/', save_name = 'bubble_average_agency'):
+	if(not os.path.isfile(file)):
+		print('file not exist')
+		return None
+	bubble_average_agency = pd.read_csv(file, names= ['year','agency','total','average'])
+
+	years = np.unique(bubble_average_agency.year)
+	agency = np.unique(bubble_average_agency.agency)
+	data = []
+	for i in agency:
+		data.append(go.Scatter(
+	        x = list(bubble_average_agency.loc[bubble_average_agency.agency == i ]['total']),
+	        y = list(bubble_average_agency.loc[bubble_average_agency.agency == i ]['average']),
+	        name = i,
+	        mode = 'markers',
+	        
+	        ))
+
+	layout = dict(title = 'Average and total number of complaints in each agency',
+	              yaxis = dict(zeroline = False),
+	              xaxis = dict(zeroline = False)
+	             )
+
+	fig = dict(data=data, layout=layout)
+
+
+	save_path = os.path.join(save_path, save_name)
+
+	plot(fig, filename=save_path + '.html', auto_open=False)
+
+
+# fig 8 
+
+def plot_map_zip_amount(file, save_path = '../../figs/', save_name = 'map_zip_amount'):
+	if(not os.path.isfile(file)):
+		print('file not exist')
+		return None
+	map_zip_amount = pd.read_csv(file, names= ['year','zip','num'])
+	map_zip_amount.zip = map_zip_amount.zip.astype(np.str)
+
+	with open('../../data/nyc-zip-code-tabulation-areas-polygons.json') as f:
+	    geo_data = json.load(f)
+	m = folium.Map([40.7,-73.9], zoom_start=11)
+
+	m.choropleth(
+	    geo_str=geo_data,
+	    data=map_zip_amount,
+	    columns=['zip', 'num'],
+	    key_on='feature.properties.postalCode',
+	    fill_color='BuPu',
+	    )
+
+	save_path = os.path.join(save_path, save_name)
+	m.save(save_path+'.html')
+
+
 if __name__ == '__main__':
 	num_agency_day = 'num_agency_day.txt'
 	plot_num_agency_day(num_agency_day)
@@ -171,6 +302,16 @@ if __name__ == '__main__':
 	type_year_pie = 'type_year_pie.txt'
 	plot_type_year_pie(type_year_pie)
 
+	board_agency_year = 'board_agency_year.txt'
+	plot_board_agency_year(board_agency_year)
 
 
+	scatter_matrix = 'scatter_matrix.txt'
+	plot_scatter_matrix(scatter_matrix)
+
+	bubble_average_agency = 'bubble_average_agency.txt'
+	plot_bubble_average_agency(bubble_average_agency)
+
+	map_zip_amount = 'map_zip_amount.txt'
+	plot_map_zip_amount(map_zip_amount)
 
