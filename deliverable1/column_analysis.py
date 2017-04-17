@@ -120,6 +120,23 @@ def parse_0_vendor(x):
             data_label = 'INVALID'
     return (key, base_type, semantic_type, data_label, occur_count)
 
+
+def parse_0_vendor2(x):
+    key, occur_count = x
+    base_type = 'STRING'
+    semantic_type = 'vendor id'
+    data_label = 'VALID'  #VALID | NULL | INVALID
+    if key is None or len(key) == 0:
+        base_type = 'NULL'
+        semantic_type = 'unknown value'
+        data_label = 'NULL'
+    else:
+        if key not in ('CMT', 'VTS'):
+            semantic_type = 'unknown value'
+            data_label = 'INVALID'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
+
 # These date parsers can actually check the date against the file name.
 # However the output format that we have (keyed by value) doesn't allow
 # us to take advantage of this. For example, 2015-02-01 can be valid or invalid
@@ -502,7 +519,7 @@ WARNING WARNING WARNING
     # All the possible columns. Some years may only have a subset of columns.
     # All columns should be lowercase.
     column_dict = {
-        'vendor_id': parse_0_vendor, # 2013-2014 formatting.
+        'vendor_id': parse_0_vendor2, # 2013-2014 formatting.
         'vendorid': parse_0_vendor,
         # Date time column for 2014.
         'pickup_datetime': parse_1_pickup_datetime,
