@@ -73,11 +73,11 @@ def plot_box_agency_day(file, save_path = '../../figs/', save_name = 'box_agency
 	data = []
 	for i in agency:
 	    data.append(go.Box(
-	        x = list(num_agency_day_box.loc[num_agency_day_box.agency == i,'list']),
-	        y = list(num_agency_day_box.loc[num_agency_day_box.agency == i,'date']),
+	        y = list(num_agency_day_box.loc[num_agency_day_box.agency == i,'list']),
+	        x = list(num_agency_day_box.loc[num_agency_day_box.agency == i,'date']),
 	        name = i,
 	        boxmean = False,
-	        orientation = 'h',
+	        orientation = 'v',
 	        ))
 
 	layout = go.Layout(
@@ -138,9 +138,9 @@ def plot_type_year_pie(file, save_path = '../../figs/', save_name = 'type_year_p
 	types = np.unique(type_year_pie.type)
 	years = np.unique(type_year_pie.year)
 	num = len(years)
-	gap = 0.08
-	step = (1.0 - gap*(num / 2)) / (num / 2 + 1)
-	ys = [[i*(step + gap)  , i*(step + gap) + step  ] for i in range((num/2 + 1))]
+	gap = 0.008
+	step = (1.0 - gap*(num / 2)) / ((num+1)/2)
+	ys = [[i*(step + gap)  , i*(step + gap) + step  ] for i in range((num+1)/2)]
 	xs = [[0, .48],[.52, 1]]
 	data = []
 	annotations = []
@@ -162,7 +162,7 @@ def plot_type_year_pie(file, save_path = '../../figs/', save_name = 'type_year_p
 	            ),
 	        showarrow = False,
 	        text = j,
-	        x = (sum(xs[i % 2]) - gap )/ 2.0,
+	        x = np.array([0, 0.5])[i % 2],
 	        y = sum(ys[i / 2]) / 2.0)
 	        )
 
@@ -272,6 +272,7 @@ def plot_map_zip_amount(file, save_path = '../../figs/', save_name = 'map_zip_am
 		return None
 	map_zip_amount = pd.read_csv(file, names= ['year','zip','num'])
 	map_zip_amount.zip = map_zip_amount.zip.astype(np.str)
+	map_zip_amount = map_zip_amount.loc[map_zip_amount.year == 2016]
 
 	with open('../../data/nyc-zip-code-tabulation-areas-polygons.json') as f:
 	    geo_data = json.load(f)
