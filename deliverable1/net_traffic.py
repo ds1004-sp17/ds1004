@@ -8,7 +8,7 @@ from datetime import date
 from cStringIO import StringIO
 from operator import add
 import datetimes
-
+from pyspark import SparkContext, SparkConf
 
 pu_datetime_index = 1
 do_datetime_index = 2
@@ -24,6 +24,7 @@ parser.add_argument('--save_path', type=str, default='./net_traffic.csv',
                     help='directory in HDFS to save files to.')
 parser.add_argument('--loglevel', type=str, default='WARN',
                     help='log verbosity.')
+args = parser.parse_args()
 
 
 def csv_row_read(x):
@@ -98,7 +99,8 @@ def format_add_result(pair):
     return to_csv(row)
 
 filepaths = [
-    os.path.join(args.input_dir, 'yellow_tripdata_2016-{:02d}'.format(month))
+    os.path.join(
+        args.input_dir, 'yellow_tripdata_2016-{:02d}.csv'.format(month))
     for month in range(args.start_month, args.end_month + 1)
 ]
 
@@ -106,15 +108,18 @@ def main():
     conf = SparkConf().setAppName('net_traffic')
     sc = SparkContext()
     sc.setLogLevel(args.loglevel)
+    sc.addPyFile('datetimes.py')
 
     print('-'*80 + '\n' + 'net traffic counter' + '\n' + '-'*80)
     for filepath in filepaths:
         print(filepath)
 
+    print('Save to:', args.save_path)
+
     not_null = lambda x: x is not None
     all_data = sc.union([sc.textFile(x) for x in filepaths])
     counts = all_data.flatMap(process).filter(not_null).reduceByKey(tuple_add)
-    counts.map(format_add_result)saveAsTextFile(args.save_path)
+    counts.map(format_add_result).saveAsTextFile(args.save_path)
 
 if __name__ == '__main__':
     main()
