@@ -14,7 +14,7 @@ if __name__ == "__main__":
 	line = lines.map(lambda x:(x.encode('ascii','ignore')))\
 				.mapPartitions(lambda x: (reader(x, delimiter = ',', quotechar = '"')))
 
-	def weekday_agency(date, agency):
+	def get_weekday_agency(date, agency):
 	    date = date.lower()
 	    year = date[6:10]
 	    hour = date[11:13]
@@ -34,11 +34,11 @@ if __name__ == "__main__":
 	    return year, weekday, hour, agency
 
 
-	weekday_agency = line.map(lambda x: (x[1],x[3])\
-						.map(lambda x:(weekday_agency(x[0],x[1]),1))\
+	weekday_agency = line.map(lambda x: (x[1],x[3]))\
+						.map(lambda x:(get_weekday_agency(x[0],x[1]),1))\
 						.reduceByKey(add)\
 						.sortByKey()\
-						.map(lambda x: "%s, %s, %s, %s, %d" % (x[0][0],x[0][1],x[0][2],x[0][3],x[1]))
-						.saveAsTextFile("weekday_agency.out")
+						.map(lambda x: "%s,%s,%s,%s,%d" % (x[0][0],x[0][1],x[0][2],x[0][3],x[1]))
+	weekday_agency.saveAsTextFile("weekday_agency.out")
 
 	sc.stop()
