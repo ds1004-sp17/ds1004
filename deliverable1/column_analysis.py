@@ -236,7 +236,9 @@ def parse_9_payment_type(x):
             if key not in ('1','2','3','4','5','6'):
                 data_label = 'INVALID'
         except:
-            base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'
+            base_type = 'STRING'
+            if key not in ('CRD','CSH','DIS','UNK','NOC'):
+                semantic_type, data_label = 'unknown value', 'INVALID'
     return (key, base_type, semantic_type, data_label, occur_count)
 
 
