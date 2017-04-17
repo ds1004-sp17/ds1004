@@ -288,6 +288,51 @@ def plot_map_zip_amount(file, save_path = '../../figs/', save_name = 'map_zip_am
 	save_path = os.path.join(save_path, save_name)
 	m.save(save_path+'.html')
 
+# fig 9 
+
+def plot_weekday_agency(file, save_path = '../../figs/', save_name = 'weekday_agency'):
+	if(not os.path.isfile(file)):
+		print('file not exist')
+		return None
+	weekday_agency = pd.read_csv(file, names= ['year','week','hour','num'])
+	years = np.unique(weekday_agency.year)
+
+	def combine(x):
+	    weekdays = ['Mon','Tue','Wed','Tur','Fri','Sat','Sun']
+	    return weekdays[int(x['week'])] +'_' + str(x['hour'])
+
+	weekday_agency['week_hour'] = weekday_agency.apply(lambda x: combine(x), axis = 1)
+	weekday_agency = weekday_agency.sort_values(['week','hour']).loc[:,['year','week_hour','num']]
+
+	data = []
+	for i in years:
+	    data.append(go.Scatter(
+	        x = weekday_agency.loc[weekday_agency.year == i]['week_hour'],
+	        y = weekday_agency.loc[weekday_agency.year == i]['num'],
+	        mode='lines',
+	        name= i ,
+	        hoverinfo='name',
+	        line=dict(
+	            shape='spline'
+	        )))
+
+	layout = dict(
+	    legend=dict(
+	        y=0.5,
+	        traceorder='reversed',
+	        font=dict(
+	            size=16
+	        )
+	    ),
+	    title = 'Number of complaits distribution on each day every year',
+	)
+
+	fig = go.Figure(data=data, layout=layout)
+	save_path = os.path.join(save_path, save_name)
+
+	plot(fig, filename=save_path + '.html', auto_open=False)
+
+
 
 if __name__ == '__main__':
 	num_agency_day = 'num_agency_day.txt'
@@ -315,3 +360,6 @@ if __name__ == '__main__':
 	map_zip_amount = 'map_zip_amount.txt'
 	plot_map_zip_amount(map_zip_amount)
 
+
+	weekday_agency = 'weekday_agency.txt'
+	plot_weekday_agency(weekday_agency)
