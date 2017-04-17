@@ -27,8 +27,8 @@ taxis_test_results/VendorID.csv
 ...
 ```
 The easiest way to run the script is to call one of the starter shell scripts
-``run_test.sh`` or ``run_real.sh``. **IMPORTANT: the program or the scripts
-MUST be run from inside the deliverables1/ subdirectory.**
+``run_test.sh``, ``run_real.sh`` and their green taxi counterparts.
+**IMPORTANT: the program or the scripts MUST be run from inside the deliverables1/ subdirectory.**
 The first one runs on a small subset of the real data. I've made copies of
 the data publicly readable on these HDFS directories:
 ```
@@ -58,3 +58,22 @@ to see more options.
 
 This script can also print the joined contents to standard output instead of
 saving into files, using the ``--dump`` option.
+
+### Plot Generating Scripts
+
+We have a collection of scripts that gather data from the source. Here we
+describe them and provide instructions on how to run them.
+
+#### Net Traffic Counter
+
+Different locations have different patterns of activity throughout the day.
+We wish to analyze whether more taxi trips are coming in or going out of a
+specific location throughout the day. We made a Spark script that runs on
+the July-December 2016 taxis dataset.
+
+We've provided a runner script for the spark job. To execute it, run
+```
+sh ./net_traffic_run.sh
+```
+from the ``deliverable1/`` subdirectory. We analyze the results from the
+``analysis/plots.ipynb`` notebook.
