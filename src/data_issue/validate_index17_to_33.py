@@ -6,7 +6,7 @@ import sys
 from operator import add
 from pyspark import SparkContext
 from csv import reader
-import datatime
+import datetime
 
 if __name__ == "__main__":
 	sc = SparkContext()
