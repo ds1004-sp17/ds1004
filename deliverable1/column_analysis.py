@@ -18,7 +18,7 @@ import locations
 from pyspark import SparkContext, SparkConf
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-if 'bigdata_project/deliverable1' not in dir_path:
+if 'deliverable1' not in dir_path:
     raise ValueError('Please run this inside bigdata_project/deliverable1')
 
 parser = argparse.ArgumentParser(description='Big Data Taxi Parser')
