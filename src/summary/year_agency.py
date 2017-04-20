@@ -33,6 +33,6 @@ if __name__ == "__main__":
 	                    .map(lambda x: ((x[0], x[1]),1))\
 	                    .reduceByKey(add)\
 	                    .sortBy(lambda x: x[1])\
-	                    .saveAsTextFile("Agency for each year.out")
+	                    .saveAsTextFile("Agency_for_each_year.out")
 
 	sc.stop()
