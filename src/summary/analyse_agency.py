@@ -28,12 +28,10 @@ if __name__ == "__main__":
 	    d = datetime.strptime(dt, "%m/%d/%Y %I:%M:%S %p")
 	    return d.year
 
-	year_agency = line.filter(lambda x: (check_datetime(x[1]),x[3]))\
-	                    .map(lambda x: (str(get_year(x[1])), x[3]))\
-	                    .map(lambda x: ((x[0], x[1]),1))\
-	                    .reduceByKey(add)\
-	                    .sortByKey()\
-	                    .map(lambda x: (str(x[0][0])+ ',' + str(x[0][1])+','+str(x[1])))\
-	                    .saveAsTextFile("Agency_for_each_year.out")
-
-	sc.stop()
+	agency = line.filter(lambda x: (check_datetime(x[1]),x[3],x[5]))\
+	            .map(lambda x: (str(get_year(x[1])),x[3],x[5]))\
+	            .map(lambda x: ((x[0],x[1],x[2]),1))\
+	            .reduceByKey(add)\
+	            .sortByKey()\
+	            .map(lambda x: (str(x[0][0])+','+str(x[0][1])+','+str(x[0][2])+','+str(x[1])))\
+	            .saveAsTextFile("year_agency_type.out")
