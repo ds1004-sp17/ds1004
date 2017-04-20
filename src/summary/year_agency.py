@@ -32,7 +32,7 @@ if __name__ == "__main__":
 	                    .map(lambda x: (get_year(x[1]), x[3]))\
 	                    .map(lambda x: ((x[0], x[1]),1))\
 	                    .reduceByKey(add)\
-	                    .sortBy(lambda x: x[1])\
-	                    .saveAsTextFile("Agency_for_each_year.out")
+	                    .sortByKey()\
+	                    .saveAsTextFile("agency_for_each_year.out")
 
 	sc.stop()
