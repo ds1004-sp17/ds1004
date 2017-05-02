@@ -20,7 +20,9 @@
 *.tar
 *.zip
 
-Notes/
+Notes
+
+
 # Logs and databases #
 ######################
 *.log
@@ -51,6 +53,6 @@ lib/*
 metastore_db
 
 *.out
-data
+
 
 
