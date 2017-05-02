@@ -153,8 +153,61 @@ def plot_correlation():
 
     print(high_corr[0,1], low_corr[0,1])
 
+
+def fire_corr():
+    fire_filename = "fire.txt"
+    complaint_filename = "water_sys_sorted.txt"
+
+    complaint_data = []
+    fire_data = []
+
+    with open(fire_filename, "r") as f:
+        for line in f:
+            if "," in line:
+                tuples = line.strip().split(", ")
+                num = int(tuples[0]) + int(tuples[1])
+                fire_data.append(num)
+
+    with open(complaint_filename, "r") as f:
+        for line in f:
+            line = line.strip()
+            c = int(line.split("\t")[1])
+            complaint_data.append(c)
+
+    complaint_data = complaint_data[3 * 12:]
+    complaint_data = NP.array(complaint_data)# / max(complaint_data)
+    fire_data = NP.array(fire_data)# / max(fire_data)
+
+    matplotlib.rc('xtick', labelsize=20) 
+    matplotlib.rc('ytick', labelsize=20) 
+
+    # Set the font dictionaries (for plot title and axis titles)
+    title_font = {'fontname':'Sans', 'size':'26', 'color':'black', 'weight':'normal',
+                          'verticalalignment':'bottom'} # Bottom vertical alignment for more space
+    axis_font = {'fontname':'Sans', 'size':'30'}
+
+    PLT.figure(figsize=(30, 15))
+
+    x = list(range(1, 13)) * 4
+    PLT.plot(fire_data, complaint_data, "o")
+
+    PLT.xlabel("Monthly fire occurrences", **axis_font)
+    PLT.ylabel("Number of Water System Complaints", **axis_font)
+    PLT.savefig(result_dir + "/fireCorr.png")
+    PLT.close()
+
+    """
+    compute correlation
+    """
+    fire_corr = NP.corrcoef(NP.array(fire_data, dtype=NP.float32), 
+            NP.array(complaint_data, dtype=NP.float32))
+
+    print(fire_corr[0, 1])
+
+
 if __name__ == "__main__":
     #plot_nums_in_month_by_year()
     #plt_water_sys_desc()
-    plot_correlation()
+    #plot_correlation()
+    fire_corr()
 
