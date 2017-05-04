@@ -18,7 +18,7 @@ import locations
 from pyspark import SparkContext, SparkConf
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-if 'bigdata_project/deliverable1' not in dir_path:
+if 'deliverable1' not in dir_path:
     raise ValueError('Please run this inside bigdata_project/deliverable1')
 
 parser = argparse.ArgumentParser(description='Big Data Taxi Parser')
@@ -120,6 +120,23 @@ def parse_0_vendor(x):
             data_label = 'INVALID'
     return (key, base_type, semantic_type, data_label, occur_count)
 
+
+def parse_0_vendor2(x):
+    key, occur_count = x
+    base_type = 'STRING'
+    semantic_type = 'vendor id'
+    data_label = 'VALID'  #VALID | NULL | INVALID
+    if key is None or len(key) == 0:
+        base_type = 'NULL'
+        semantic_type = 'unknown value'
+        data_label = 'NULL'
+    else:
+        if key not in ('CMT', 'VTS'):
+            semantic_type = 'unknown value'
+            data_label = 'INVALID'
+    return (key, base_type, semantic_type, data_label, occur_count)
+
+
 # These date parsers can actually check the date against the file name.
 # However the output format that we have (keyed by value) doesn't allow
 # us to take advantage of this. For example, 2015-02-01 can be valid or invalid
@@ -219,7 +236,9 @@ def parse_9_payment_type(x):
             if key not in ('1','2','3','4','5','6'):
                 data_label = 'INVALID'
         except:
-            base_type, semantic_type, data_label = 'STRING', 'unknown value', 'INVALID'
+            base_type = 'STRING'
+            if key not in ('CRD','CSH','DIS','UNK','NOC'):
+                semantic_type, data_label = 'unknown value', 'INVALID'
     return (key, base_type, semantic_type, data_label, occur_count)
 
 
@@ -502,7 +521,7 @@ WARNING WARNING WARNING
     # All the possible columns. Some years may only have a subset of columns.
     # All columns should be lowercase.
     column_dict = {
-        'vendor_id': parse_0_vendor, # 2013-2014 formatting.
+        'vendor_id': parse_0_vendor2, # 2013-2014 formatting.
         'vendorid': parse_0_vendor,
         # Date time column for 2014.
         'pickup_datetime': parse_1_pickup_datetime,
@@ -592,7 +611,7 @@ WARNING WARNING WARNING
             continue
         for col, values_file, missing_rows_file in columns:
             if col not in column_values:
-                print('{0}: Unknown column: {1}'.format(filename, col))
+                print('Unknown column: {0}'.format(col))
                 continue
             column_values[col].append(values_file)
             invalid_rows[col].append(missing_rows_file)
