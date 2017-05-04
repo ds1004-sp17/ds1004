@@ -1,0 +1,82 @@
+bz866
+*   d89e377 Merge branch 'branch2' into branch1
+|\  
+| *   c947eda Merge branch 'master' into branch2
+| |\  
+| * | 33372ad 4th commit (1st branch2)
+* | |   5490308 Merge branch 'master' into branch1
+|\ \ \  
+| | |/  
+| |/|   
+| * |   3919580 resolved conflit
+| |\ \  
+| | |/  
+| |/|   
+| * | c024560 3rd commit (2nd master)
+* | | 390cc16 5th commit(2nd branch1)
+| |/  
+|/|   
+* | 7b99418 2nd commit(1st branch1)
+|/  
+* c479223 1st commit
+
+ls4408
+*   0a06b4a final merge
+|\  
+| *   a96db1e 2nd merge
+| |\  
+| | * a473137 t31
+* | |   74ebd7b 2nd merge
+|\ \ \  
+| |/ /  
+| * |   be9c210 1st merge
+| |\ \  
+| | |/  
+| | * f297c37 t1
+* | | e8f6539 t21
+|/ /  
+* | 483234f m2
+|/  
+* c55e8bc m1
+
+yz1349
+*   42dfaf5 5th layer master
+|\  
+| *   c1b61b0 4th layer branch1
+| |\  
+| * | f17a712 3rd layer branch1
+* | |   cbeacec 4th layer master
+|\ \ \  
+| |_|/  
+|/| |   
+| * | 6bc835a 3rd layer branch2
+* | |   80a1816 3rd layer master
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 45125cd 2nd layer branch1
+* | d2554b9 2nd layer master
+|/  
+* 3395127 1st layer master
+
+zg475
+*   b6a66fb final merge
+|\  
+| *   944e2af 2rd merge master to b1
+| |\  
+| * | 9ebba6b 2rd change to branch1
+* | |   5e382fd 3rd merge b2 to master
+|\ \ \  
+| |_|/  
+|/| |   
+| * | e32c2ab 1st change on branch2
+* | |   108322a first merge b1 to master
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * bf01be0 1st change on branch1
+* | babf9f2 1st change on master
+|/  
+* 2d46c84 start point
