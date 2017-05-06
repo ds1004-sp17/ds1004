@@ -143,6 +143,8 @@ def main():
     header = {col:idx for idx, col in enumerate(csv_row_read(header_line))}
 
     # Detect if the location ID is present.
+    all_data = all_data.filter(lambda row: len(row) > 0 and row != header_line)
+    all_data = all_data.map(lambda x: csv_row_read(x))
     if 'pulocationid' in header and 'dolocationid' in header:
         all_data = all_data.map(partial(extract, header))
     else:
