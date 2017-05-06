@@ -95,34 +95,28 @@ def to_location_ids(header, row):
     d_lat_idx = header['dropoff_latitude']
     d_lon_idx = header['dropoff_longitude']
 
-    try:
-        row.append(get_location_id(row[p_lon_idx], row[p_lat_idx]))
-        row.append(get_location_id(row[d_lon_idx], row[d_lat_idx]))
-        return row
-    except:
-        return None
+    row.append(get_location_id(row[p_lon_idx], row[p_lat_idx]))
+    row.append(get_location_id(row[d_lon_idx], row[d_lat_idx]))
+    return row
 
 def extract(h, row):
     if row is None:
         return None
-    try:
-        r = [row[h['pulocationid']],
-             row[h['dolocationid']],
-             row[h['passenger_count']],
-             row[h['trip_distance']],
-             row[h['payment_type']],
-             row[h['total_amount']]]
-        if 'pickup_datetime' in h:
-            r.append(row[h['pickup_datetime']])
-            r.append(row[h['dropoff_datetime']])
-        if 'tpep_pickup_datetime' in h:
-            r.append(row[h['tpep_pickup_datetime']])
-            r.append(row[h['tpep_dropoff_datetime']])
-        if 'lpep_pickup_datetime' in h:
-            r.append(row[h['lpep_pickup_datetime']])
-            r.append(row[h['lpep_dropoff_datetime']])
-    except:
-        return None
+    r = [row[h['pulocationid']],
+         row[h['dolocationid']],
+         row[h['passenger_count']],
+         row[h['trip_distance']],
+         row[h['payment_type']],
+         row[h['total_amount']]]
+    if 'pickup_datetime' in h:
+        r.append(row[h['pickup_datetime']])
+        r.append(row[h['dropoff_datetime']])
+    if 'tpep_pickup_datetime' in h:
+        r.append(row[h['tpep_pickup_datetime']])
+        r.append(row[h['tpep_dropoff_datetime']])
+    if 'lpep_pickup_datetime' in h:
+        r.append(row[h['lpep_pickup_datetime']])
+        r.append(row[h['lpep_dropoff_datetime']])
 
 filename = 'yellow_tripdata_2015-{:02d}.csv'.format(args.month)
 filepath = os.path.join(args.input_dir, filename)
