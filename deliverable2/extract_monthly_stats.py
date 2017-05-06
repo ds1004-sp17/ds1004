@@ -6,19 +6,17 @@ import argparse
 import os
 from datetime import date
 from cStringIO import StringIO
-from operator import add
-import datetimes
 from pyspark import SparkContext, SparkConf
+from shapely.geometry import Point
 from rtree import Index
-
-pu_datetime_index = 1
-do_datetime_index = 2
-pu_location_id_index = 7
-do_location_id_index = 8
+import json
+from shapely.geometry import mapping, shape
 
 parser = argparse.ArgumentParser(description='Taxi net traffic.')
 parser.add_argument('--input_dir', type=str, default='public/taxis/',
                     help='location of csv files in HDFS.')
+parser.add_argument('--taxi_shapes', type=str, default='taxi_zones.geojson',
+                    help='location of taxi zone shapes.')
 parser.add_argument('--month', type=int, default=7, help='month to process.')
 parser.add_argument('--save_path', type=str, default='./monthly_stats/',
                     help='directory in HDFS to save files to.')
@@ -26,6 +24,13 @@ parser.add_argument('--loglevel', type=str, default='WARN',
                     help='log verbosity.')
 args = parser.parse_args()
 
+taxi_zones = json.load(open(args.taxi_shapes))
+class Neighborhood(object):
+    def __init__(self, feature):
+        self.properties = feature['properties']
+        self.geometry = feature['geometry']
+        self.shape = shape(feature['geometry'])
+taxi_zones_shapes = [Neighborhood(f) for f in taxi_zones['features']]
 
 def csv_row_read(x):
     '''Turns a CSV string (x) into a list of columns.'''
@@ -62,34 +67,13 @@ def process_pair(columns, time_index, loc_id_index):
     return (d['hour'], d['minute'], loc, is_weekend)
 
 
-def process(string):
-    '''Args:
-        string: Raw input from the textFile(s)
-    Returns:
-        [None], or tuple of
-            (key: (location, is_weekend, in/out, hour, minute), count: 1)
-        If 'string' is invalid, returns [None].'''
-    columns = csv_row_read(string)
-    if len(columns) < 10:
-        return [None]
-    try:
-        pu_hour, pu_minute, pu_loc, pu_weekend = process_pair(
-                columns, pu_datetime_index, pu_location_id_index)
-        do_hour, do_minute, do_loc, do_weekend = process_pair(
-                columns, do_datetime_index, do_location_id_index)
-    except:
-        return [None]
-    pu_key = (pu_loc, pu_weekend, pu_hour, pu_minute)
-    do_key = (do_loc, do_weekend, do_hour, do_minute)
-    # Feed to a flatMap.
-    return [(pu_key, (1, 0)), (do_key, (0, 1))]
-
 min_lon, max_lon = -74.30, -73.65
 min_lat, max_lat = 40.45, 40.95
 def in_range(lon, lat):
     return lon >= min_lon and lon <= max_lon and \
             lat >= min_lat and lat <= max_lat
 
+taxi_zones = 
 index = index.Index()
 for i, t in enumerate(taxi_zones_shapes):
     index.insert(i, t.shape.bbox)
