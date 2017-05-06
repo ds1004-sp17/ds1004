@@ -7,6 +7,7 @@ import os
 from datetime import date
 from cStringIO import StringIO
 from pyspark import SparkContext, SparkConf
+from functools import partial
 from shapely.geometry import Point
 from pyqtree import Index
 import json
@@ -74,9 +75,9 @@ def in_range(lon, lat):
             lat >= min_lat and lat <= max_lat
 
 taxi_zones = json.load(open('taxi_zones.geojson'))
-index = index.Index(bbox=[min_lon, min_lat, max_lon, max_lat])
+index = Index(bbox=[min_lon, min_lat, max_lon, max_lat])
 for i, t in enumerate(taxi_zones_shapes):
-    index.insert(i, t.shape.bbox)
+    index.insert(i, t.shape.bounds)
 
 def get_location_id(lon, lat):
     lon = float(lon)
@@ -89,10 +90,10 @@ def get_location_id(lon, lat):
 
 def to_location_ids(header, row):
     '''Converts a (lat, lon) formatted file into location ID.'''
-    p_lat_idx = header.indexof('pickup_latitude')
-    p_lon_idx = header.indexof('pickup_longitude')
-    d_lat_idx = header.indexof('dropoff_latitude')
-    d_lon_idx = header.indexof('dropoff_longitude')
+    p_lat_idx = header['pickup_latitude']
+    p_lon_idx = header['pickup_longitude']
+    d_lat_idx = header['dropoff_latitude']
+    d_lon_idx = header['dropoff_longitude']
 
     try:
         row.append(get_location_id(row[p_lon_idx], row[p_lat_idx]))
