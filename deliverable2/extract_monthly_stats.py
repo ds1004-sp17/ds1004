@@ -73,7 +73,7 @@ def in_range(lon, lat):
     return lon >= min_lon and lon <= max_lon and \
             lat >= min_lat and lat <= max_lat
 
-taxi_zones = 
+taxi_zones = json.load(open('taxi_zones.geojson'))
 index = index.Index()
 for i, t in enumerate(taxi_zones_shapes):
     index.insert(i, t.shape.bbox)
@@ -82,7 +82,7 @@ def get_location_id(lon, lat):
     lon = float(lon)
     lat = float(lat)
     pt = Point(lon, lat)
-    for ic in idx.intersection(pt)
+    for ic in idx.intersection(pt):
         c = taxi_zones_shapes[ic]
         if c.shape.contains(pt):
             return c.properties['LocationID']
@@ -123,10 +123,8 @@ def extract(h, row):
     except:
         return None
 
-filepath = \
-    os.path.join(
-        args.input_dir,
-        'yellow_tripdata_2015-{:02d}.csv'.format(args.month))
+filename = 'yellow_tripdata_2015-{:02d}.csv'.format(args.month)
+filepath = os.path.join(args.input_dir, filename)
 
 def main():
     conf = SparkConf().setAppName('location_id_extractor')
@@ -153,7 +151,9 @@ def main():
         all_data = all_data.map(partial(extract, header))
 
     all_data = all_data.filter(not_null)
-    all_data.map(to_csv).saveAsTextFile(args.save_path)
+    savepath = os.path.join(args.save_path, filename)
+    all_data.map(to_csv).saveAsTextFile(savepath)
+    print('Saved to:', savepath)
 
 if __name__ == '__main__':
     main()
