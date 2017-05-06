@@ -8,7 +8,7 @@ from datetime import date
 from cStringIO import StringIO
 from pyspark import SparkContext, SparkConf
 from shapely.geometry import Point
-from rtree import Index
+from pyqtree import Index
 import json
 from shapely.geometry import mapping, shape
 
@@ -74,7 +74,7 @@ def in_range(lon, lat):
             lat >= min_lat and lat <= max_lat
 
 taxi_zones = json.load(open('taxi_zones.geojson'))
-index = index.Index()
+index = index.Index(bbox=[min_lon, min_lat, max_lon, max_lat])
 for i, t in enumerate(taxi_zones_shapes):
     index.insert(i, t.shape.bbox)
 
@@ -130,7 +130,7 @@ def main():
     conf = SparkConf().setAppName('location_id_extractor')
     sc = SparkContext()
     sc.setLogLevel(args.loglevel)
-    sc.addPyFile('datetimes.py')
+    sc.addPyFile('pyqtree.py')
 
     print('-'*80 + '\n' + 'location id tagger + extractor' + '\n' + '-'*80)
     print(filepath)
