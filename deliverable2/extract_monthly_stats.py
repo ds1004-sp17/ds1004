@@ -129,12 +129,12 @@ filepath = \
         'yellow_tripdata_2015-{:02d}.csv'.format(args.month))
 
 def main():
-    conf = SparkConf().setAppName('extract_monthly_stats')
+    conf = SparkConf().setAppName('location_id_extractor')
     sc = SparkContext()
     sc.setLogLevel(args.loglevel)
     sc.addPyFile('datetimes.py')
 
-    print('-'*80 + '\n' + 'net traffic counter' + '\n' + '-'*80)
+    print('-'*80 + '\n' + 'location id tagger + extractor' + '\n' + '-'*80)
     print(filepath)
     print('Save to:', args.save_path)
 
