@@ -4,11 +4,11 @@ import csv
 import re
 import argparse
 import os
-from datetime import date
 from cStringIO import StringIO
 from operator import add
 import datetimes
 from pyspark import SparkContext, SparkConf
+from half_trip import HalfTrip
 
 pu_location_id_index = 0
 do_location_id_index = 1
@@ -46,50 +46,7 @@ def to_csv(l):
     writer.writerow(l)
     return f.getvalue().strip()
 
-SATURDAY = 5
-passenger_count_index = 2
-distance_index = 3
 # skip payment type
-total_amt_index = 5
-class HalfTrip(object):
-    def __init__(self, mode, columns, d, loc):
-        # such and such is in this location at this moment
-        # PU = departure
-        # DO = arrival
-        self.mode = mode
-        self.year = d['year']
-        self.month = d['month']
-        self.day = d['day']
-        self.minute = (d['minute'] // 5) * 5
-        self.is_weekend = \
-                date(d['year'], d['month'], d['day']).weekday() >= SATURDAY
-        self.loc = loc
-
-        self.passengers = columns[passenger_count_index]
-        self.distance = columns[distance_index]
-        self.total = columns[total_amt_index]
-        self.count = 1
-
-    def get_time_key(self):
-        return (self.loc,
-                self.mode,
-                self.hour,
-                self.minute,
-                self.is_weekend)
-
-    def get_daily_key(self):
-        return (self.loc,
-                self.mode,
-                self.year,
-                self.month,
-                self.day)
-
-    def get_val(self):
-        return (self.passengers,
-                self.distance,
-                self.total,
-                self.count)
-
 
 def get_daily_keyval(half_trip):
     return (half_trip.get_daily_key(), half_trip.get_val())
@@ -125,11 +82,8 @@ def process(string):
         [None], or [HalfTrip, HalfTrip]
         If 'string' is invalid, returns [None].'''
     columns = csv_row_read(string)
-    try:
-        pu = get_half_trip(columns, pu_datetime_index, pu_location_id_index)
-        do = get_half_trip(columns, do_datetime_index, do_location_id_index)
-    except:
-        return [None]
+    pu = get_half_trip(columns, mode='PU')
+    do = get_half_trip(columns, mode='DO')
     # Feed to a flatMap.
     return [pu, do]
 
@@ -147,8 +101,8 @@ def format_add_result(pair):
 filepaths = [
     os.path.join(args.input_dir,
         'yellow_extract_{}-{:02d}.csv'.format(year, month))
-    for year in range(2013, 2017)
-    for month in range(1, 13)
+    for year in range(2015, 2016)
+    for month in range(1, 3)
 ]
 
 def main():
@@ -156,12 +110,14 @@ def main():
     sc = SparkContext()
     sc.setLogLevel(args.loglevel)
     sc.addPyFile('datetimes.py')
+    sc.addPyFile('half_trip.py')
 
     print('-'*80 + '\n' + 'net traffic counter' + '\n' + '-'*80)
     for filepath in filepaths:
         print(filepath)
 
-    print('Save to:', args.save_path)
+    print('Save to:', args.daily_path)
+    print('Save to:', args.minutely_path)
 
     not_null = lambda x: x is not None
     half_trips = sc.union([sc.textFile(x) for x in filepaths])\
