@@ -10,5 +10,4 @@ sudo ln -sf /usr/bin/python2.7 /usr/bin/python
 sudo yum install -y geos geos-devel
 yes | sudo pip install shapely
 yes | sudo pip install Rtree
-
-aws s3 cp s3://cipta-bigdata1004/deliverable2.tar.gz .
+yes | sudo pip install networkx
