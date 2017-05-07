@@ -26,8 +26,8 @@ parser.add_argument('--taxi_edges_path', type=str,
         default='taxi_zones_LocationID_edges.json',
         help='taxi regions adjacency.')
 parser.add_argument('--zillow_shapes_path', type=str,
-        default='taxi_zones.geojson',
-        help='taxi shapefile.')
+        default='ZillowNeighborhoods-NY.geojson',
+        help='zillow shapefile.')
 parser.add_argument('--zillow_edges_path', type=str,
         default='ZillowNeighborhoods_RegionID_edges.json',
         help='Zillow neighborhoods adjacency.')
@@ -50,11 +50,6 @@ class Neighborhood(object):
         self.geometry = feature['geometry']
         self.shape = shape(feature['geometry'])
 
-z_hoods_shapes = [Neighborhood(f)
-                  for f in z_hoods['features']
-                  if f['properties']['City'] == 'New York']
-taxi_zones_shapes = [Neighborhood(f) for f in taxi_zones['features']]
-
 # Fit them into graphs.
 T = nx.Graph()
 T.add_edges_from(t_edges)
@@ -63,8 +58,6 @@ Z = nx.Graph()
 Z.add_edges_from(z_edges)
 Z = nx.freeze(Z)
 
-regionid_to_z = {int(z.properties['RegionID']): z for z in z_hoods_shapes}
-locid_to_t = {int(t.properties['LocationID']): t for t in taxi_zones_shapes}
 
 def generate_connected_subgraphs(G):
     all_nodes = list(G)
@@ -93,6 +86,13 @@ def score_fn(shape_t, shape_z):
 
 def analyze(z0_idx):
     '''Analyze the neighbors around a Zillow point.'''
+    z_hoods_shapes = [Neighborhood(f)
+                      for f in z_hoods['features']
+                      if f['properties']['City'] == 'New York']
+    taxi_zones_shapes = [Neighborhood(f) for f in taxi_zones['features']]
+    regionid_to_z = {int(z.properties['RegionID']): z for z in z_hoods_shapes}
+    locid_to_t = {int(t.properties['LocationID']): t for t in taxi_zones_shapes}
+
     z0 = z_hoods_shapes[z0_idx]
     clusters = []
 
@@ -134,6 +134,7 @@ def main():
     threshold = 0.5
     print('-'*80 + '\n' + 'graph join' + '\n' + '-'*80)
 
+    z_ids = [int(z['properties']['RegionID']) for z in z_hoods]
     zs = sc.parallelize(list(regionid_to_z.keys()))
     clusters = zs.flatMap(analyze).reduceByKey(max)
     # cluster: [ ( (t_ids, z_ids), score ) ]

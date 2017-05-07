@@ -8,6 +8,7 @@ sudo yum-config-manager --enable epel
 sudo yum install -y spatialindex spatialindex-devel
 sudo ln -sf /usr/bin/python2.7 /usr/bin/python
 sudo yum install -y geos geos-devel
+sudo yum install -y tmux
 yes | sudo pip install shapely
 yes | sudo pip install Rtree
 yes | sudo pip install networkx
