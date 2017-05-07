@@ -17,7 +17,7 @@ class HalfTrip(object):
         self.month = d['month']
         self.day = d['day']
         self.hour = d['hour']
-        self.minute = (d['minute'] // 5) * 5
+        self.minute = d['minute']
         self.is_weekend = \
                 date(d['year'], d['month'], d['day']).weekday() >= SATURDAY
         self.loc = loc

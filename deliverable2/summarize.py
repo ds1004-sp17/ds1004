@@ -101,8 +101,8 @@ def format_add_result(pair):
 filepaths = [
     os.path.join(args.input_dir,
         'yellow_extract_{}-{:02d}.csv'.format(year, month))
-    for year in range(2015, 2016)
-    for month in range(1, 3)
+    for year in range(2013, 2017)
+    for month in range(1, 13)
 ]
 
 def main():
