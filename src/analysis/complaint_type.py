@@ -8,7 +8,8 @@ if __name__ == "__main__":
     sc = SparkContext()
     data = sc.textFile(sys.argv[1], 1)
 
-    data = data.mapPartitions(lambda x: reader(x))\
+    data = data.map(lambda x:(x.encode('ascii','ignore')))\
+    		.mapPartitions(lambda x: reader(x))\
             .map(lambda x: (x[5].lower().strip(), 1))\
             .reduceByKey(add)\
             .filter(lambda x: x[0] != "complaint type")\
