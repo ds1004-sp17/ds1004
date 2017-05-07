@@ -25,6 +25,8 @@ parser.add_argument('--daily_path', type=str,
 parser.add_argument('--minutely_path', type=str,
         default='s3://cipta-bigdata1004/minutely.csv',
         help='directory in HDFS to save files to.')
+parser.add_argument('--mode', type=str, default='yellow',
+        help='yellow or green data.')
 parser.add_argument('--loglevel', type=str, default='WARN',
                     help='log verbosity.')
 args = parser.parse_args()
@@ -98,9 +100,10 @@ def format_add_result(pair):
     row.extend(value)
     return to_csv(row)
 
+assert args.mode in ['yellow', 'green']
 filepaths = [
     os.path.join(args.input_dir,
-        'yellow_extract_{}-{:02d}.csv'.format(year, month))
+        '{}_extract_{}-{:02d}.csv'.format(args.mode, year, month))
     for year in range(2013, 2017)
     for month in range(1, 13)
 ]
@@ -113,15 +116,24 @@ def main():
     sc.addPyFile('half_trip.py')
 
     print('-'*80 + '\n' + 'net traffic counter' + '\n' + '-'*80)
+    textFiles = []
     for filepath in filepaths:
-        print(filepath)
+        try:
+            tf = sc.textFile(filepath)
+            print(filepath)
+            print(tf.first()) # Check file
+            textFiles.append(tf)
+        except Exception as e:
+            if 'Input path does not exist' in str(e):
+                continue
+            else:
+                raise
 
     print('Save to:', args.daily_path)
     print('Save to:', args.minutely_path)
 
     not_null = lambda x: x is not None
-    half_trips = sc.union([sc.textFile(x) for x in filepaths])\
-        .flatMap(process).filter(not_null).cache()
+    half_trips = sc.union(textFiles).flatMap(process).filter(not_null).cache()
     
     daily = half_trips.map(get_daily_keyval).reduceByKey(tuple_add)
     daily.sortByKey()\
