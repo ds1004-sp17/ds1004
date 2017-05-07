@@ -13,8 +13,10 @@ import json
 from shapely.geometry import shape, Point
 
 parser = argparse.ArgumentParser(description='Taxi net traffic.')
-parser.add_argument('--input_dir', type=str, default='public/taxis/',
+parser.add_argument('--input', type=str, default='s3://nyc-tlc/trip data/yellow_tripdata_2015-10.csv',
                     help='location of csv files in HDFS.')
+parser.add_argument('--output', type=str, default='s3://cipta-bigdata1004/yellow_extract_2015-10.csv',
+                    help='location of output csv files in HDFS.')
 parser.add_argument('--taxi_shapes', type=str, default='taxi_zones.geojson',
                     help='location of taxi zone shapes.')
 parser.add_argument('--month', type=int, default=7, help='month to process.')
@@ -120,9 +122,9 @@ def extract(h, row):
     if 'lpep_pickup_datetime' in h:
         r.append(row[h['lpep_pickup_datetime']])
         r.append(row[h['lpep_dropoff_datetime']])
+    return r
 
-filename = 'yellow_tripdata_2015-{:02d}.csv'.format(args.month)
-filepath = os.path.join(args.input_dir, filename)
+filepath = args.input
 
 def main():
     conf = SparkConf().setAppName('location_id_extractor')
@@ -140,7 +142,7 @@ def main():
     header = {col:idx for idx, col in enumerate(csv_row_read(header_line))}
 
     # Detect if the location ID is present.
-    all_data = all_data.filter(lambda row: len(row) > 0 and row != header_line)
+    all_data = all_data.filter(lambda row: len(row) > 0 and row.lower() != header_line)
     all_data = all_data.map(lambda x: csv_row_read(x))
     if 'pulocationid' in header and 'dolocationid' in header:
         all_data = all_data.map(partial(extract, header))
@@ -151,7 +153,7 @@ def main():
         all_data = all_data.map(partial(extract, header))
 
     all_data = all_data.filter(not_null)
-    savepath = os.path.join(args.save_path, filename)
+    savepath = args.output
     all_data.map(to_csv).saveAsTextFile(savepath)
     print('Saved to:', savepath)
 
