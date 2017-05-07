@@ -43,6 +43,9 @@ z_hoods = json.load(open(args.zillow_shapes_path))
 t_edges = json.load(open(args.taxi_edges_path))
 z_edges = json.load(open(args.zillow_edges_path))
 
+z_hoods['features'] = [f for f in z_hoods['features']
+                      if f['properties']['City'] == 'New York']
+
 class Neighborhood(object):
     def __init__(self, feature):
         super(Neighborhood, self).__init__()
@@ -86,9 +89,7 @@ def score_fn(shape_t, shape_z):
 
 def analyze(z0_idx):
     '''Analyze the neighbors around a Zillow point.'''
-    z_hoods_shapes = [Neighborhood(f)
-                      for f in z_hoods['features']
-                      if f['properties']['City'] == 'New York']
+    z_hoods_shapes = [Neighborhood(f) for f in z_hoods['features']]
     taxi_zones_shapes = [Neighborhood(f) for f in taxi_zones['features']]
     regionid_to_z = {int(z.properties['RegionID']): z for z in z_hoods_shapes}
     locid_to_t = {int(t.properties['LocationID']): t for t in taxi_zones_shapes}
@@ -134,7 +135,7 @@ def main():
     threshold = 0.5
     print('-'*80 + '\n' + 'graph join' + '\n' + '-'*80)
 
-    z_ids = [int(z['properties']['RegionID']) for z in z_hoods]
+    z_ids = [int(z['properties']['RegionID']) for z in z_hoods['features']]
     zs = sc.parallelize(list(regionid_to_z.keys()))
     clusters = zs.flatMap(analyze).reduceByKey(max)
     # cluster: [ ( (t_ids, z_ids), score ) ]
