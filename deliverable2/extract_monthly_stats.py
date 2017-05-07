@@ -139,7 +139,8 @@ def main():
     not_null = lambda x: x is not None
     all_data = sc.textFile(filepath)
     header_line = all_data.first().lower()
-    header = {col:idx for idx, col in enumerate(csv_row_read(header_line))}
+    header = {col.strip(): idx for idx, col in enumerate(csv_row_read(header_line))}
+    print(json.dumps(header, indent=2))
 
     # Detect if the location ID is present.
     all_data = all_data.filter(lambda row: len(row) > 0 and row.lower() != header_line)
