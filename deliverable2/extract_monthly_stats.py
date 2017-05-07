@@ -8,10 +8,9 @@ from datetime import date
 from cStringIO import StringIO
 from pyspark import SparkContext, SparkConf
 from functools import partial
-from shapely.geometry import Point
 from pyqtree import Index
 import json
-from shapely.geometry import mapping, shape
+from shapely.geometry import shape, Point
 
 parser = argparse.ArgumentParser(description='Taxi net traffic.')
 parser.add_argument('--input_dir', type=str, default='public/taxis/',
@@ -80,10 +79,14 @@ for i, t in enumerate(taxi_zones_shapes):
     index.insert(i, t.shape.bounds)
 
 def get_location_id(lon, lat):
-    lon = float(lon)
-    lat = float(lat)
+    try:
+        lon = float(lon)
+        lat = float(lat)
+    except:
+        print(lon, lat)
+        return None
     pt = Point(lon, lat)
-    for ic in idx.intersection(pt):
+    for ic in index.intersect([lon - 0.01, lat - 0.01, lon + 0.01, lat + 0.01]):
         c = taxi_zones_shapes[ic]
         if c.shape.contains(pt):
             return c.properties['LocationID']
