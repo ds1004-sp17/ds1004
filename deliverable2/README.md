@@ -37,7 +37,7 @@ This script looks at the results from the previous program and outputs two
 aggregated files. One output is aggregated by date, and one by time of day.
 Essentially they're the results of two group by operations:
 
-### Daily file
+### Daily File
 ```
 SELECT locationid, event, year, month, day,
        SUM(passengers_count), SUM(distance), SUM(total_amount), COUNT(*)
@@ -58,4 +58,12 @@ Example:
 22,PU,2013,9,13,11,37.239999999999995,140.63,6
 22,PU,2013,9,14,11,44.2,224.16,7
 ```
-       
+
+### Intraday File
+```
+SELECT locationid, event, hour, minute, is_weekend,
+       SUM(passengers_count), SUM(distance), SUM(total_amount), COUNT(*)
+FROM trips
+GROUP BY locationid, event, hour, minute, is_weekend
+```
+We separate the aggregates by weekend vs. non-weekend into two rows.
