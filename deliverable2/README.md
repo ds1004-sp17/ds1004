@@ -30,3 +30,32 @@ Example:
 148,48,1,3.6000000000000001,CSH,14.5,2014-05-22 03:40:06,2014-05-22 03:55:46
 127,239,3,7,CSH,21.5,2014-05-21 21:57:18,2014-05-21 22:08:03
 ```
+
+## Summarizer
+
+This script looks at the results from the previous program and outputs two
+aggregated files. One output is aggregated by date, and one by time of day.
+Essentially they're the results of two group by operations:
+
+### Daily file
+```
+SELECT locationid, event, year, month, day,
+       SUM(passengers_count), SUM(distance), SUM(total_amount), COUNT(*)
+FROM trips
+GROUP BY locationid, event, year, month, day
+```
+Each `event` is either `PU` for pickup or `DO` for dropoff. Each row contains
+data like this:
+1. How many passengers arrive in Chelsea on 2013-09-24?
+1. How many trips start from Financial District on 2013-01-10?
+
+Example:
+```
+22,PU,2013,9,9,1,0.0,3.5,1
+22,PU,2013,9,10,3,2.87,15.0,2
+22,PU,2013,9,11,1,8.94,27.0,1
+22,PU,2013,9,12,18,15.16,76.8,7
+22,PU,2013,9,13,11,37.239999999999995,140.63,6
+22,PU,2013,9,14,11,44.2,224.16,7
+```
+       
