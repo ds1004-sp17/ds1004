@@ -39,5 +39,13 @@ if __name__ == "__main__":
 	                           .foldByKey(0, add) \
 	                           .map(lambda x: '%s,%s,%s,%s' %(x[0][0],x[0][1],x[0][2],x[1]))
 	DHS_complaint_year.saveAsTextFile('DHS_complaint_year.out')  
-	
+
+	DHS_complaint_home = complaints.filter(lambda x: check_datetime(x[1])) \
+                           .filter(lambda x: x[3] == 'DHS') \
+                           .filter(lambda x: get_date(x[1])[0] == '2017') \
+                           .filter(lambda x: x[5] == 'Homeless Person Assistance') \
+                           .map(lambda x: (get_date(x[1])[1],x[8],x[49],x[50])) \
+                           .map(lambda x: '%s,%s,%s,%s' %(x[0], x[1],x[2],x[3]))
+	DHS_complaint_home.saveAsTextFile('DHS_complaint_home.out')
+
 	sc.stop()
