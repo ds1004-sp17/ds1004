@@ -68,7 +68,7 @@ if __name__ == "__main__":
   line.filter(lambda x: check_datetime(x[1])) \
                           .filter(lambda x: x[3] == 'NYPD') \
                           .filter(lambda x: re.match(r'Noise', x[5]) != None) \
-                          .map(lambda x: (('-'.join(get_date(x[1])),x[5]),x[8],x[51])) \
+                          .map(lambda x: (('-'.join(get_date(x[1])),x[5]),x[8],x[52])) \
                           .filter(lambda x: x[0] in time_lists) \
                           .map(lambda x: (str(x[0][0])+ ',' + str(x[0][1])+','+str(x[1])+ ','+str(x[2])))\
                           .saveAsTextFile("noise_top10.out")
