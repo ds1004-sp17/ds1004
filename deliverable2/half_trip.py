@@ -30,6 +30,7 @@ class HalfTrip(object):
     def get_time_key(self):
         return (self.loc,
                 self.mode,
+                self.year,
                 self.hour,
                 self.minute,
                 self.is_weekend)

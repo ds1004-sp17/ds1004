@@ -133,16 +133,21 @@ def main():
     print('Save to:', args.minutely_path)
 
     not_null = lambda x: x is not None
-    half_trips = sc.union(textFiles).flatMap(process).filter(not_null).cache()
+    half_trips = sc.union(textFiles).flatMap(process).filter(not_null)
+    half_trips = half_trips.coalesce(768).cache()
     
-    daily = half_trips.map(get_daily_keyval).reduceByKey(tuple_add)
+    daily = half_trips.map(get_daily_keyval)\
+        .reduceByKey(tuple_add)
     daily.sortByKey()\
         .map(format_add_result)\
+        .coalesce(16)\
         .saveAsTextFile(args.daily_path)
     
-    minutely = half_trips.map(get_time_keyval).reduceByKey(tuple_add)
+    minutely = half_trips.map(get_time_keyval)\
+        .reduceByKey(tuple_add)
     minutely.sortByKey()\
         .map(format_add_result)\
+        .coalesce(16)\
         .saveAsTextFile(args.minutely_path)
 
 if __name__ == '__main__':
