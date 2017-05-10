@@ -110,7 +110,7 @@ def main():
                             ''')
     output_2.write.csv('max_temp.csv')
 
-    output_3 = sqlContext.sql('''SELECT cast(snow as int) as snow_inc, 
+    output_3 = sqlContext.sql('''SELECT snow_inc, 
                                 COUNT(DISTINCT pickup_date) as total_days, 
                                 COUNT(trip_distance) as count, 
                                 AVG(trip_distance) as avg_dist
