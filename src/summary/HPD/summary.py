@@ -49,6 +49,10 @@ def get_week(dt):
     d = datetime.strptime(dt, "%m/%d/%Y %I:%M:%S %p")
     return d.year, d.weekday(), d.hour
 
+def get_date2(dt):
+    d = datetime.strptime(dt, "%m/%d/%Y %I:%M:%S %p")
+    return str(d.date())
+
 if __name__ == "__main__":
 
 	sc = SparkContext()
@@ -103,9 +107,9 @@ if __name__ == "__main__":
 	HPD_complaint_all_days = complaints.filter(lambda x: check_datetime(x[1])) \
 	                                  .filter(lambda x: x[3] == 'HPD') \
 	                                  .filter(lambda x: x[5] == 'HEAT/HOT WATER') \
-	                                  .map(lambda x: ('-'.join(get_date(x[1])),x[3],x[5],x[8],x[51])) \
+	                                  .map(lambda x: ('-'.join(get_date(x[1])),x[3],x[5],x[8],x[49],x[50])) \
 	                                  .filter(lambda x: x[0] in time_lists) \
-	                                  .map(lambda x : "%s,%s,%s,%s,%s" % (x[0], x[1],x[2], x[3],x[4])) 
+	                                  .map(lambda x : "%s,%s,%s,%s,%s,%s" % (x[0], x[1],x[2], x[3],x[4],x[5])) 
 
 	HPD_complaint_all_days.saveAsTextFile("HPD_complaint_all_days.out") 
 
