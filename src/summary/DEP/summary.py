@@ -26,14 +26,18 @@ if __name__ == "__main__":
 	complaints = complaint.map(lambda x: x.encode('ascii', 'ignore')) \
 					  .mapPartitions(lambda x: reader(x, delimiter = ',',quotechar = '"'))
 
+	DHS_complaint_month = complaints.filter(lambda x: check_datetime(x[1])) \
+	                           .filter(lambda x: x[3] == 'DHS') \
+	                           .map(lambda x: ((get_date(x[1])[:2], x[5]),1)) \
+	                           .foldByKey(0, add) \
+	                           .map(lambda x: '%s,%s,%s' %('-'.join(x[0][0]), x[0][1],x[1]))
+	DHS_complaint_month.saveAsTextFile('DHS_complaint_month.out')
 
-	map_zip_amount = complaints.filter(lambda x : check_datetime(x[1])) \
-			  				   .map(lambda x: ((get_date(x[1])[0:2],x[8]), 1)) \
-			  				   .foldByKey(0, add) \
-			  				   .map(lambda x : "%s,%s,%d" % (x[0][0], x[0][1], x[1]))
-
-
-	map_zip_amount.saveAsTextFile("map_zip_amount.out")
-
-
+	DHS_complaint_year = complaints.filter(lambda x: check_datetime(x[1])) \
+	                           .filter(lambda x: x[3] == 'DHS') \
+	                           .map(lambda x: ((get_date(x[1])[0], x[5], x[6]),1)) \
+	                           .foldByKey(0, add) \
+	                           .map(lambda x: '%s,%s,%s,%s' %(x[0][0],x[0][1],x[0][2],x[1]))
+	DHS_complaint_year.saveAsTextFile('DHS_complaint_year.out')  
+	
 	sc.stop()
