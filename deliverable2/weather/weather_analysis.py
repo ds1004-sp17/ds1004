@@ -90,7 +90,7 @@ def main():
                             COUNT(trip_distance) as count, 
                             AVG(trip_distance) as avg_dist
                             FROM joined 
-                            WHERE (pickup_time < 040000 
+                            WHERE (pickup_time < 030000 
                                 OR pickup_time > 220000)
                                 AND (trip_distance < 200)
                             GROUP BY tmin
@@ -103,20 +103,21 @@ def main():
                                 COUNT(trip_distance) as count, 
                                 AVG(trip_distance) as avg_dist
                             FROM joined 
-                            WHERE pickup_time > 110000 
-                                AND pickup_time < 150000
+                            WHERE (pickup_time > 110000 
+                                AND pickup_time < 150000)
+                                AND (trip_distance < 200)
                             GROUP BY tmax
                             ORDER BY tmax DESC
                             ''')
     output_2.write.csv('max_temp.csv')
 
-    output_3 = sqlContext.sql('''SELECT snow_inc, 
+    output_3 = sqlContext.sql('''SELECT snow, 
                                 COUNT(DISTINCT pickup_date) as total_days, 
                                 COUNT(trip_distance) as count, 
                                 AVG(trip_distance) as avg_dist
                             FROM joined 
-                            GROUP BY snow_inc
-                            ORDER BY snow_inc DESC
+                            GROUP BY snow
+                            ORDER BY snow DESC
                             ''')
     output_3.write.csv('snowfall.csv')
 
