@@ -2,7 +2,7 @@ import csv
 from collections import defaultdict
 
 
-data_path = "/Users/abhishekkadian/Documents/Github/uber-tlc-foil-response/uber-trip-data/uber-janjune-sample.csv"
+data_path = "/Users/abhishekkadian/Documents/Github/uber-tlc-foil-response/uber-trip-data/uber-raw-data-janjune-15.csv"
 output_date_trips_path = "uber_janjune_count_trips.csv"
 output_date_location_trips_path = "uber_janjune_location_count_trips.csv"
 
