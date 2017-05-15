@@ -41,9 +41,9 @@ After processing the data by _spark_, you can run the following command to plot 
 For the scripts in the data_issue folder:
 You should first use the following command:
 ```bash
-cd data_issue
+cd src/data_issue
 ```
-There are 3 shells in the folder, which can help you to run the script and get the result.
+There several scripts in the data_issue folder.
 Use the following command to run:
 ```bash
 ./run_basic.sh your-input-dataset-path
@@ -63,7 +63,27 @@ Please allow time for the scripts to run on big dataset, and try again if the sp
 
 # Update basic information, counting missing values and validation
 1. The PDFs will be used for the summury or report.
-2. The files in data_info folder: 
+2. The files in data_issue folder: 
    [basic_statistics_info.py] gives a general glance of the contents in each column and we can use the information to find missing values and the pattern of the columns.
    [missing_values.py] finds the missing values in the column, including blank(''), NA and so on.
-   Three scripts contain the indices in file name give key, base type, semantic type and validation of NULL, VALID or INVALID   
+   Three scripts contain the indices in file name give key, base type, semantic type and validation of NULL, VALID or INVALID
+   
+# For the scripts in src/summary:
+The NYPD_noise folder has multiple scripts to generate the summary about noise related issues, to run them:
+First:
+```bash
+cd src/summary/NYPD_noise
+```
+Then use the shell to run:
+```bash
+./run_nypd your-input-dataset-path
+```
+For example:
+```bash
+./run_nypd 311.csv
+```
+or
+```bash
+./run_nypd /user/jh5442/311.csv
+```
+The output will be in a folder called NYPD_noise
