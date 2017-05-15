@@ -87,3 +87,23 @@ or
 ./run_nypd /user/jh5442/311.csv
 ```
 The output will be in a folder called NYPD_noise
+
+
+# For the scirpts in src/summary/ALL
+
+``` bash
+chdir ../summary/ALL
+./run_figure.sh
+```
+Then 
+``` bash
+python visulization.py
+```
+# For the scirpts in src/summary/DEP or src/summary/HPD
+
+Just run
+``` bash
+./run.sh
+```
+
+
